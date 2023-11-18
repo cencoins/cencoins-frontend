@@ -1,3 +1,4 @@
+import { API_VERSION } from "@/constants/API_VERSION";
 import { AxiosPromise, AxiosRequestConfig } from "axios";
 import axios from "axios";
 import getConfig from "next/config";
@@ -8,7 +9,9 @@ const {
 } = getConfig();
 
 export abstract class ServiceBase {
-  protected static BASE_URL: string;
+  protected static BASE_URL: string = BASE_URL;
+  protected static API_VERSION: string = API_VERSION.V1;
+  protected static TAG_SERVICE: string = "";
 
   protected static api = axios.create({
     baseURL: BASE_URL,
@@ -18,7 +21,7 @@ export abstract class ServiceBase {
   });
 
   public static buildUrl(url: string): string {
-    return `/api${this.BASE_URL}${url}`;
+    return `/api/${this.API_VERSION}${this.TAG_SERVICE}${url}`;
   }
 
   public static setAuthToken(token: Nullable<string>): void {
