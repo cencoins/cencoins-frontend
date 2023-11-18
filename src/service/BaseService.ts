@@ -1,24 +1,46 @@
-import { API_VERSION } from "@/constants/API_VERSION";
-import { AxiosPromise, AxiosRequestConfig } from "axios";
 import axios from "axios";
-import getConfig from "next/config";
+import { API_VERSION } from "@/constants/API_VERSION";
+import { camelCaseKeysDeep } from "@/utils/camelCase";
+import { AxiosPromise, AxiosRequestConfig } from "axios";
 import { stringify } from "qs";
+
+import getConfig from "next/config";
 
 const {
   publicRuntimeConfig: { BASE_URL },
 } = getConfig();
+
+const instance = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    Accept: "application/json",
+  },
+});
+
+instance.interceptors.request.use(
+  (config) => ({
+    ...config,
+    metadata: { startTime: new Date() },
+  }),
+  (error) => Promise.reject(error)
+);
+
+instance.interceptors.response.use(
+  (response) => {
+    response.data = camelCaseKeysDeep(response.data);
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export abstract class ServiceBase {
   protected static BASE_URL: string = BASE_URL;
   protected static API_VERSION: string = API_VERSION.V1;
   protected static TAG_SERVICE: string = "";
 
-  protected static api = axios.create({
-    baseURL: BASE_URL,
-    headers: {
-      Accept: "application/json",
-    },
-  });
+  protected static api = instance;
 
   public static buildUrl(url: string): string {
     return `/api/${this.API_VERSION}${this.TAG_SERVICE}${url}`;
