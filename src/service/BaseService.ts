@@ -1,6 +1,4 @@
-import axios from "axios";
 import { API_VERSION } from "@/constants/API_VERSION";
-import { camelCaseKeysDeep } from "@/utils/camelCase";
 import { AxiosPromise, AxiosRequestConfig } from "axios";
 import { stringify } from "qs";
 
