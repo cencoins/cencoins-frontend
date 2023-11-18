@@ -1,6 +1,16 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-}
+const getEnv = require("./src/utils/getEnv");
+const env = getEnv();
 
-module.exports = nextConfig
+const nextConfig = {
+  reactStrictMode: false,
+  swcMinify: true,
+  poweredByHeader: false,
+  generateEtags: false,
+  publicRuntimeConfig: {
+    BASE_URL: env.BASE_URL,
+  },
+  serverRuntimeConfig: {},
+};
+
+module.exports = nextConfig;
