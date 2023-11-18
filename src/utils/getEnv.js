@@ -5,7 +5,6 @@ const { parsed: envs } = require("dotenv").config({
 
 const getEnv = () => {
   const { NODE_ENV, ENV_FILE } = process.env;
-  console.log({ NODE_ENV, ENV_FILE });
   const env = NODE_ENV !== "production" ? envs : process.env;
   const envFileExists = fs.existsSync(`${process.cwd()}/.env.${ENV_FILE}`);
 
