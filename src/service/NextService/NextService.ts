@@ -9,6 +9,6 @@ export class NextService extends ServiceBase {
     body: EmailSignUpParams,
     config?: AxiosRequestConfig<unknown>
   ): AxiosPromise<unknown> {
-    return this.post("/identity/email/signup", body, config);
+    return this.post("identity/email/signup", body, config);
   }
 }
