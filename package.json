@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "ENV_FILE=develop next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "ENV_FILE=develop next start",
     "lint": "next lint"
   },
   "dependencies": {

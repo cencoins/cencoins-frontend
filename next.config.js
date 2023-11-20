@@ -10,7 +10,9 @@ const nextConfig = {
   publicRuntimeConfig: {
     BASE_URL: env.BASE_URL,
   },
-  serverRuntimeConfig: {},
+  serverRuntimeConfig: {
+    USER_SERVICE_URL: env.USER_SERVICE_URL,
+  },
 };
 
 module.exports = nextConfig;
