@@ -1,7 +1,6 @@
 import { API_VERSION } from "@/constants/API_VERSION";
 import { AxiosPromise, AxiosRequestConfig } from "axios";
 import { stringify } from "qs";
-
 import getConfig from "next/config";
 import { createAxiosInstance } from "./createAxiosInstance";
 
