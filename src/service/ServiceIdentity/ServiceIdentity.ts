@@ -17,6 +17,6 @@ export class ServiceIdentity extends ServiceBase {
     body: EmailSignUpParams,
     config: AxiosRequestConfig<unknown>
   ): AxiosPromise<void> {
-    return this.post<void>("/email/web/", body, config);
+    return this.post<void>("/email/signup", body, config);
   }
 }
