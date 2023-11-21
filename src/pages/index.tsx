@@ -1,19 +1,36 @@
 /* eslint-disable no-console */
-// @ts-nocheck
-import { NextService } from "@/service/NextService/NextService";
 import Head from "next/head";
 import { useEffect } from "react";
 
 export default function Home() {
   useEffect(() => {
-    NextService.emailSignUp({
-      name: "",
-      password: "123",
-      session: "",
-      email: "",
-    })
-      .then((res) => console.log({ res }))
-      .catch((error) => console.log({ error }));
+    // const email = "test123@gmail.com";
+    // const password = "test123Qazwsx";
+    // NextService.emailSignUpValidate({
+    //   email: "zolotukhinwebp1r@gmail.com",
+    // })
+    //   .then((res) => {
+    //     console.log({ res });
+    //     NextService.emailSignUp({
+    //       name: "Anatoliy",
+    //       email,
+    //       password,
+    //       session: res.data.session,
+    //     })
+    //       .then((res2) => {
+    //         console.log({ res2 });
+    //         NextService.emailSignIn({
+    //           email,
+    //           password,
+    //         })
+    //           .then((res3) => {
+    //             console.log({ res3 });
+    //           })
+    //           .catch((error3) => console.log({ error3 }));
+    //       })
+    //       .catch((error322) => console.log({ error322 }));
+    //   })
+    //   .catch((error2) => console.log({ error2 }));
   }, []);
   return (
     <>

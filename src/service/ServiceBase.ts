@@ -1,21 +1,15 @@
 import { API_VERSION } from "@/constants/API_VERSION";
 import { AxiosPromise, AxiosRequestConfig } from "axios";
 import { stringify } from "qs";
-import getConfig from "next/config";
-import { createAxiosInstance } from "./createAxiosInstance";
-
-const {
-  publicRuntimeConfig: { BASE_URL },
-} = getConfig();
+import { axiosInstance } from "./createAxiosInstance";
 
 export abstract class ServiceBase {
-  protected static BASE_URL: string = BASE_URL;
   protected static API_VERSION: string = API_VERSION.V1;
   protected static TAG_SERVICE: string = "";
-  protected static api = createAxiosInstance(this.BASE_URL);
+  protected static api = axiosInstance;
 
   public static buildUrl(url: string): string {
-    return `/api/${this.API_VERSION}${this.TAG_SERVICE}${url}`;
+    return `/${this.API_VERSION}${this.TAG_SERVICE}${url}`;
   }
 
   protected static get<T, P = Record<string, unknown>>(

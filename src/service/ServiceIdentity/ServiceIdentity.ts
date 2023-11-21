@@ -1,22 +1,62 @@
 import getConfig from "next/config";
 import { ServiceBase } from "../ServiceBase";
 import { AxiosPromise, AxiosRequestConfig } from "axios";
-import { EmailSignUpParams } from "./ServiceIdentity.dto";
-import { createAxiosInstance } from "../createAxiosInstance";
+import {
+  EmailSignInParams,
+  EmailSignInRefreshParams,
+  EmailSignInRefreshResponse,
+  EmailSignInResponse,
+  EmailSignUpParams,
+  EmailSignUpValidateParams,
+  EmailSignUpValidateResponse,
+} from "./ServiceIdentity.dto";
+import { API_VERSION } from "@/constants/API_VERSION";
 
 const {
-  serverRuntimeConfig: { USER_SERVICE_URL },
+  serverRuntimeConfig: { GATEWAY_URL },
 } = getConfig();
 
 export class ServiceIdentity extends ServiceBase {
-  protected static BASE_URL = USER_SERVICE_URL;
   protected static TAG_SERVICE = "/identity";
-  protected static api = createAxiosInstance(USER_SERVICE_URL);
+  protected static API_VERSION = "gw/" + API_VERSION.V1;
+
+  public static emailSignUpValidate(
+    body: EmailSignUpValidateParams,
+    config?: AxiosRequestConfig<unknown>
+  ): AxiosPromise<EmailSignUpValidateResponse> {
+    return this.post<EmailSignUpValidateResponse>("/signup/validate", body, {
+      ...config,
+      baseURL: GATEWAY_URL,
+    });
+  }
 
   public static emailSignUp(
     body: EmailSignUpParams,
-    config: AxiosRequestConfig<unknown>
+    config?: AxiosRequestConfig<unknown>
   ): AxiosPromise<void> {
-    return this.post<void>("/email/signup", body, config);
+    return this.post<void>("/signup", body, {
+      ...config,
+      baseURL: GATEWAY_URL,
+    });
+  }
+
+  public static emailSignIn(
+    body: EmailSignInParams,
+    config?: AxiosRequestConfig<unknown>
+  ): AxiosPromise<EmailSignInResponse> {
+    return this.post<EmailSignInResponse>("/signin", body, {
+      ...config,
+      baseURL: GATEWAY_URL,
+    });
+  }
+
+  public static emailSignInRefresh(
+    body: EmailSignInRefreshParams,
+    config?: AxiosRequestConfig<unknown>
+  ): AxiosPromise<EmailSignInResponse> {
+    return this.post<EmailSignInRefreshResponse>("/signin/refresh", body, {
+      ...config,
+      baseURL: GATEWAY_URL,
+    });
   }
 }

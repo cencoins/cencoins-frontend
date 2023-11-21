@@ -11,7 +11,7 @@ const nextConfig = {
     BASE_URL: env.BASE_URL,
   },
   serverRuntimeConfig: {
-    USER_SERVICE_URL: env.USER_SERVICE_URL,
+    GATEWAY_URL: env.GATEWAY_URL,
   },
 };
 

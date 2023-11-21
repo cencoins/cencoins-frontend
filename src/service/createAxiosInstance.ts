@@ -1,9 +1,14 @@
 import axios from "axios";
 import { camelCaseKeysDeep } from "@/utils/camelCase";
+import getConfig from "next/config";
 
-export const createAxiosInstance = (baseURL: string) => {
+const {
+  publicRuntimeConfig: { BASE_URL },
+} = getConfig();
+
+export const createAxiosInstance = () => {
   const instance = axios.create({
-    baseURL,
+    baseURL: BASE_URL,
     headers: {
       Accept: "application/json",
     },
@@ -29,3 +34,5 @@ export const createAxiosInstance = (baseURL: string) => {
 
   return instance;
 };
+
+export const axiosInstance = createAxiosInstance();
