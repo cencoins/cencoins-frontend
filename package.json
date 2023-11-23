@@ -6,7 +6,8 @@
     "dev": "ENV_FILE=develop next dev",
     "build": "next build",
     "start": "ENV_FILE=develop next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "tsc": "tsc --noEmit"
   },
   "browserslist": {
     "production": [
@@ -51,6 +52,7 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
+    "husky": "^8.0.3",
     "typescript": "^5"
   }
 }
