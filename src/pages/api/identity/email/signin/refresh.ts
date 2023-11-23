@@ -4,13 +4,14 @@ import { EmailSignInRefreshResponse } from "@/service/ServiceIdentity/ServiceIde
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<EmailSignInRefreshResponse>
+  res: NextApiResponse<EmailSignInRefreshResponse>,
 ) {
   try {
     const response = await ServiceIdentity.emailSignInRefresh(req.body);
     return res.send(response.data);
   } catch (error) {
-    // @ts-ignore
-    return res.status(error?.response?.status).send(error?.response?.data);
+    // eslint-disable-next-line no-console
+    console.log({ error });
+    return res.status(500).end();
   }
 }
