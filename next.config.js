@@ -1,6 +1,4 @@
 /** @type {import('next').NextConfig} */
-const getEnv = require("./src/utils/getEnv");
-const env = getEnv();
 
 const nextConfig = {
   reactStrictMode: false,
@@ -8,11 +6,11 @@ const nextConfig = {
   poweredByHeader: false,
   generateEtags: false,
   publicRuntimeConfig: {
-    BASE_URL: env.BASE_URL,
+    BASE_URL: process.env.BASE_URL,
   },
   serverRuntimeConfig: {
-    GATEWAY_URL: env.GATEWAY_URL,
-    NEXTAUTH_SECRET: env.NEXTAUTH_SECRET,
+    GATEWAY_URL: process.env.GATEWAY_URL,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   },
   images: {
     domains: ["assets.maccarianagency.com"],

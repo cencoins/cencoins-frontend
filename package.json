@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "ENV_FILE=development next dev",
-    "build": "ENV_FILE=production next build",
-    "start": "ENV_FILE=production next start",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "next lint",
     "tsc": "tsc --noEmit"
   },
