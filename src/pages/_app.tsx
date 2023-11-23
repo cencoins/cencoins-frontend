@@ -13,9 +13,9 @@ import AOS from "aos";
 import getTheme from "@/theme";
 import { RefreshTokenHandler } from "@/components/RefreshTokenHandler/RefreshTokenHandler";
 import getConfig from "next/config";
+
 const {
-  publicRuntimeConfig: { BASE_URL },
-  serverRuntimeConfig: { GATEWAY_URL },
+  publicRuntimeConfig: { BASE_URL, GATEWAY_URL },
 } = getConfig();
 
 // eslint-disable-next-line no-console

@@ -13,8 +13,7 @@ import {
 import { API_VERSION } from "@/constants/API_VERSION";
 
 const {
-  publicRuntimeConfig: { BASE_URL },
-  serverRuntimeConfig: { GATEWAY_URL },
+  publicRuntimeConfig: { BASE_URL, GATEWAY_URL },
 } = getConfig();
 
 // eslint-disable-next-line no-console
