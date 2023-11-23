@@ -14,7 +14,6 @@ import MobileMenu from "./MobileMenu";
 import navigationPages from "./navigationPages";
 
 interface Props {
-  children: React.ReactNode;
   colorInvert?: boolean;
   bgcolor?: string;
 }
