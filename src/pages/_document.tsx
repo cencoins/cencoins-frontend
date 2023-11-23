@@ -12,6 +12,14 @@ import { AppType } from "next/app";
 import { MyAppProps } from "@/pages/_app";
 import createEmotionCache from "@/theme/createEmotionCache";
 import { light } from "@/theme/palette";
+import getConfig from "next/config";
+const {
+  publicRuntimeConfig: { BASE_URL },
+  serverRuntimeConfig: { GATEWAY_URL },
+} = getConfig();
+
+// eslint-disable-next-line no-console
+console.log({ GATEWAY_URL, BASE_URL });
 
 interface MyDocumentProps extends DocumentProps {
   emotionStyleTags: JSX.Element[];
@@ -88,7 +96,7 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   ctx.renderPage = () =>
     originalRenderPage({
       enhanceApp: (
-        App: React.ComponentType<React.ComponentProps<AppType> & MyAppProps>
+        App: React.ComponentType<React.ComponentProps<AppType> & MyAppProps>,
       ) =>
         function EnhanceApp(props) {
           return <App emotionCache={cache} {...props} />;
