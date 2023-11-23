@@ -11,6 +11,7 @@ export default async function handler(
     return res.send(response.data);
   } catch (error) {
     if (isAxiosError(error)) {
+      // eslint-disable-next-line no-console
       console.log({ error });
       // @ts-ignore
       return res.status(500).send();
