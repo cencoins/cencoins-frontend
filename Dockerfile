@@ -16,7 +16,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV ENV_FILE production
 
-RUN npm run build
+RUN npm run build:prod
 
 FROM node:19-bullseye AS runner
 WORKDIR /app
@@ -36,4 +36,4 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:prod"]
