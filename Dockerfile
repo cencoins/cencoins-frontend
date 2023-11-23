@@ -14,7 +14,6 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED 1
-ENV ENV_FILE production
 
 RUN npm run build
 
@@ -23,6 +22,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV ENV_FILE production
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/node_modules ./node_modules
