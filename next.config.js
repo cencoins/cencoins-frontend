@@ -12,6 +12,7 @@ const nextConfig = {
   },
   serverRuntimeConfig: {
     GATEWAY_URL: env.GATEWAY_URL,
+    NEXTAUTH_SECRET: env.NEXTAUTH_SECRET,
   },
 };
 
