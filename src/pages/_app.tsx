@@ -8,9 +8,10 @@ import createEmotionCache from "@/theme/createEmotionCache";
 import { Layout } from "@/components/Layout/Layout";
 import { SessionProvider } from "next-auth/react";
 import { useDarkMode } from "@/hooks/useDarkMode";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AOS from "aos";
 import getTheme from "@/theme";
+import { RefreshTokenHandler } from "@/components/RefreshTokenHandler/RefreshTokenHandler";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -25,6 +26,7 @@ export default function App(props: MyAppProps) {
     emotionCache = clientSideEmotionCache,
     pageProps: { session, ...pageProps },
   } = props;
+  const [interval, setInterval] = useState(0);
 
   useEffect(() => {
     // Remove the server-side injected CSS.
@@ -52,7 +54,7 @@ export default function App(props: MyAppProps) {
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-      <SessionProvider session={session}>
+      <SessionProvider refetchInterval={interval} session={session}>
         <ThemeProvider theme={getTheme(themeMode, themeToggler)}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
@@ -60,6 +62,7 @@ export default function App(props: MyAppProps) {
             <Component {...pageProps} />
           </Layout>
         </ThemeProvider>
+        <RefreshTokenHandler setInterval={setInterval} />
       </SessionProvider>
     </CacheProvider>
   );

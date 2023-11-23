@@ -11,10 +11,11 @@ import {
   toggleModalSignIn,
 } from "@/stores/modals/ModalSignIn.effector";
 import { useUnit } from "effector-react";
+import { Typography } from "@mui/material";
 
 export const ModalSignIn: React.FC = () => {
   const modalSignIn = useUnit($modalSignIn);
-  // console.log({ ...modalSignIn });
+
   return (
     <Dialog
       open={modalSignIn.open}
@@ -51,6 +52,9 @@ export const ModalSignIn: React.FC = () => {
           variant="standard"
           placeholder="Enter your password..."
         />
+        {Boolean(modalSignIn.error?.length) && (
+          <Typography color="red">{modalSignIn.error![0]}</Typography>
+        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={() => toggleModalSignIn()}>Cancel</Button>

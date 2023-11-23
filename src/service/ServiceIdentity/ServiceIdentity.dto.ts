@@ -19,7 +19,15 @@ export interface EmailSignInParams {
   password: string;
 }
 
-export interface EmailSignInResponse {}
+export interface EmailSignInResponse {
+  accessToken: string;
+  expiresIn: number;
+  refreshExpiresIn: number;
+  refreshToken: number;
+  tokenType: string;
+  scope: string;
+  step: string;
+}
 
 export interface EmailSignInRefreshParams {
   refreshToken: string;

@@ -22,7 +22,7 @@ export class ServiceIdentity extends ServiceBase {
 
   public static emailSignUpValidate(
     body: EmailSignUpValidateParams,
-    config?: AxiosRequestConfig<unknown>
+    config?: AxiosRequestConfig<unknown>,
   ): AxiosPromise<EmailSignUpValidateResponse> {
     return this.post<EmailSignUpValidateResponse>("/signup/validate", body, {
       ...config,
@@ -32,7 +32,7 @@ export class ServiceIdentity extends ServiceBase {
 
   public static emailSignUp(
     body: EmailSignUpParams,
-    config?: AxiosRequestConfig<unknown>
+    config?: AxiosRequestConfig<unknown>,
   ): AxiosPromise<void> {
     return this.post<void>("/signup", body, {
       ...config,
@@ -42,7 +42,7 @@ export class ServiceIdentity extends ServiceBase {
 
   public static emailSignIn(
     body: EmailSignInParams,
-    config?: AxiosRequestConfig<unknown>
+    config?: AxiosRequestConfig<unknown>,
   ): AxiosPromise<EmailSignInResponse> {
     return this.post<EmailSignInResponse>("/signin", body, {
       ...config,
@@ -52,8 +52,8 @@ export class ServiceIdentity extends ServiceBase {
 
   public static emailSignInRefresh(
     body: EmailSignInRefreshParams,
-    config?: AxiosRequestConfig<unknown>
-  ): AxiosPromise<EmailSignInResponse> {
+    config?: AxiosRequestConfig<unknown>,
+  ): AxiosPromise<EmailSignInRefreshResponse> {
     return this.post<EmailSignInRefreshResponse>("/signin/refresh", body, {
       ...config,
       baseURL: GATEWAY_URL,

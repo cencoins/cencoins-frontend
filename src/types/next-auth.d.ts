@@ -1,9 +1,26 @@
 /* eslint-disable no-unused-vars */
-import NextAuth from "next-auth";
+import NextAuth, { DefaultUser } from "next-auth";
 
 declare module "next-auth" {
-  /**
-   * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
-   */
-  interface Session {}
+  interface User extends DefaultUser {
+    data: {
+      accessToken: string;
+      refreshToken: string;
+      accessTokenExpiry: number;
+    };
+  }
+
+  interface Session {
+    user?: User;
+    accessToken: string;
+    accessTokenExpiry: number;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT extends UserData {
+    accessToken: string;
+    accessTokenExpiry: number;
+    refreshToken: string;
+  }
 }

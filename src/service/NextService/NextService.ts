@@ -15,41 +15,41 @@ export class NextService extends ServiceBase {
 
   public static emailSignUp(
     body: EmailSignUpParams,
-    config?: AxiosRequestConfig<unknown>
+    config?: AxiosRequestConfig<unknown>,
   ): AxiosPromise<unknown> {
     return this.post("/identity/email/signup", body, config);
   }
 
   public static emailSignUpValidate(
     body: EmailSignUpValidateParams,
-    config?: AxiosRequestConfig<unknown>
+    config?: AxiosRequestConfig<unknown>,
   ): AxiosPromise<EmailSignUpValidateResponse> {
     return this.post<EmailSignUpValidateResponse>(
       "/identity/email/signup/validate",
       body,
-      config
+      config,
     );
   }
 
   public static emailSignIn(
     body: EmailSignInParams,
-    config?: AxiosRequestConfig<unknown>
+    config?: AxiosRequestConfig<unknown>,
   ): AxiosPromise<EmailSignInResponse> {
     return this.post<EmailSignInResponse>(
       "/identity/email/signin",
       body,
-      config
+      config,
     );
   }
 
   public static emailSignInRefresh(
     body: EmailSignInRefreshParams,
-    config?: AxiosRequestConfig<unknown>
+    config?: AxiosRequestConfig<unknown>,
   ): AxiosPromise<EmailSignInRefreshResponse> {
     return this.post<EmailSignInResponse>(
       "/identity/email/signin/refresh",
       body,
-      config
+      config,
     );
   }
 }
