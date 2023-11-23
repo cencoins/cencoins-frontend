@@ -14,6 +14,9 @@ const nextConfig = {
     GATEWAY_URL: env.GATEWAY_URL,
     NEXTAUTH_SECRET: env.NEXTAUTH_SECRET,
   },
+  images: {
+    domains: ["assets.maccarianagency.com"],
+  },
 };
 
 module.exports = nextConfig;

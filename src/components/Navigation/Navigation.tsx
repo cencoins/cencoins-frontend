@@ -10,6 +10,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { toggleModalSignIn } from "@/stores/modals/ModalSignIn.effector";
 import { toggleModalSignUp } from "@/stores/modals/ModalSignUp.effector";
+import ThemeModeToggler from "../ThemeModeToggler/ThemeModeToggler";
 
 export const Navigation: React.FC = () => {
   return (
@@ -50,6 +51,9 @@ export const Navigation: React.FC = () => {
             >
               <AccountCircle />
             </IconButton>
+          </Box>
+          <Box marginLeft={3}>
+            <ThemeModeToggler />
           </Box>
         </Toolbar>
       </AppBar>

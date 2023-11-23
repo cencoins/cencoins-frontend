@@ -1,18 +1,19 @@
-import { Box } from "@mui/material";
-import { Navigation } from "../Navigation/Navigation";
 import { PropsWithChildren } from "react";
-import { ModalSignIn } from "../Modals/ModalSignIn/ModalSignIn";
-import { ModalSignUp } from "../Modals/ModalSignUp/ModalSignUp";
+import { Box } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import { ModalSignIn } from "@/components/Modals/ModalSignIn/ModalSignIn";
+import { ModalSignUp } from "@/components/Modals/ModalSignUp/ModalSignUp";
+import { Navigation } from "@/components/Navigation/Navigation";
 
 export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <Box component="main">
+    <Paper elevation={0}>
       <Navigation />
-      <Box component="section" sx={{ p: 3 }}>
+      <Box component="main" sx={{ p: 3 }}>
         {children}
       </Box>
       <ModalSignIn />
       <ModalSignUp />
-    </Box>
+    </Paper>
   );
 };

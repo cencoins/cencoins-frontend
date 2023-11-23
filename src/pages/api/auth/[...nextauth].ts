@@ -37,7 +37,7 @@ const Auth = (req: NextApiRequest, res: NextApiResponse): void =>
       // }),
     ],
     pages: {},
-    secret: NEXTAUTH_SECRET,
+    // secret: NEXTAUTH_SECRET,
   } as NextAuthOptions);
 
 export default Auth;
