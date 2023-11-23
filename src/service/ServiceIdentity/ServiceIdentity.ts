@@ -17,7 +17,7 @@ const {
 } = getConfig();
 
 // eslint-disable-next-line no-console
-console.log({ GATEWAY_URL, BASE_URL });
+console.log({ GATEWAY_URL, BASE_URL, process: process.env });
 
 export class ServiceIdentity extends ServiceBase {
   protected static TAG_SERVICE = "/identity";

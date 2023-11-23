@@ -19,7 +19,7 @@ const {
 } = getConfig();
 
 // eslint-disable-next-line no-console
-console.log({ GATEWAY_URL, BASE_URL });
+console.log({ GATEWAY_URL, BASE_URL, process: process.env });
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
