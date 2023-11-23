@@ -6,10 +6,10 @@ const nextConfig = {
   poweredByHeader: false,
   generateEtags: false,
   publicRuntimeConfig: {
-    BASE_URL: process.env.BASE_URL,
+    BASE_URL: "https://cencoins.com",
   },
   serverRuntimeConfig: {
-    GATEWAY_URL: process.env.GATEWAY_URL,
+    GATEWAY_URL: "http://api-gateway-service.k8s.local",
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   },
   images: {
