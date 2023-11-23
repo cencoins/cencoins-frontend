@@ -23,7 +23,7 @@ export interface EmailSignInResponse {
   accessToken: string;
   expiresIn: number;
   refreshExpiresIn: number;
-  refreshToken: number;
+  refreshToken: string;
   tokenType: string;
   scope: string;
   step: string;
@@ -33,4 +33,4 @@ export interface EmailSignInRefreshParams {
   refreshToken: string;
 }
 
-export interface EmailSignInRefreshResponse {}
+export interface EmailSignInRefreshResponse extends EmailSignInResponse {}

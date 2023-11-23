@@ -5,6 +5,7 @@ import getConfig from "next/config";
 import { jwtDecode } from "jwt-decode";
 import { JWTAuth } from "@/types/jwtAuth";
 import { Session } from "next-auth";
+import { ServiceIdentity } from "@/service/ServiceIdentity/ServiceIdentity";
 
 const {
   serverRuntimeConfig: { NEXTAUTH_SECRET },
@@ -27,16 +28,16 @@ const Auth = (req: NextApiRequest, res: NextApiResponse): void =>
         },
         authorize(credentials) {
           if (credentials?.accessToken) {
-            const user: JWTAuth = jwtDecode(credentials.accessToken);
+            const jwtDecoded: JWTAuth = jwtDecode(credentials.accessToken);
             return {
               name: "",
               image: "",
-              id: user.user_id,
-              email: user.email,
+              id: jwtDecoded.user_id,
+              email: jwtDecoded.email,
               data: {
                 accessToken: credentials.accessToken,
                 refreshToken: credentials.refreshToken,
-                accessTokenExpiry: user.exp * 1000,
+                accessTokenExpiry: jwtDecoded.exp * 1000,
               },
             };
           }
@@ -71,15 +72,23 @@ const Auth = (req: NextApiRequest, res: NextApiResponse): void =>
           return token;
         }
 
-        // TODO: РЕФРЕШ ТОКЕНА
-        // try {
-        //   const response = await ServiceIdentity.emailSignInRefresh({
-        //     refreshToken: token.refreshToken,
-        //   });
-        //   console.log({ response: response.data });
-        // } catch (error) {
-        //   console.log({ error });
-        // }
+        try {
+          const { data } = await ServiceIdentity.emailSignInRefresh({
+            refreshToken: token.refreshToken,
+          });
+          const jwtDecoded: JWTAuth = jwtDecode(data.accessToken);
+          token.accessToken = data.accessToken;
+          token.refreshToken = data.refreshToken;
+          token.accessTokenExpiry = jwtDecoded.exp * 1000;
+          token.user = {
+            name: "",
+            image: "",
+            id: jwtDecoded.user_id,
+            email: jwtDecoded.email,
+          };
+        } catch (error) {
+          return null;
+        }
 
         return token;
       },
