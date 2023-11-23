@@ -13,11 +13,8 @@ import {
 import { API_VERSION } from "@/constants/API_VERSION";
 
 const {
-  publicRuntimeConfig: { BASE_URL, GATEWAY_URL },
+  serverRuntimeConfig: { GATEWAY_URL },
 } = getConfig();
-
-// eslint-disable-next-line no-console
-console.log({ GATEWAY_URL, BASE_URL, process: process.env });
 
 export class ServiceIdentity extends ServiceBase {
   protected static TAG_SERVICE = "/identity";

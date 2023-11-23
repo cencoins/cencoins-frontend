@@ -12,14 +12,6 @@ import { useEffect, useState } from "react";
 import AOS from "aos";
 import getTheme from "@/theme";
 import { RefreshTokenHandler } from "@/components/RefreshTokenHandler/RefreshTokenHandler";
-import getConfig from "next/config";
-
-const {
-  publicRuntimeConfig: { BASE_URL, GATEWAY_URL },
-} = getConfig();
-
-// eslint-disable-next-line no-console
-console.log({ GATEWAY_URL, BASE_URL, process: process.env });
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
