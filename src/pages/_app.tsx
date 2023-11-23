@@ -23,6 +23,7 @@ export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
+// eslint-disable-next-line no-console
 console.log({ config });
 
 export default function App(props: MyAppProps) {
