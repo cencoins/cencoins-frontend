@@ -1,12 +1,12 @@
-import { ServiceIdentity } from "@/service/ServiceIdentity/ServiceIdentity";
+// import { ServiceIdentity } from "@/service/ServiceIdentity/ServiceIdentity";
 import { NextApiRequest, NextApiResponse } from "next";
 import NextAuth, { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import getConfig from "next/config";
+// import CredentialsProvider from "next-auth/providers/credentials";
+// import getConfig from "next/config";
 
-const {
-  serverRuntimeConfig: { NEXTAUTH_SECRET },
-} = getConfig();
+// const {
+//   serverRuntimeConfig: { NEXTAUTH_SECRET },
+// } = getConfig();
 
 const Auth = (req: NextApiRequest, res: NextApiResponse): void =>
   NextAuth(req, res, {
