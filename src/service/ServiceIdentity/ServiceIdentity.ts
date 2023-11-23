@@ -30,7 +30,7 @@ export class ServiceIdentity extends ServiceBase {
   ): AxiosPromise<EmailSignUpValidateResponse> {
     return this.post<EmailSignUpValidateResponse>("/signup/validate", body, {
       ...config,
-      baseURL: GATEWAY_URL,
+      baseURL: "http://api-gateway-service.k8s.local",
     });
   }
 
@@ -40,7 +40,7 @@ export class ServiceIdentity extends ServiceBase {
   ): AxiosPromise<void> {
     return this.post<void>("/signup", body, {
       ...config,
-      baseURL: GATEWAY_URL,
+      baseURL: "http://api-gateway-service.k8s.local",
     });
   }
 
@@ -50,7 +50,7 @@ export class ServiceIdentity extends ServiceBase {
   ): AxiosPromise<EmailSignInResponse> {
     return this.post<EmailSignInResponse>("/signin", body, {
       ...config,
-      baseURL: GATEWAY_URL,
+      baseURL: "http://api-gateway-service.k8s.local",
     });
   }
 
@@ -60,7 +60,7 @@ export class ServiceIdentity extends ServiceBase {
   ): AxiosPromise<EmailSignInRefreshResponse> {
     return this.post<EmailSignInRefreshResponse>("/signin/refresh", body, {
       ...config,
-      baseURL: GATEWAY_URL,
+      baseURL: "http://api-gateway-service.k8s.local",
     });
   }
 }
