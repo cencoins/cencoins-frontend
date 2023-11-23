@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "ENV_FILE=develop next dev",
     "build": "next build",
-    "start": "ENV_FILE=production next start",
+    "start": "next start",
+    "build:prod": "ENV_FILE=production next build",
     "lint": "next lint",
     "tsc": "tsc --noEmit"
   },
