@@ -1,4 +1,5 @@
 import { ServiceIdentity } from "@/service/ServiceIdentity/ServiceIdentity";
+import { isAxiosError } from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -9,8 +10,11 @@ export default async function handler(
     const response = await ServiceIdentity.emailSignUp(req.body);
     return res.send(response.data);
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log({ error });
-    return res.status(500).end();
+    if (isAxiosError(error)) {
+      // @ts-ignore
+      return res.status(error?.response?.status).send(error?.response?.data);
+    } else {
+      return res.status(500).end();
+    }
   }
 }

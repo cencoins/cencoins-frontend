@@ -4,26 +4,23 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm pkg delete scripts.prepare
 RUN npm ci --legacy-peer-deps
-
+#
 FROM node:19-bullseye AS builder
 WORKDIR /app
 
 ENV NODE_ENV production
+ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-ENV NEXT_TELEMETRY_DISABLED 1
-ENV ENV_FILE production
-
-RUN npm run build:prod
-
+RUN npm run build
+#
 FROM node:19-bullseye AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
-ENV ENV_FILE production
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/node_modules ./node_modules
@@ -36,4 +33,4 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start"]

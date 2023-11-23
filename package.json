@@ -6,8 +6,6 @@
     "dev": "ENV_FILE=develop next dev",
     "build": "next build",
     "start": "next start",
-    "build:prod": "ENV_FILE=production next build",
-    "start:prod": "ENV_FILE=production next start",
     "lint": "next lint",
     "tsc": "tsc --noEmit"
   },
