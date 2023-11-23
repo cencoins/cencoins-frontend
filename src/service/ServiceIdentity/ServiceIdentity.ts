@@ -16,6 +16,9 @@ const {
   serverRuntimeConfig: { GATEWAY_URL },
 } = getConfig();
 
+// eslint-disable-next-line no-console
+console.log({ GATEWAY_URL });
+
 export class ServiceIdentity extends ServiceBase {
   protected static TAG_SERVICE = "/identity";
   protected static API_VERSION = "gw/" + API_VERSION.V1;

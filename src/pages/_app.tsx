@@ -12,9 +12,6 @@ import { useEffect, useState } from "react";
 import AOS from "aos";
 import getTheme from "@/theme";
 import { RefreshTokenHandler } from "@/components/RefreshTokenHandler/RefreshTokenHandler";
-import getConfig from "next/config";
-
-const config = getConfig();
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -22,9 +19,6 @@ const clientSideEmotionCache = createEmotionCache();
 export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
-
-// eslint-disable-next-line no-console
-console.log({ config });
 
 export default function App(props: MyAppProps) {
   const {
