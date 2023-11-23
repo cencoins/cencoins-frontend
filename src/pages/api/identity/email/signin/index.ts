@@ -11,8 +11,9 @@ export default async function handler(
     return res.send(response.data);
   } catch (error) {
     if (isAxiosError(error)) {
+      console.log({ error });
       // @ts-ignore
-      return res.status(error?.response?.status).send(error?.response?.data);
+      return res.status(500).send();
     } else {
       return res.status(500).end();
     }
