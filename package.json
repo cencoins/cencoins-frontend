@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "ENV_FILE=develop next dev",
+    "dev": "ENV_FILE=development next dev",
     "build": "ENV_FILE=production next build",
     "start": "ENV_FILE=production next start",
     "lint": "next lint",

@@ -9,6 +9,7 @@ FROM node:19-bullseye AS builder
 WORKDIR /app
 
 ENV NODE_ENV production
+ENV ENV_FILE production
 ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY --from=deps /app/node_modules ./node_modules
@@ -20,13 +21,13 @@ FROM node:19-bullseye AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
+ENV ENV_FILE production
 ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/package-lock.json ./package-lock.json
-COPY --from=builder /app/.env.production ./.env.production
 COPY --from=builder /app/.next ./.next
 
 EXPOSE 3000
