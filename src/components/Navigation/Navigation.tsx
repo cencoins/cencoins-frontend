@@ -1,62 +1,74 @@
+import { useState } from "react";
 import {
   AppBar,
   Box,
-  Button,
-  IconButton,
-  Toolbar,
-  Typography,
+  Collapse,
+  useMediaQuery,
+  useScrollTrigger,
+  useTheme,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import { toggleModalSignIn } from "@/stores/modals/ModalSignIn.effector";
-import { toggleModalSignUp } from "@/stores/modals/ModalSignUp.effector";
-import ThemeModeToggler from "../ThemeModeToggler/ThemeModeToggler";
+import Container from "@/components/Container/Container";
+import NavigationTop from "./NavigationTop";
+import NavigationBar from "./NavigationBar";
+import MobileMenu from "./MobileMenu";
+import navigationPages from "./navigationPages";
 
-export const Navigation: React.FC = () => {
+interface Props {
+  children: React.ReactNode;
+  colorInvert?: boolean;
+  bgcolor?: string;
+}
+
+export const Navigation: React.FC<Props> = ({
+  colorInvert = false,
+  bgcolor = "transparent",
+}) => {
+  const theme = useTheme();
+  const [openMobileMenu, setOpenMobileMenu] = useState(false);
+  const isMd = useMediaQuery(theme.breakpoints.up("md"), {
+    defaultMatches: true,
+  });
+
+  const handleMobileMenuClick = (): void => {
+    setOpenMobileMenu(!openMobileMenu);
+  };
+
+  const open = isMd ? false : openMobileMenu;
+
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 38,
+  });
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            CENCOINS
-          </Typography>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <Button sx={{ color: "#fff" }} onClick={() => toggleModalSignIn()}>
-              Log In
-            </Button>
-            <Button sx={{ color: "#fff" }} onClick={() => toggleModalSignUp()}>
-              Sign up
-            </Button>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box marginLeft={3}>
-            <ThemeModeToggler />
-          </Box>
-        </Toolbar>
+    <>
+      <Box position={"relative"} zIndex={theme.zIndex.appBar}>
+        <Container paddingTop={"8px !important"} paddingBottom={"0 !important"}>
+          <Box flexGrow={1} />
+          <NavigationTop colorInvert={colorInvert} />
+        </Container>
+      </Box>
+      <AppBar
+        position={"sticky"}
+        sx={{
+          top: 0,
+          backgroundColor: trigger ? theme.palette.background.paper : bgcolor,
+        }}
+        elevation={trigger ? 1 : 0}
+      >
+        <Container paddingY={1}>
+          <NavigationBar
+            handleMobileMenuClick={handleMobileMenuClick}
+            pages={navigationPages}
+            colorInvert={trigger ? false : colorInvert}
+          />
+        </Container>
       </AppBar>
-    </Box>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <Container paddingY={0}>
+          <MobileMenu pages={navigationPages}></MobileMenu>
+        </Container>
+      </Collapse>
+    </>
   );
 };

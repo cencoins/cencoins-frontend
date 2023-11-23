@@ -9,8 +9,8 @@ import Document, {
 } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
 import { AppType } from "next/app";
-import { MyAppProps } from "./_app";
-import createEmotionCache from "@/components/createEmotionCache";
+import { MyAppProps } from "@/pages/_app";
+import createEmotionCache from "@/theme/createEmotionCache";
 import { light } from "@/theme/palette";
 
 interface MyDocumentProps extends DocumentProps {

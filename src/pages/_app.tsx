@@ -4,7 +4,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import type { AppProps } from "next/app";
 import { CacheProvider } from "@emotion/react";
 import Head from "next/head";
-import createEmotionCache from "@/components/createEmotionCache";
+import createEmotionCache from "@/theme/createEmotionCache";
 import { Layout } from "@/components/Layout/Layout";
 import { SessionProvider } from "next-auth/react";
 import { useDarkMode } from "@/hooks/useDarkMode";

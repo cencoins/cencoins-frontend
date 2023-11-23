@@ -9,9 +9,7 @@ export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <Paper elevation={0}>
       <Navigation />
-      <Box component="main" sx={{ p: 3 }}>
-        {children}
-      </Box>
+      <Box component="main">{children}</Box>
       <ModalSignIn />
       <ModalSignUp />
     </Paper>
