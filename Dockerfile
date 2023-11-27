@@ -30,6 +30,7 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/next.config.js ./next.config.js
 COPY --from=builder /app/entrypoint.sh ./entrypoint.sh
 COPY --from=builder /app/.env.production ./.env.production
+COPY --from=builder /app/next-i18next.config.js ./next-i18next.config.js
 
 # RUN apk add --no-cache --upgrade bash
 RUN ["chmod", "+x", "./entrypoint.sh"]
