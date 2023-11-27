@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import AOS from "aos";
 import getTheme from "@/theme";
 import { RefreshTokenHandler } from "@/components/RefreshTokenHandler/RefreshTokenHandler";
+import { appWithTranslation } from "next-i18next";
+import nextI18NextConfig from "../../next-i18next.config.js";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -20,7 +22,7 @@ export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
-export default function App(props: MyAppProps) {
+const App = (props: MyAppProps) => {
   const {
     Component,
     emotionCache = clientSideEmotionCache,
@@ -52,7 +54,9 @@ export default function App(props: MyAppProps) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <SessionProvider refetchInterval={interval} session={session}>
         <ThemeProvider theme={getTheme(themeMode, themeToggler)}>
@@ -66,4 +70,6 @@ export default function App(props: MyAppProps) {
       </SessionProvider>
     </CacheProvider>
   );
-}
+};
+
+export default appWithTranslation(App, nextI18NextConfig);

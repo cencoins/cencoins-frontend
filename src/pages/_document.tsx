@@ -12,14 +12,20 @@ import { AppType } from "next/app";
 import { MyAppProps } from "@/pages/_app";
 import createEmotionCache from "@/theme/createEmotionCache";
 import { light } from "@/theme/palette";
+import i18nextConfig from "../../next-i18next.config";
 
 interface MyDocumentProps extends DocumentProps {
   emotionStyleTags: JSX.Element[];
 }
 
-export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
+export default function MyDocument({
+  emotionStyleTags,
+  __NEXT_DATA__,
+}: MyDocumentProps) {
+  const currentLocale =
+    __NEXT_DATA__.locale ?? i18nextConfig.i18n.defaultLocale;
   return (
-    <Html lang="en">
+    <Html lang={currentLocale}>
       <Head>
         <meta charSet="utf-8" />
         {/* PWA primary color */}

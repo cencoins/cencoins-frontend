@@ -12,9 +12,11 @@ import {
 } from "@/stores/modals/ModalSignIn.effector";
 import { useUnit } from "effector-react";
 import { Typography } from "@mui/material";
+import { useTranslation } from "next-i18next";
 
 export const ModalSignIn: React.FC = () => {
   const modalSignIn = useUnit($modalSignIn);
+  const { t } = useTranslation("common");
 
   return (
     <Dialog
@@ -22,7 +24,7 @@ export const ModalSignIn: React.FC = () => {
       onClose={() => toggleModalSignIn()}
       maxWidth="xs"
     >
-      <DialogTitle>Log In</DialogTitle>
+      <DialogTitle>{t("Войти")}</DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
@@ -63,7 +65,7 @@ export const ModalSignIn: React.FC = () => {
             onSubmitModalSignIn();
           }}
         >
-          Log in
+          {t("Войти")}
         </Button>
       </DialogActions>
     </Dialog>

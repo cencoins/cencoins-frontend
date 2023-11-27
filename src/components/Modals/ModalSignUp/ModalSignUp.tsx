@@ -12,9 +12,11 @@ import {
   toggleModalSignUp,
 } from "@/stores/modals/ModalSignUp.effector";
 import { Typography } from "@mui/material";
+import { useTranslation } from "next-i18next";
 
 export const ModalSignUp: React.FC = () => {
   const modalSignUp = useUnit($modalSignUp);
+  const { t } = useTranslation("common");
 
   return (
     <Dialog
@@ -22,7 +24,7 @@ export const ModalSignUp: React.FC = () => {
       onClose={() => toggleModalSignUp()}
       maxWidth="xs"
     >
-      <DialogTitle>Sign Up</DialogTitle>
+      <DialogTitle>{t("Зарегистрироваться")}</DialogTitle>
       <DialogContent>
         <TextField
           required
@@ -81,7 +83,7 @@ export const ModalSignUp: React.FC = () => {
             onSubmitModalSignUp();
           }}
         >
-          Sign Up
+          {t("Зарегистрироваться")}
         </Button>
       </DialogActions>
     </Dialog>

@@ -1,16 +1,18 @@
-/* eslint-disable no-console */
 import Container from "@/components/Container/Container";
 import { Box } from "@mui/material";
+import { GetStaticProps } from "next";
 import Head from "next/head";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { LANGUAGES } from "@/constants/LANGUAGES";
+import { DICTIONARY } from "@/constants/DICTIONARY";
 
-export default function Home() {
+interface Props {}
+
+const Home = () => {
   return (
     <>
       <Head>
         <title>Cencoins</title>
-        <meta name="description" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container>
         <Box height={1500}>
@@ -19,4 +21,14 @@ export default function Home() {
       </Container>
     </>
   );
-}
+};
+
+export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? LANGUAGES.RU, [
+      DICTIONARY.COMMON,
+    ])),
+  },
+});
+
+export default Home;
