@@ -7,6 +7,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { LANGUAGES } from "@/constants/LANGUAGES";
+import { useMemo } from "react";
 
 interface Props {
   colorInvert?: boolean;
@@ -25,49 +26,57 @@ const NavigationTop = ({ colorInvert = false }: Props): JSX.Element => {
     router.push({ pathname, query }, asPath, { locale: newLocale });
   };
 
-  return (
-    <Box display="flex" justifyContent="flex-end" alignItems="center">
-      {session.status === "authenticated" ? (
+  const authInfo = useMemo(() => {
+    if (session.status === "loading") {
+      return null;
+    }
+
+    return session.status === "authenticated" ? (
+      <Box marginRight={{ xs: 1, sm: 2 }}>
+        <Link
+          underline="none"
+          component="a"
+          style={{ cursor: "pointer" }}
+          onClick={() => signOut()}
+          color={colorInvert ? "common.white" : "text.primary"}
+          sx={{ display: "flex", alignItems: "center" }}
+        >
+          {t("Выйти")} {session.data.user?.email}
+        </Link>
+      </Box>
+    ) : (
+      <>
         <Box marginRight={{ xs: 1, sm: 2 }}>
           <Link
             underline="none"
             component="a"
             style={{ cursor: "pointer" }}
-            onClick={() => signOut()}
+            onClick={() => toggleModalSignIn()}
             color={colorInvert ? "common.white" : "text.primary"}
             sx={{ display: "flex", alignItems: "center" }}
           >
-            {t("Выйти")} {session.data.user?.email}
+            {t("Войти")}
           </Link>
         </Box>
-      ) : (
-        <>
-          <Box marginRight={{ xs: 1, sm: 2 }}>
-            <Link
-              underline="none"
-              component="a"
-              style={{ cursor: "pointer" }}
-              onClick={() => toggleModalSignIn()}
-              color={colorInvert ? "common.white" : "text.primary"}
-              sx={{ display: "flex", alignItems: "center" }}
-            >
-              {t("Войти")}
-            </Link>
-          </Box>
-          <Box marginRight={{ xs: 1, sm: 2 }}>
-            <Link
-              underline="none"
-              component="a"
-              style={{ cursor: "pointer" }}
-              onClick={() => toggleModalSignUp()}
-              color={colorInvert ? "common.white" : "text.primary"}
-              sx={{ display: "flex", alignItems: "center" }}
-            >
-              {t("Зарегистрироваться")}
-            </Link>
-          </Box>
-        </>
-      )}
+        <Box marginRight={{ xs: 1, sm: 2 }}>
+          <Link
+            underline="none"
+            component="a"
+            style={{ cursor: "pointer" }}
+            onClick={() => toggleModalSignUp()}
+            color={colorInvert ? "common.white" : "text.primary"}
+            sx={{ display: "flex", alignItems: "center" }}
+          >
+            {t("Зарегистрироваться")}
+          </Link>
+        </Box>
+      </>
+    );
+  }, [colorInvert, session.data?.user?.email, session.status, t]);
+
+  return (
+    <Box display="flex" justifyContent="flex-end" alignItems="center">
+      {authInfo}
       <Box marginRight={{ xs: 1, sm: 2 }}>
         <Link
           underline="none"
