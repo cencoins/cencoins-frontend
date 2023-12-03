@@ -2,7 +2,6 @@ import {
   HubConnection,
   HubConnectionBuilder,
   LogLevel,
-  HttpTransportType,
 } from "@microsoft/signalr";
 
 export default class ServiceSocket {
