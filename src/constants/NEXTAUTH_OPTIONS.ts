@@ -91,6 +91,7 @@ export const nextAuthOptions = {
       return token;
     },
   },
+  useSecureCookies: false,
   pages: {},
   secret: NEXTAUTH_SECRET,
 } as NextAuthOptions;

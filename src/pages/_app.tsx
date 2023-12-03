@@ -6,7 +6,7 @@ import { CacheProvider } from "@emotion/react";
 import Head from "next/head";
 import createEmotionCache from "@/theme/createEmotionCache";
 import { Layout } from "@/components/Layout/Layout";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, getSession } from "next-auth/react";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useEffect, useState } from "react";
 import AOS from "aos";
@@ -16,8 +16,6 @@ import { appWithTranslation } from "next-i18next";
 import { useWebsocket } from "@/hooks/useWebsocket";
 import nextI18NextConfig from "../../next-i18next.config.js";
 import { Session } from "next-auth";
-import { getServerSession } from "next-auth";
-import { nextAuthOptions } from "@/constants/NEXTAUTH_OPTIONS";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -86,12 +84,7 @@ const App = (props: MyAppProps) => {
 };
 
 App.getInitialProps = async (context: AppContext) => {
-  const session = await getServerSession(
-    // @ts-ignore
-    context.ctx.req,
-    context.ctx.res,
-    nextAuthOptions,
-  );
+  const session = await getSession(context.ctx);
 
   // eslint-disable-next-line no-console
   console.log({ session }, "GET TOKEN");
