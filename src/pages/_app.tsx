@@ -1,8 +1,7 @@
 import { EmotionCache } from "@emotion/cache";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import type { AppContext, AppInitialProps, AppProps } from "next/app";
-import NextApp from "next/app";
+import type { AppContext, AppProps } from "next/app";
 import { CacheProvider } from "@emotion/react";
 import Head from "next/head";
 import createEmotionCache from "@/theme/createEmotionCache";
@@ -14,15 +13,8 @@ import AOS from "aos";
 import getTheme from "@/theme";
 import { RefreshTokenHandler } from "@/components/RefreshTokenHandler/RefreshTokenHandler";
 import { appWithTranslation } from "next-i18next";
-import { Session, getServerSession } from "next-auth";
+import { Session } from "next-auth";
 import nextI18NextConfig from "../../next-i18next.config.js";
-import { getToken } from "next-auth/jwt";
-import getConfig from "next/config";
-import { nextAuthOptions } from "@/constants/NEXTAUTH_OPTIONS";
-
-const {
-  serverRuntimeConfig: { NEXTAUTH_SECRET },
-} = getConfig();
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -90,28 +82,9 @@ const App = (props: MyAppProps) => {
 
 App.getInitialProps = async (context: AppContext) => {
   const session = await getSession(context.ctx);
-  const token = await getToken({
-    // @ts-ignore
-    req: context.ctx.req,
-    secret: NEXTAUTH_SECRET,
-  });
-  const { pageProps, ...initialProps } = (await NextApp.getInitialProps(
-    context,
-  )) as AppInitialProps<MyAppProps>;
-
-  const serverSession = await getServerSession(
-    context.ctx.req as any,
-    context.ctx.res as any,
-    nextAuthOptions,
-  );
-  // eslint-disable-next-line no-console
-  console.log({ token, session, serverSession });
-
   return {
-    ...initialProps,
     pageProps: {
-      ...pageProps,
-      isSignedIn: Boolean(serverSession),
+      isSignedIn: Boolean(session),
     },
   };
 };
