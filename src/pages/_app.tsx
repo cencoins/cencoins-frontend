@@ -23,18 +23,22 @@ const clientSideEmotionCache = createEmotionCache();
 export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
   session?: Session;
+  pageProps: {
+    session?: Session;
+    isSignedIn?: boolean;
+  };
 }
 
 const App = (props: MyAppProps) => {
   const {
     Component,
     emotionCache = clientSideEmotionCache,
-    pageProps: { session, ...pageProps },
+    pageProps: { session, isSignedIn, ...pageProps },
     session: sessionTwo,
   } = props;
 
   // eslint-disable-next-line no-console
-  console.log({ session, sessionTwo, props: props.pageProps });
+  console.log({ session, sessionTwo, props: props.pageProps, isSignedIn });
   const [interval, setInterval] = useState(0);
 
   useWebsocket();
@@ -91,7 +95,9 @@ App.getInitialProps = async (context: AppContext) => {
 
   return {
     session,
-    isSignedIn: Boolean(session),
+    pageProps: {
+      isSignedIn: Boolean(session),
+    },
   };
 };
 
