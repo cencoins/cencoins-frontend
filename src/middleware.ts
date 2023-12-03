@@ -1,8 +1,7 @@
-/* eslint-disable no-console */
 import { LANGUAGES } from "@/constants/LANGUAGES";
 import { NextRequest, NextResponse } from "next/server";
-// import { ServiceLocation } from "./service/ServiceLocation/ServiceLocation";
-// import { API_VERSION } from "./constants/API_VERSION";
+import { GetLocationResponse } from "./service/ServiceLocation/ServiceLocation.dto";
+import { checkLocaleIsAvailable } from "./utils/checkLocaleIsAvailable";
 
 const PUBLIC_FILE = /\.(.*)$/;
 
@@ -16,30 +15,41 @@ export async function middleware(req: NextRequest) {
   }
 
   if (req.nextUrl.locale === "default") {
-    try {
-      // console.log({ req });
-      const forwarded = req.headers.get("x-forwarded-for");
-      const ip = forwarded ? forwarded.split(/, /)[0] : undefined;
-      console.log({ ip });
-      // const { GATEWAY_URL } = process.env;
-      // const response = await fetch(
-      //   `${GATEWAY_URL}/gw/${API_VERSION.V1}/location/10.100.1.1`,
-      //   { method: "GET" },
-      // );
-      // console.log({ response });
-    } catch (error) {
-      console.log({ error });
+    let locale = req.cookies.get("NEXT_LOCALE")?.value || LANGUAGES.RU;
+    let locationObject;
+    const forwarded = req.headers.get("x-forwarded-for");
+    const ip = forwarded ? forwarded.split(/, /)[0] : undefined;
+    // const myIp = "192.168.142.192";
+
+    if (ip) {
+      try {
+        const { GATEWAY_URL } = process.env;
+        const response = await fetch(`${GATEWAY_URL}/location/${ip}`, {
+          method: "GET",
+        });
+        const json: GetLocationResponse = await response.json();
+        locationObject = json;
+        const [currentLanguage] = json.lang.split("_");
+        if (checkLocaleIsAvailable(currentLanguage)) {
+          locale = currentLanguage;
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log("get location error", { error });
+      }
     }
-    // console.log({ response });
 
-    const locale = req.cookies.get("NEXT_LOCALE")?.value || LANGUAGES.RU;
-
-    return NextResponse.redirect(
+    const response = NextResponse.redirect(
       new URL(
         `/${locale}${req.nextUrl.pathname}${req.nextUrl.search}`,
         req.url,
       ),
     );
+    response.cookies.set("NEXT_LOCALE", locale);
+    if (locationObject) {
+      response.cookies.set("location", JSON.stringify(locationObject));
+    }
+    return response;
   }
 }
 
