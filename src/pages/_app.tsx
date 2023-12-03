@@ -38,11 +38,9 @@ const App = (props: MyAppProps) => {
   const {
     Component,
     emotionCache = clientSideEmotionCache,
-    pageProps: { session, isSignedIn, ...pageProps },
+    pageProps: { session, ...pageProps },
   } = props;
 
-  // eslint-disable-next-line no-console
-  console.log({ session, isSignedIn });
   const [interval, setInterval] = useState(0);
 
   useWebsocket();
@@ -95,6 +93,9 @@ App.getInitialProps = async (context: AppContext) => {
     req: context.ctx.req,
     secret: NEXTAUTH_SECRET,
   });
+
+  // eslint-disable-next-line no-console
+  console.log({ token }, "GET TOKEN");
 
   return {
     pageProps: {
