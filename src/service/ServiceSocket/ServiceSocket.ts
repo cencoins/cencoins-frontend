@@ -16,7 +16,7 @@ export default class ServiceSocket {
         accessTokenFactory: () => token,
       })
       .withAutomaticReconnect()
-      .configureLogging(LogLevel.Debug)
+      .configureLogging(LogLevel.Information)
       .build();
 
     await this.startConnect();
