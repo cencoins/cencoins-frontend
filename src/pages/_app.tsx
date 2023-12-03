@@ -81,13 +81,9 @@ const App = (props: MyAppProps) => {
 };
 
 App.getInitialProps = async (context: AppContext) => {
-  let session = null;
-
-  try {
-    session = await getSession(context.ctx);
-  } catch (error: any) {
-    throw new Error(error);
-  }
+  let session = await getSession(context.ctx);
+  // eslint-disable-next-line no-console
+  console.log({ session });
   return {
     pageProps: {
       isSignedIn: Boolean(session),
