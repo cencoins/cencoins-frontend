@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { Navigation } from "@/components/Navigation/Navigation";
 import dynamic from "next/dynamic";
+import { useWebsocket } from "@/hooks/useWebsocket";
 
 const ModalSignIn = dynamic(
   () =>
@@ -21,6 +22,8 @@ const ModalSignUp = dynamic(
 );
 
 export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
+  useWebsocket();
+
   return (
     <Paper elevation={0}>
       <Navigation />

@@ -2,17 +2,20 @@ import {
   HubConnection,
   HubConnectionBuilder,
   LogLevel,
+  HttpTransportType,
 } from "@microsoft/signalr";
 
 export default class ServiceSocket {
   public static connection: Nullable<HubConnection> = null;
   public static isConnected: boolean = false;
 
-  public static async connect(url: string) {
+  public static async connect(url: string, token: string) {
     const connectionBuilder = new HubConnectionBuilder();
 
     this.connection = connectionBuilder
-      .withUrl(url)
+      .withUrl(url, {
+        accessTokenFactory: () => token,
+      })
       .withAutomaticReconnect()
       .configureLogging(LogLevel.Information)
       .build();
