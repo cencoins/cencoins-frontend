@@ -3,7 +3,7 @@ import { camelCaseKeysDeep } from "@/utils/camelCase";
 import getConfig from "next/config";
 
 const {
-  publicRuntimeConfig: { BASE_URL },
+  serverRuntimeConfig: { BASE_URL },
 } = getConfig();
 
 export const createAxiosInstance = () => {
@@ -19,7 +19,7 @@ export const createAxiosInstance = () => {
       ...config,
       metadata: { startTime: new Date() },
     }),
-    (error) => Promise.reject(error)
+    (error) => Promise.reject(error),
   );
 
   instance.interceptors.response.use(
@@ -29,7 +29,7 @@ export const createAxiosInstance = () => {
     },
     (error) => {
       return Promise.reject(error);
-    }
+    },
   );
 
   return instance;

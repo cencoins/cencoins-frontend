@@ -6,10 +6,9 @@ const nextConfig = {
   swcMinify: true,
   poweredByHeader: false,
   generateEtags: false,
-  publicRuntimeConfig: {
-    BASE_URL: process.env.BASE_URL,
-  },
+  publicRuntimeConfig: {},
   serverRuntimeConfig: {
+    BASE_URL: process.env.BASE_URL,
     GATEWAY_URL: process.env.GATEWAY_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   },
