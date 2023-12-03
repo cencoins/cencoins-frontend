@@ -6,7 +6,7 @@ import { CacheProvider } from "@emotion/react";
 import Head from "next/head";
 import createEmotionCache from "@/theme/createEmotionCache";
 import { Layout } from "@/components/Layout/Layout";
-import { SessionProvider, getSession } from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useEffect, useState } from "react";
 import AOS from "aos";
@@ -16,13 +16,18 @@ import { appWithTranslation } from "next-i18next";
 import { useWebsocket } from "@/hooks/useWebsocket";
 import nextI18NextConfig from "../../next-i18next.config.js";
 import { Session } from "next-auth";
+import { getToken } from "next-auth/jwt";
+import getConfig from "next/config.js";
+
+const {
+  publicRuntimeConfig: { NEXTAUTH_SECRET },
+} = getConfig();
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
-  session?: Session;
   pageProps: {
     session?: Session;
     isSignedIn?: boolean;
@@ -34,11 +39,10 @@ const App = (props: MyAppProps) => {
     Component,
     emotionCache = clientSideEmotionCache,
     pageProps: { session, isSignedIn, ...pageProps },
-    session: sessionTwo,
   } = props;
 
   // eslint-disable-next-line no-console
-  console.log({ session, sessionTwo, props: props.pageProps, isSignedIn });
+  console.log({ session, isSignedIn });
   const [interval, setInterval] = useState(0);
 
   useWebsocket();
@@ -71,10 +75,7 @@ const App = (props: MyAppProps) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SessionProvider
-        refetchInterval={interval}
-        session={sessionTwo || session}
-      >
+      <SessionProvider refetchInterval={interval} session={session}>
         <ThemeProvider theme={getTheme(themeMode, themeToggler)}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
@@ -89,14 +90,15 @@ const App = (props: MyAppProps) => {
 };
 
 App.getInitialProps = async (context: AppContext) => {
-  const session = await getSession(context.ctx);
-  // eslint-disable-next-line no-console
-  console.log({ session });
+  const token = await getToken({
+    // @ts-ignore
+    req: context.ctx.req,
+    secret: NEXTAUTH_SECRET,
+  });
 
   return {
-    session,
     pageProps: {
-      isSignedIn: Boolean(session),
+      isSignedIn: Boolean(token),
     },
   };
 };
