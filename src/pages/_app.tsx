@@ -29,8 +29,8 @@ const App = (props: MyAppProps) => {
   const {
     Component,
     emotionCache = clientSideEmotionCache,
-    pageProps: { ...pageProps },
-    session,
+    pageProps: { session, ...pageProps },
+    // session,
   } = props;
   const [interval, setInterval] = useState(0);
 
@@ -80,6 +80,8 @@ const App = (props: MyAppProps) => {
 
 App.getInitialProps = async (context: AppContext) => {
   const session = await getSession(context.ctx);
+  // eslint-disable-next-line no-console
+  console.log({ session });
   return {
     session: session,
   };
