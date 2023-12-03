@@ -16,12 +16,8 @@ import { appWithTranslation } from "next-i18next";
 import { useWebsocket } from "@/hooks/useWebsocket";
 import nextI18NextConfig from "../../next-i18next.config.js";
 import { Session } from "next-auth";
-import { getToken } from "next-auth/jwt";
-import getConfig from "next/config.js";
-
-const {
-  publicRuntimeConfig: { NEXTAUTH_SECRET },
-} = getConfig();
+import { getServerSession } from "next-auth";
+import { nextAuthOptions } from "@/constants/NEXTAUTH_OPTIONS";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -90,18 +86,19 @@ const App = (props: MyAppProps) => {
 };
 
 App.getInitialProps = async (context: AppContext) => {
-  const token = await getToken({
+  const session = await getServerSession(
     // @ts-ignore
-    req: context.ctx.req,
-    secret: NEXTAUTH_SECRET,
-  });
+    context.ctx.req,
+    context.ctx.res,
+    nextAuthOptions,
+  );
 
   // eslint-disable-next-line no-console
-  console.log({ token }, "GET TOKEN");
+  console.log({ session }, "GET TOKEN");
 
   return {
     pageProps: {
-      isSignedIn: Boolean(token),
+      isSignedIn: Boolean(session),
     },
   };
 };
