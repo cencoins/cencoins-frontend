@@ -12,10 +12,21 @@ export abstract class ServiceBase {
     return `/${this.API_VERSION}${this.TAG_SERVICE}${url}`;
   }
 
+  public static setAuthToken(token: Nullable<string>): void {
+    if (!token) {
+      delete this.api.defaults.headers.common.authorization;
+      return;
+    }
+    this.api.defaults.headers.common = {
+      ...this.api.defaults.headers.common,
+      authorization: `Bearer ${token}`,
+    };
+  }
+
   protected static get<T, P = Record<string, unknown>>(
     url: string,
     data?: P,
-    options?: AxiosRequestConfig
+    options?: AxiosRequestConfig,
   ): AxiosPromise<T> {
     let newUrl: string = url;
 
@@ -29,7 +40,7 @@ export abstract class ServiceBase {
   protected static post<T, P = Record<string, unknown> | unknown>(
     url: string,
     data?: Nullable<P>,
-    options?: AxiosRequestConfig
+    options?: AxiosRequestConfig,
   ): AxiosPromise<T> {
     return this.api.post(this.buildUrl(url), data, options);
   }
@@ -37,7 +48,7 @@ export abstract class ServiceBase {
   protected static put<T>(
     url: string,
     data?: Nullable<unknown>,
-    options?: AxiosRequestConfig
+    options?: AxiosRequestConfig,
   ): AxiosPromise<T> {
     return this.api.put(this.buildUrl(url), data, options);
   }
@@ -45,7 +56,7 @@ export abstract class ServiceBase {
   protected static patch<T>(
     url: string,
     data?: Nullable<unknown>,
-    options?: AxiosRequestConfig
+    options?: AxiosRequestConfig,
   ): AxiosPromise<T> {
     return this.api.patch(this.buildUrl(url), data, options);
   }
@@ -54,7 +65,7 @@ export abstract class ServiceBase {
     url: string,
     data?: Nullable<Record<string, unknown>>,
     options?: AxiosRequestConfig,
-    disableURLExtends?: boolean
+    disableURLExtends?: boolean,
   ): AxiosPromise<T> {
     let newUrl: string = url;
 
