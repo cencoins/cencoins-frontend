@@ -38,8 +38,10 @@ const App = (props: MyAppProps) => {
   const {
     Component,
     emotionCache = clientSideEmotionCache,
-    pageProps: { session, ...pageProps },
+    pageProps: { session, isSignedIn, ...pageProps },
   } = props;
+  // eslint-disable-next-line no-console
+  console.log({ isSignedIn });
 
   const [interval, setInterval] = useState(0);
 
