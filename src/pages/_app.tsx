@@ -15,14 +15,12 @@ import { RefreshTokenHandler } from "@/components/RefreshTokenHandler/RefreshTok
 import { appWithTranslation } from "next-i18next";
 import { useWebsocket } from "@/hooks/useWebsocket";
 import nextI18NextConfig from "../../next-i18next.config.js";
-import { Session } from "next-auth";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
-  session?: Session;
 }
 
 const App = (props: MyAppProps) => {
@@ -80,10 +78,11 @@ const App = (props: MyAppProps) => {
 
 App.getInitialProps = async (context: AppContext) => {
   const session = await getSession(context.ctx);
-  // eslint-disable-next-line no-console
-  console.log({ session });
+
   return {
-    session: session,
+    pageProps: {
+      session: session,
+    },
   };
 };
 
