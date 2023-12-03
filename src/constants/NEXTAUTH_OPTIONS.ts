@@ -96,4 +96,9 @@ export const nextAuthOptions = {
   pages: {},
   debug: true,
   secret: NEXTAUTH_SECRET,
+  logger: {
+    debug(code, metadata) {
+      console.log(code, metadata);
+    },
+  },
 } as NextAuthOptions;
