@@ -1,7 +1,7 @@
+import Head from "next/head";
 import Container from "@/components/Container/Container";
 import { Box } from "@mui/material";
-import { GetStaticProps } from "next";
-import Head from "next/head";
+import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { LANGUAGES } from "@/constants/LANGUAGES";
 import { DICTIONARY } from "@/constants/DICTIONARY";
@@ -23,12 +23,16 @@ const Home = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale ?? LANGUAGES.RU, [
-      DICTIONARY.COMMON,
-    ])),
-  },
-});
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  context,
+) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(context.locale ?? LANGUAGES.RU, [
+        DICTIONARY.COMMON,
+      ])),
+    },
+  };
+};
 
 export default Home;
