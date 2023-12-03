@@ -13,6 +13,7 @@ import AOS from "aos";
 import getTheme from "@/theme";
 import { RefreshTokenHandler } from "@/components/RefreshTokenHandler/RefreshTokenHandler";
 import { appWithTranslation } from "next-i18next";
+import { useWebsocket } from "@/hooks/useWebsocket";
 import nextI18NextConfig from "../../next-i18next.config.js";
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -29,6 +30,8 @@ const App = (props: MyAppProps) => {
     pageProps: { session, ...pageProps },
   } = props;
   const [interval, setInterval] = useState(0);
+
+  useWebsocket();
 
   useEffect(() => {
     // Remove the server-side injected CSS.

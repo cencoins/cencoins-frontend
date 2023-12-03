@@ -6,7 +6,9 @@ const nextConfig = {
   swcMinify: true,
   poweredByHeader: false,
   generateEtags: false,
-  publicRuntimeConfig: {},
+  publicRuntimeConfig: {
+    WEBSOCKET_URL: process.env.WEBSOCKET_URL,
+  },
   serverRuntimeConfig: {
     BASE_URL: process.env.BASE_URL,
     GATEWAY_URL: process.env.GATEWAY_URL,
