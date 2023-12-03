@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import { LANGUAGES } from "@/constants/LANGUAGES";
 import { NextRequest, NextResponse } from "next/server";
-import { ServiceLocation } from "./service/ServiceLocation/ServiceLocation";
-import { API_VERSION } from "./constants/API_VERSION";
+// import { ServiceLocation } from "./service/ServiceLocation/ServiceLocation";
+// import { API_VERSION } from "./constants/API_VERSION";
 
 const PUBLIC_FILE = /\.(.*)$/;
 
