@@ -20,9 +20,6 @@ const NavigationTop: React.FC<Props> = ({
   const router = useRouter();
   const { t, i18n } = useTranslation("common");
 
-  // eslint-disable-next-line no-console
-  console.log({ session });
-
   const changeTo = router.locale === LANGUAGES.RU ? LANGUAGES.EN : LANGUAGES.RU;
 
   const onToggleLanguageClick = (newLocale: string) => {

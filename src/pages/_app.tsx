@@ -15,12 +15,14 @@ import { RefreshTokenHandler } from "@/components/RefreshTokenHandler/RefreshTok
 import { appWithTranslation } from "next-i18next";
 import { useWebsocket } from "@/hooks/useWebsocket";
 import nextI18NextConfig from "../../next-i18next.config.js";
+import { Session } from "next-auth";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
+  session?: Session;
 }
 
 const App = (props: MyAppProps) => {
@@ -28,8 +30,11 @@ const App = (props: MyAppProps) => {
     Component,
     emotionCache = clientSideEmotionCache,
     pageProps: { session, ...pageProps },
-    // session,
+    session: sessionTwo,
   } = props;
+
+  // eslint-disable-next-line no-console
+  console.log({ session, sessionTwo });
   const [interval, setInterval] = useState(0);
 
   useWebsocket();
@@ -62,7 +67,10 @@ const App = (props: MyAppProps) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SessionProvider refetchInterval={interval} session={session}>
+      <SessionProvider
+        refetchInterval={interval}
+        session={sessionTwo || session}
+      >
         <ThemeProvider theme={getTheme(themeMode, themeToggler)}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
@@ -80,9 +88,7 @@ App.getInitialProps = async (context: AppContext) => {
   const session = await getSession(context.ctx);
 
   return {
-    pageProps: {
-      session: session,
-    },
+    session,
   };
 };
 
