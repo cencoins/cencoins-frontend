@@ -1,12 +1,12 @@
 import { EmotionCache } from "@emotion/cache";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import type { AppProps } from "next/app";
+import type { AppContext, AppProps } from "next/app";
 import { CacheProvider } from "@emotion/react";
 import Head from "next/head";
 import createEmotionCache from "@/theme/createEmotionCache";
 import { Layout } from "@/components/Layout/Layout";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, getSession } from "next-auth/react";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useEffect, useState } from "react";
 import AOS from "aos";
@@ -15,19 +15,22 @@ import { RefreshTokenHandler } from "@/components/RefreshTokenHandler/RefreshTok
 import { appWithTranslation } from "next-i18next";
 import { useWebsocket } from "@/hooks/useWebsocket";
 import nextI18NextConfig from "../../next-i18next.config.js";
+import { Session } from "next-auth";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
+  session?: Session;
 }
 
 const App = (props: MyAppProps) => {
   const {
     Component,
     emotionCache = clientSideEmotionCache,
-    pageProps: { session, ...pageProps },
+    pageProps: { ...pageProps },
+    session,
   } = props;
   const [interval, setInterval] = useState(0);
 
@@ -73,6 +76,13 @@ const App = (props: MyAppProps) => {
       </SessionProvider>
     </CacheProvider>
   );
+};
+
+App.getInitialProps = async (context: AppContext) => {
+  const session = await getSession(context.ctx);
+  return {
+    session: session,
+  };
 };
 
 export default appWithTranslation(App, nextI18NextConfig);

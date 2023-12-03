@@ -13,7 +13,9 @@ interface Props {
   colorInvert?: boolean;
 }
 
-const NavigationTop = ({ colorInvert = false }: Props): JSX.Element => {
+const NavigationTop: React.FC<Props> = ({
+  colorInvert = false,
+}): JSX.Element => {
   const session = useSession();
   const router = useRouter();
   const { t, i18n } = useTranslation("common");
@@ -27,10 +29,6 @@ const NavigationTop = ({ colorInvert = false }: Props): JSX.Element => {
   };
 
   const authInfo = useMemo(() => {
-    if (session.status === "loading") {
-      return null;
-    }
-
     return session.status === "authenticated" ? (
       <Box marginRight={{ xs: 1, sm: 2 }}>
         <Link
@@ -41,7 +39,7 @@ const NavigationTop = ({ colorInvert = false }: Props): JSX.Element => {
           color={colorInvert ? "common.white" : "text.primary"}
           sx={{ display: "flex", alignItems: "center" }}
         >
-          {t("Выйти")} {session.data.user?.email}
+          {t("Выйти")} {session.data?.user?.email}
         </Link>
       </Box>
     ) : (
@@ -72,7 +70,7 @@ const NavigationTop = ({ colorInvert = false }: Props): JSX.Element => {
         </Box>
       </>
     );
-  }, [colorInvert, session.data?.user?.email, session.status, t]);
+  }, [colorInvert, session, t]);
 
   return (
     <Box display="flex" justifyContent="flex-end" alignItems="center">
