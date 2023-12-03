@@ -34,7 +34,7 @@ const App = (props: MyAppProps) => {
   } = props;
 
   // eslint-disable-next-line no-console
-  console.log({ session, sessionTwo });
+  console.log({ session, sessionTwo, props: props.pageProps });
   const [interval, setInterval] = useState(0);
 
   useWebsocket();
@@ -85,8 +85,9 @@ const App = (props: MyAppProps) => {
 };
 
 App.getInitialProps = async (context: AppContext) => {
-  let session = null;
+  let session = "test";
   try {
+    // @ts-ignore
     session = await getSession(context.ctx);
     // eslint-disable-next-line no-console
     console.log({ session }, "ssr");
