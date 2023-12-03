@@ -88,6 +88,7 @@ App.getInitialProps = async (context: AppContext) => {
   let session = null;
   try {
     session = await getSession(context.ctx);
+    // eslint-disable-next-line no-console
     console.log({ session }, "ssr");
   } catch (error) {
     // eslint-disable-next-line no-console
