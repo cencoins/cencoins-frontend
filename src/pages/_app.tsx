@@ -81,7 +81,13 @@ const App = (props: MyAppProps) => {
 };
 
 App.getInitialProps = async (context: AppContext) => {
-  const session = await getSession(context.ctx);
+  let session = null;
+
+  try {
+    session = await getSession(context.ctx);
+  } catch (error: any) {
+    throw new Error(error);
+  }
   return {
     pageProps: {
       isSignedIn: Boolean(session),

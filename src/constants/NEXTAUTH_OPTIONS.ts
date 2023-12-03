@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { jwtDecode } from "jwt-decode";
 import { JWTAuth } from "@/types/jwtAuth";
 import { Session } from "next-auth";
@@ -68,7 +67,6 @@ export const nextAuthOptions = {
       }
 
       if (Date.now() < Number(token.accessTokenExpiry)) {
-        console.log("jwt token", { token });
         return token;
       }
 
@@ -94,11 +92,5 @@ export const nextAuthOptions = {
     },
   },
   pages: {},
-  debug: true,
   secret: NEXTAUTH_SECRET,
-  logger: {
-    debug(code, metadata) {
-      console.log(code, metadata);
-    },
-  },
 } as NextAuthOptions;
