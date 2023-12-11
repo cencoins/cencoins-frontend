@@ -8,7 +8,7 @@ interface Props {
 
 const Container = ({ children, ...rest }: Props): JSX.Element => (
   <Box
-    maxWidth={{ sm: 720, md: 1236 }}
+    maxWidth={{ sm: 720, md: 1440 }}
     width={1}
     margin={"0 auto"}
     paddingX={2}

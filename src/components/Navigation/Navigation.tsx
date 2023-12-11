@@ -1,14 +1,12 @@
 import { useState } from "react";
 import {
   AppBar,
-  Box,
   Collapse,
   useMediaQuery,
   useScrollTrigger,
   useTheme,
 } from "@mui/material";
 import Container from "@/components/Container/Container";
-import NavigationTop from "./NavigationTop";
 import NavigationBar from "./NavigationBar";
 import MobileMenu from "./MobileMenu";
 import navigationPages from "./navigationPages";
@@ -41,12 +39,6 @@ export const Navigation: React.FC<Props> = ({
 
   return (
     <>
-      <Box position={"relative"} zIndex={theme.zIndex.appBar}>
-        <Container paddingTop={"8px !important"} paddingBottom={"0 !important"}>
-          <Box flexGrow={1} />
-          <NavigationTop colorInvert={colorInvert} />
-        </Container>
-      </Box>
       <AppBar
         position={"sticky"}
         sx={{
@@ -55,7 +47,7 @@ export const Navigation: React.FC<Props> = ({
         }}
         elevation={trigger ? 1 : 0}
       >
-        <Container paddingY={1}>
+        <Container paddingY={1} maxWidth={1440}>
           <NavigationBar
             handleMobileMenuClick={handleMobileMenuClick}
             pages={navigationPages}

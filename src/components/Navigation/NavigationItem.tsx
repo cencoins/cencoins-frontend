@@ -6,6 +6,7 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useTranslation } from "next-i18next";
 
 interface Props {
   title: string;
@@ -19,7 +20,7 @@ interface Props {
 
 const NavItem = ({ title, id, items }: Props): JSX.Element => {
   const theme = useTheme();
-
+  const { t } = useTranslation("common");
   const [anchorEl, setAnchorEl] = useState(null);
   const [openedPopoverId, setOpenedPopoverId] = useState(null);
 
@@ -51,7 +52,7 @@ const NavItem = ({ title, id, items }: Props): JSX.Element => {
             },
           }}
         >
-          {title}
+          {t(title)}
         </Typography>
         <ExpandMoreIcon
           sx={{
@@ -106,7 +107,7 @@ const NavItem = ({ title, id, items }: Props): JSX.Element => {
                   },
                 }}
               >
-                {p.title}
+                {t(p.title)}
               </Link>
             </Grid>
           ))}

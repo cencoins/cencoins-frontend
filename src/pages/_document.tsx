@@ -32,7 +32,7 @@ export default function MyDocument({
         <meta name="theme-color" content={light.primary.main} />
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="emotion-insertion-point" content="" />
-        <meta property="og:locale" content="en_US" />
+        <meta property="og:locale" content={currentLocale} />
         <meta name="description" content="Су" />
         <meta property="og:type" content="website" />
         <meta
@@ -46,7 +46,11 @@ export default function MyDocument({
         <meta property="og:url" content="https://cencoins.com/" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap"
           rel="stylesheet"
         />
         {emotionStyleTags}

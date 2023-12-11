@@ -1,9 +1,20 @@
 import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import { alpha, useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import NavItem from "./NavigationItem";
+import { IconButton, Menu, MenuItem, Link as MuiLink } from "@mui/material";
+import Link from "next/link";
+import Image from "next/image";
+import ThemeModeToggler from "../ThemeModeToggler/ThemeModeToggler";
+import { useTranslation } from "next-i18next";
+import { LANGUAGES } from "@/constants/LANGUAGES";
+import { useRouter } from "next/router";
+import { toggleModalSignIn } from "@/stores/modals/ModalSignIn.effector";
+import { toggleModalSignUp } from "@/stores/modals/ModalSignUp.effector";
+import { signOut, useSession } from "next-auth/react";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useState } from "react";
 
 interface NavItemProps {
   title: string;
@@ -25,9 +36,30 @@ interface Props {
 const NavigationBar = ({
   handleMobileMenuClick,
   pages = [],
-}: Props): JSX.Element => {
+}: // colorInvert,
+Props): JSX.Element => {
   const theme = useTheme();
+  const session = useSession();
   const { mode } = theme.palette;
+  const router = useRouter();
+  const { t, i18n } = useTranslation("common");
+  const [anchorEl, setAnchorEl] = useState<Nullable<HTMLElement>>(null);
+  const open = Boolean(anchorEl);
+  const changeTo = router.locale === LANGUAGES.RU ? LANGUAGES.EN : LANGUAGES.RU;
+
+  const onToggleLanguageClick = (newLocale: string) => {
+    const { pathname, asPath, query } = router;
+    i18n.changeLanguage(newLocale);
+    router.push({ pathname, query }, asPath, { locale: newLocale });
+  };
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Box
@@ -36,29 +68,19 @@ const NavigationBar = ({
       alignItems={"center"}
       width={1}
     >
-      <Box
-        display={"flex"}
-        component="a"
-        href="/"
-        title="theFront"
-        width={{ xs: 100, md: 120 }}
-      >
-        <Box
-          component={"img"}
-          src={
-            mode === "light"
-              ? "https://assets.maccarianagency.com/the-front/logos/logo.svg"
-              : "https://assets.maccarianagency.com/the-front/logos/logo-negative.svg"
-          }
-          height={1}
-          width={1}
+      <Link href="/">
+        <Image
+          alt="Cencoins logo"
+          width={101}
+          height={16}
+          src={mode === "light" ? "/images/logo.svg" : "/images/logo.svg"}
         />
-      </Box>
+      </Link>
       <Box sx={{ display: { xs: "none", md: "flex" } }} alignItems={"center"}>
         {pages.map((p, i) => (
           <Box key={i} marginLeft={3}>
             {!p.children ? (
-              <Link
+              <MuiLink
                 href={p.href}
                 color={"text.primary"}
                 underline={"none"}
@@ -68,25 +90,85 @@ const NavigationBar = ({
                   },
                 }}
               >
-                {p.title}
-              </Link>
+                {t(p.title)}
+              </MuiLink>
             ) : (
               <NavItem title={p.title} items={p.children} id={p.id} />
             )}
           </Box>
         ))}
+        {session.status === "unauthenticated" && (
+          <>
+            <Box marginLeft={3}>
+              <Button
+                variant="outlined"
+                color="primary"
+                size="large"
+                style={{ height: 42 }}
+                onClick={() => toggleModalSignIn()}
+              >
+                {t("Войти")}
+              </Button>
+            </Box>
+            <Box marginLeft={3}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                style={{ height: 42 }}
+                onClick={() => toggleModalSignUp()}
+              >
+                {t("Регистрация")}
+              </Button>
+            </Box>
+          </>
+        )}
+        <Box marginLeft={3}>
+          <ThemeModeToggler />
+        </Box>
         <Box marginLeft={3}>
           <Button
-            variant="contained"
-            color="primary"
-            component="a"
-            target="blank"
-            href="https://mui.com/store/items/the-front-landing-page/"
-            size="large"
+            variant="outlined"
+            style={{ cursor: "pointer" }}
+            onClick={() => onToggleLanguageClick(changeTo)}
+            color={mode === "light" ? "primary" : "secondary"}
+            sx={{
+              borderRadius: 2,
+              minWidth: "auto",
+              padding: 1,
+              height: 42,
+              borderColor: alpha(theme.palette.divider, 0.2),
+            }}
           >
-            Buy now
+            {changeTo.toLocaleUpperCase()}
           </Button>
         </Box>
+        {session.status === "authenticated" && (
+          <>
+            <Box marginLeft={1.5}>
+              <IconButton
+                color="primary"
+                onClick={(event) => handleClick(event)}
+                sx={{
+                  width: 42,
+                  height: 42,
+                }}
+              >
+                <AccountCircleIcon fontSize="large" />
+              </IconButton>
+            </Box>
+            <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+              <MenuItem
+                onClick={() => {
+                  signOut();
+                  handleClose();
+                }}
+              >
+                {t("Выйти")}
+              </MenuItem>
+            </Menu>
+          </>
+        )}
       </Box>
       <Box sx={{ display: { xs: "block", md: "none" } }} alignItems={"center"}>
         <Button
