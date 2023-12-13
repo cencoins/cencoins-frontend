@@ -14,17 +14,34 @@ import { useTranslation } from "next-i18next";
 import { Link as MuiLink } from "@mui/material";
 import Link from "next/link";
 import IconButton from "@mui/material/IconButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { getSession } from "next-auth/react";
+import {
+  $signUp,
+  onChangeSignUp,
+  onSubmitSignUp,
+  resetSignUp,
+} from "@/stores/signUp.effector";
+import { useUnit } from "effector-react";
+import { useRouter } from "next/router";
 
 interface Props {}
 
 const Signup = () => {
   const { t, i18n } = useTranslation("common");
+  const signUp = useUnit($signUp);
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (signUp.isRegistered) {
+      router.push("/login", undefined, { locale: i18n.language });
+      resetSignUp();
+    }
+  }, [i18n.language, router, signUp.isRegistered]);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -65,8 +82,28 @@ const Signup = () => {
             </Typography>
           </Box>
           <Card sx={{ p: { xs: 4, md: 6 } }}>
-            <form>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                onSubmitSignUp();
+              }}
+            >
               <Grid container spacing={4}>
+                <Grid item xs={12}>
+                  <Typography variant={"subtitle2"} sx={{ marginBottom: 2 }}>
+                    {t("Введите ваше имя")}
+                  </Typography>
+                  <TextField
+                    label="Ваше имя"
+                    variant="outlined"
+                    name={"name"}
+                    value={signUp.name}
+                    onChange={(event) =>
+                      onChangeSignUp({ name: event.currentTarget.value })
+                    }
+                    fullWidth
+                  />
+                </Grid>
                 <Grid item xs={12}>
                   <Typography variant={"subtitle2"} sx={{ marginBottom: 2 }}>
                     {t("Введите ваш email")}
@@ -75,6 +112,10 @@ const Signup = () => {
                     label="Email"
                     variant="outlined"
                     name={"email"}
+                    value={signUp.email}
+                    onChange={(event) =>
+                      onChangeSignUp({ email: event.currentTarget.value })
+                    }
                     fullWidth
                   />
                 </Grid>
@@ -100,6 +141,10 @@ const Signup = () => {
                     variant="outlined"
                     name={"password"}
                     type={showPassword ? "text" : "password"}
+                    value={signUp.password}
+                    onChange={(event) =>
+                      onChangeSignUp({ password: event.currentTarget.value })
+                    }
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">

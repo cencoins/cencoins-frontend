@@ -13,12 +13,29 @@ import Typography from "@mui/material/Typography";
 import { useTranslation } from "next-i18next";
 import { Link as MuiLink } from "@mui/material";
 import Link from "next/link";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
+import { useUnit } from "effector-react";
+import {
+  $signIn,
+  onChangeSignIn,
+  onSubmitSignIn,
+} from "@/stores/signIn.effector";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 interface Props {}
 
 const Login = () => {
   const { t, i18n } = useTranslation("common");
+  const signIn = useUnit($signIn);
+  const session = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      router.push("/", undefined, { locale: i18n.language });
+    }
+  }, [i18n.language, router, session]);
 
   return (
     <>
@@ -51,7 +68,12 @@ const Login = () => {
             </Typography>
           </Box>
           <Card sx={{ p: { xs: 4, md: 6 } }}>
-            <form>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                onSubmitSignIn();
+              }}
+            >
               <Grid container spacing={4}>
                 <Grid item xs={12}>
                   <Typography variant={"subtitle2"} sx={{ marginBottom: 2 }}>
@@ -61,6 +83,10 @@ const Login = () => {
                     label="Email"
                     variant="outlined"
                     name={"email"}
+                    value={signIn.email}
+                    onChange={(event) =>
+                      onChangeSignIn({ email: event.currentTarget.value })
+                    }
                     fullWidth
                   />
                 </Grid>
@@ -97,6 +123,12 @@ const Login = () => {
                   <TextField
                     label={t("Пароль")}
                     variant="outlined"
+                    value={signIn.password}
+                    onChange={(event) =>
+                      onChangeSignIn({
+                        password: event.currentTarget.value,
+                      })
+                    }
                     name={"password"}
                     type={"password"}
                     fullWidth

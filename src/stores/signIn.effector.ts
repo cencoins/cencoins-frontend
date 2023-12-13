@@ -1,21 +1,18 @@
-// import { EmailSignInParams } from "@/service/ServiceIdentity/ServiceIdentity.dto";
 import { NextService } from "@/service/NextService/NextService";
 import { EmailSignInParams } from "@/service/ServiceIdentity/ServiceIdentity.dto";
 import { AxiosError } from "axios";
 import { createEffect, createEvent, createStore, sample } from "effector";
 import { signIn } from "next-auth/react";
 
-interface ModalSignInStore {
-  open: boolean;
+interface SignInStore {
   email: string;
   password: string;
   error?: string[];
 }
 
-export const toggleModalSignIn = createEvent<void>();
-export const onChangeModalSignIn = createEvent<Partial<ModalSignInStore>>();
-export const onSubmitModalSignIn = createEvent<void>();
-export const resetModalSignIn = createEvent<void>();
+export const onChangeSignIn = createEvent<Partial<SignInStore>>();
+export const onSubmitSignIn = createEvent<void>();
+export const resetSignIn = createEvent<void>();
 
 export const signInFx = createEffect<
   EmailSignInParams,
@@ -38,14 +35,12 @@ export const signInFx = createEffect<
   }
 });
 
-export const $modalSignIn = createStore<ModalSignInStore>({
-  open: false,
+export const $signIn = createStore<SignInStore>({
   email: "",
   password: "",
   error: [],
 })
-  .on(toggleModalSignIn, (state) => ({ ...state, open: !state.open }))
-  .on(onChangeModalSignIn, (state, payload) => ({
+  .on(onChangeSignIn, (state, payload) => ({
     ...state,
     ...payload,
     error: [],
@@ -56,20 +51,8 @@ export const $modalSignIn = createStore<ModalSignInStore>({
   }));
 
 sample({
-  clock: onSubmitModalSignIn,
-  source: $modalSignIn,
+  clock: onSubmitSignIn,
+  source: $signIn,
   fn: ({ email, password }) => ({ email, password }),
   target: signInFx,
-});
-
-sample({
-  clock: signInFx.doneData,
-  target: toggleModalSignIn,
-});
-
-sample({
-  clock: toggleModalSignIn,
-  source: $modalSignIn,
-  filter: ({ open }) => !open,
-  target: resetModalSignIn,
 });

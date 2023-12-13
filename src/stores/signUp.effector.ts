@@ -7,20 +7,19 @@ import {
 import { AxiosError } from "axios";
 import { createEffect, createEvent, createStore, sample } from "effector";
 
-interface ModalSignUpStore {
-  open: boolean;
+interface SignUpStore {
   name: string;
   email: string;
   password: string;
   session: string;
   error?: string[];
+  isRegistered: boolean;
 }
 
-export const toggleModalSignUp = createEvent<void>();
-export const onChangeModalSignUp = createEvent<Partial<ModalSignUpStore>>();
+export const onChangeSignUp = createEvent<Partial<SignUpStore>>();
 export const onValidateEmailSignUp = createEvent<void>();
-export const onSubmitModalSignUp = createEvent<void>();
-export const resetModalSignUp = createEvent<void>();
+export const onSubmitSignUp = createEvent<void>();
+export const resetSignUp = createEvent<void>();
 
 export const singUpValidateFx = createEffect<
   EmailSignUpValidateParams,
@@ -38,16 +37,15 @@ export const signUpFx = createEffect<EmailSignUpParams, unknown>(
   },
 );
 
-export const $modalSignUp = createStore<ModalSignUpStore>({
-  open: false,
+export const $signUp = createStore<SignUpStore>({
   name: "",
   email: "",
   password: "",
   session: "",
   error: [],
+  isRegistered: false,
 })
-  .on(toggleModalSignUp, (state) => ({ ...state, open: !state.open }))
-  .on(onChangeModalSignUp, (state, payload) => ({
+  .on(onChangeSignUp, (state, payload) => ({
     ...state,
     ...payload,
     error: [],
@@ -60,18 +58,18 @@ export const $modalSignUp = createStore<ModalSignUpStore>({
     ...state,
     error: error.response?.data,
   }))
-  .reset(resetModalSignUp);
+  .reset(resetSignUp);
 
 sample({
-  clock: onSubmitModalSignUp,
-  source: $modalSignUp,
+  clock: onSubmitSignUp,
+  source: $signUp,
   fn: ({ email }) => ({ email }),
   target: singUpValidateFx,
 });
 
 sample({
   clock: singUpValidateFx.doneData,
-  source: $modalSignUp,
+  source: $signUp,
   fn: ({ name, email, password, session }) => ({
     name,
     email,
@@ -83,12 +81,8 @@ sample({
 
 sample({
   clock: signUpFx.doneData,
-  target: toggleModalSignUp,
-});
-
-sample({
-  clock: toggleModalSignUp,
-  source: $modalSignUp,
-  filter: ({ open }) => !open,
-  target: resetModalSignUp,
+  fn: () => ({
+    isRegistered: true,
+  }),
+  target: onChangeSignUp,
 });
