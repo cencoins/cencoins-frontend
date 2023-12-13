@@ -13,10 +13,11 @@ import Typography from "@mui/material/Typography";
 import { useTranslation } from "next-i18next";
 import { Link as MuiLink } from "@mui/material";
 import Link from "next/link";
+import { getSession } from "next-auth/react";
 
 interface Props {}
 
-const Home = () => {
+const Login = () => {
   const { t, i18n } = useTranslation("common");
 
   return (
@@ -57,7 +58,7 @@ const Home = () => {
                     {t("Введите ваш email")}
                   </Typography>
                   <TextField
-                    label="Email *"
+                    label="Email"
                     variant="outlined"
                     name={"email"}
                     fullWidth
@@ -78,12 +79,15 @@ const Home = () => {
                       </Typography>
                     </Box>
                     <Typography variant={"subtitle2"}>
-                      <Link href={"#"} style={{ textDecoration: "none" }}>
+                      <Link
+                        href={"/"}
+                        locale={i18n.language}
+                        style={{ textDecoration: "none" }}
+                      >
                         <MuiLink
-                          component={"a"}
-                          href={"#"}
+                          component="span"
                           color={"primary"}
-                          underline={"none"}
+                          underline="none"
                         >
                           {t("Забыли свой пароль?")}
                         </MuiLink>
@@ -91,7 +95,7 @@ const Home = () => {
                     </Typography>
                   </Box>
                   <TextField
-                    label="Password *"
+                    label={t("Пароль")}
                     variant="outlined"
                     name={"password"}
                     type={"password"}
@@ -147,6 +151,17 @@ const Home = () => {
 export const getServerSideProps: GetServerSideProps<Props> = async (
   context,
 ) => {
+  const session = await getSession(context);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: `/${context.locale}/`,
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
       ...(await serverSideTranslations(context.locale ?? LANGUAGES.RU, [
@@ -156,4 +171,4 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   };
 };
 
-export default Home;
+export default Login;

@@ -66,7 +66,7 @@ Props): JSX.Element => {
       alignItems={"center"}
       width={1}
     >
-      <Link href="/">
+      <Link href="/" locale={i18n.language}>
         <Image
           alt="Cencoins logo"
           width={101}
@@ -78,18 +78,24 @@ Props): JSX.Element => {
         {pages.map((p, i) => (
           <Box key={i} marginLeft={3}>
             {!p.children ? (
-              <MuiLink
-                href={p.href}
-                color={"text.primary"}
-                underline={"none"}
-                sx={{
-                  "&:hover": {
-                    color: "primary.main",
-                  },
-                }}
+              <Link
+                href={p.href ?? ""}
+                locale={i18n.language}
+                style={{ textDecoration: "none" }}
               >
-                {t(p.title)}
-              </MuiLink>
+                <MuiLink
+                  component="span"
+                  color={"text.primary"}
+                  underline={"none"}
+                  sx={{
+                    "&:hover": {
+                      color: "primary.main",
+                    },
+                  }}
+                >
+                  {t(p.title)}
+                </MuiLink>
+              </Link>
             ) : (
               <NavItem title={p.title} items={p.children} id={p.id} />
             )}
