@@ -1,6 +1,5 @@
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { Link as MuiLink } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
