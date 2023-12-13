@@ -7,5 +7,12 @@
   "Сервисы": "Services",
   "Тарифы": "Rates",
   "Компания": "Company",
-  "Зарегистрироваться": "Sign Up"
+  "Зарегистрироваться": "Sign Up",
+  "Добро пожаловать": "Welcome back",
+  "Введите ваш email": "Enter your email",
+  "Введите ваш пароль": "Enter your password",
+  "Забыли свой пароль?": "Forgot your password?",
+  "Войдите, чтобы управлять своим аккаунтом.": "Login to manage your account.",
+  "У вас до сих пор нет аккаута?": "Don't have an account yet?",
+  "Зарегистрироваться тут.": "Sign up here."
 }

@@ -45,7 +45,7 @@ export const Navigation: React.FC<Props> = ({
           top: 0,
           backgroundColor: trigger ? theme.palette.background.paper : bgcolor,
         }}
-        elevation={trigger ? 1 : 0}
+        elevation={1}
       >
         <Container paddingY={1} maxWidth={1440}>
           <NavigationBar

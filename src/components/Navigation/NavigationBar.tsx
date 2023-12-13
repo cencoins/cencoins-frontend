@@ -10,8 +10,6 @@ import ThemeModeToggler from "../ThemeModeToggler/ThemeModeToggler";
 import { useTranslation } from "next-i18next";
 import { LANGUAGES } from "@/constants/LANGUAGES";
 import { useRouter } from "next/router";
-import { toggleModalSignIn } from "@/stores/modals/ModalSignIn.effector";
-import { toggleModalSignUp } from "@/stores/modals/ModalSignUp.effector";
 import { signOut, useSession } from "next-auth/react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
@@ -100,26 +98,32 @@ Props): JSX.Element => {
         {session.status === "unauthenticated" && (
           <>
             <Box marginLeft={3}>
-              <Button
-                variant="outlined"
-                color="primary"
-                size="large"
-                style={{ height: 42 }}
-                onClick={() => toggleModalSignIn()}
-              >
-                {t("Войти")}
-              </Button>
+              <Link href="/login" locale={i18n.language}>
+                <Button
+                  variant="outlined"
+                  size="large"
+                  color={mode === "light" ? "primary" : "info"}
+                  sx={{
+                    height: 42,
+                    borderColor:
+                      mode === "light" ? "" : alpha(theme.palette.divider, 0.2),
+                  }}
+                >
+                  {t("Войти")}
+                </Button>
+              </Link>
             </Box>
             <Box marginLeft={3}>
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                style={{ height: 42 }}
-                onClick={() => toggleModalSignUp()}
-              >
-                {t("Регистрация")}
-              </Button>
+              <Link href="/signup" locale={i18n.language}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  style={{ height: 42 }}
+                >
+                  {t("Регистрация")}
+                </Button>
+              </Link>
             </Box>
           </>
         )}
@@ -131,16 +135,20 @@ Props): JSX.Element => {
             variant="outlined"
             style={{ cursor: "pointer" }}
             onClick={() => onToggleLanguageClick(changeTo)}
-            color={mode === "light" ? "primary" : "secondary"}
+            color={mode === "light" ? "primary" : "info"}
             sx={{
               borderRadius: 2,
               minWidth: "auto",
               padding: 1,
               height: 42,
+              width: 42,
               borderColor: alpha(theme.palette.divider, 0.2),
             }}
           >
-            {changeTo.toLocaleUpperCase()}
+            {(changeTo !== LANGUAGES.EN
+              ? LANGUAGES.EN
+              : LANGUAGES.RU
+            ).toLocaleUpperCase()}
           </Button>
         </Box>
         {session.status === "authenticated" && (

@@ -18,8 +18,8 @@ export async function middleware(req: NextRequest) {
     let locale = req.cookies.get("NEXT_LOCALE")?.value || LANGUAGES.RU;
     let locationObject;
     const forwarded = req.headers.get("x-forwarded-for");
-    const ip = forwarded ? forwarded.split(/, /)[0] : undefined;
-    // const myIp = "192.168.142.192";
+    const myIp = "192.168.142.192";
+    const ip = forwarded ? forwarded.split(/, /)[0] : myIp;
 
     if (ip) {
       try {

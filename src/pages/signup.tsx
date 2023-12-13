@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Container from "@/components/Container/Container";
-import { Box } from "@mui/material";
 import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { LANGUAGES } from "@/constants/LANGUAGES";
@@ -12,9 +11,9 @@ const Home = () => {
   return (
     <>
       <Head>
-        <title>Cencoins</title>
+        <title>Signup</title>
       </Head>
-      <Container>{/* { children } */}</Container>
+      <Container>Signup</Container>
     </>
   );
 };
