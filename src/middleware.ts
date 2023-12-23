@@ -11,9 +11,10 @@ export async function middleware(req: NextRequest) {
     req.nextUrl.pathname.includes("/api/") ||
     PUBLIC_FILE.test(req.nextUrl.pathname)
   ) {
-    return;
+    return NextResponse.next();
   }
 
+  // console.log(req.nextUrl.locale, "req.nextUrl.locale");
   if (req.nextUrl.locale === "default") {
     let locale = req.cookies.get("NEXT_LOCALE")?.value || LANGUAGES.RU;
     let locationObject;
@@ -38,17 +39,27 @@ export async function middleware(req: NextRequest) {
         console.log("get location error", { error });
       }
     }
+    let response;
 
-    const response = NextResponse.redirect(
-      new URL(
-        `/${locale}${req.nextUrl.pathname}${req.nextUrl.search}`,
-        req.url,
-      ),
-    );
+    if (locale.toLocaleLowerCase() === LANGUAGES.RU) {
+      response = NextResponse.next();
+    } else {
+      response = NextResponse.redirect(
+        new URL(
+          `/${locale}${req.nextUrl.pathname}${req.nextUrl.search}`,
+          req.url,
+        ),
+      );
+    }
+
     response.cookies.set("NEXT_LOCALE", locale);
     if (locationObject) {
       response.cookies.set("location", JSON.stringify(locationObject));
     }
+    return response;
+  } else {
+    const response = NextResponse.next();
+    response.cookies.set("NEXT_LOCALE", req.nextUrl.locale);
     return response;
   }
 }

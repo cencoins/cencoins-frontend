@@ -5,7 +5,6 @@ import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { LANGUAGES } from "@/constants/LANGUAGES";
 import { DICTIONARY } from "@/constants/DICTIONARY";
-import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -57,18 +56,8 @@ const Signup = () => {
         <title>{t("Регистрация")}</title>
       </Head>
       <Container>
-        <Container maxWidth={680} margin={0} paddingX={0} paddingY={0}>
+        <Container maxWidth={580} margin={0} paddingX={0} paddingY={0}>
           <Box marginBottom={4}>
-            <Typography
-              sx={{
-                textTransform: "uppercase",
-              }}
-              gutterBottom
-              color={"text.secondary"}
-              fontWeight={700}
-            >
-              {t("Регистрация")}
-            </Typography>
             <Typography
               variant="h4"
               sx={{
@@ -77,11 +66,8 @@ const Signup = () => {
             >
               {t("Создать аккаунт")}
             </Typography>
-            <Typography color="text.secondary">
-              {t("Присоединяйтесь к Cencoins сегодня")}
-            </Typography>
           </Box>
-          <Card sx={{ p: { xs: 4, md: 6 } }}>
+          <Box>
             <form
               onSubmit={(event) => {
                 event.preventDefault();
@@ -247,7 +233,7 @@ const Signup = () => {
                 </Grid>
               </Grid>
             </form>
-          </Card>
+          </Box>
         </Container>
       </Container>
     </>

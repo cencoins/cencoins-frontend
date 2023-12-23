@@ -5,7 +5,6 @@ import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { LANGUAGES } from "@/constants/LANGUAGES";
 import { DICTIONARY } from "@/constants/DICTIONARY";
-import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -43,31 +42,18 @@ const Login = () => {
         <title>{t("Войти")}</title>
       </Head>
       <Container>
-        <Container maxWidth={680} margin={0} paddingX={0} paddingY={0}>
+        <Container maxWidth={580} margin={0} paddingX={0} paddingY={0}>
           <Box marginBottom={4}>
-            <Typography
-              sx={{
-                textTransform: "uppercase",
-              }}
-              gutterBottom
-              color={"text.secondary"}
-              fontWeight={700}
-            >
-              {t("Войти")}
-            </Typography>
             <Typography
               variant="h4"
               sx={{
                 fontWeight: 700,
               }}
             >
-              {t("Добро пожаловать")}
-            </Typography>
-            <Typography color="text.secondary">
-              {t("Войдите, чтобы управлять своим аккаунтом.")}
+              {t("С возвращением")}
             </Typography>
           </Box>
-          <Card sx={{ p: { xs: 4, md: 6 } }}>
+          <Box>
             <form
               onSubmit={(event) => {
                 event.preventDefault();
@@ -146,7 +132,7 @@ const Login = () => {
                   >
                     <Box marginBottom={{ xs: 1, sm: 0 }}>
                       <Typography variant={"subtitle2"}>
-                        {t("У вас до сих пор нет аккаута?")}{" "}
+                        {t("Еще нет аккаунта?")}{" "}
                         <Link
                           href={"/signup"}
                           locale={i18n.language}
@@ -173,7 +159,7 @@ const Login = () => {
                 </Grid>
               </Grid>
             </form>
-          </Card>
+          </Box>
         </Container>
       </Container>
     </>
