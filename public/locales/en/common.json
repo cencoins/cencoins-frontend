@@ -47,5 +47,9 @@
   "Добавьте монеты": "Add coins",
   "Показать добавленные": "Show added",
   "Сохранить": "Save",
-  "Поиск": "Search"
+  "Поиск": "Search",
+  "Депозит и спред": "Deposit and spread",
+  "Укажите доступный депозит": "Please indicate available deposit",
+  "Популярные варианты": "Popular options",
+  "Рекомендуем указывать значение не более 1% для большей выдачи результатов": "We recommend specifying a value of no more than 1% for better results."
 }

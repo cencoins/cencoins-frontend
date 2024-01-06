@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 import { useUnit } from "effector-react";
 import { useTranslation } from "next-i18next";
 import {
-  Box,
   Checkbox,
   Divider,
   Grid,
@@ -18,22 +17,11 @@ import {
   ListItem,
   ListItemButton,
   TextField,
-  styled,
   useTheme,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Image from "next/image";
 import { useState } from "react";
-
-const GridCoinItem = styled(Grid)(({ theme }) => ({
-  cursor: "pointer",
-  "& .MuiGrid-root": {
-    transition: "0.3s",
-    // "&:hover": {
-    //   background: theme.palette.warning.dark,
-    // },
-  },
-}));
 
 export const data = [
   {
@@ -133,7 +121,7 @@ export const ModalAddCoin: React.FC = () => {
                 onClick={handleToggle(item.name)}
                 dense
               >
-                <GridCoinItem item container>
+                <Grid item container>
                   <Grid
                     item
                     container
@@ -177,7 +165,7 @@ export const ModalAddCoin: React.FC = () => {
                       />
                     </Grid>
                   </Grid>
-                </GridCoinItem>
+                </Grid>
               </ListItemButton>
             </ListItem>
           ))}

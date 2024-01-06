@@ -1,4 +1,5 @@
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import {
   Accordion,
   AccordionDetails,
@@ -9,6 +10,7 @@ import {
   styled,
 } from "@mui/material";
 import { useTranslation } from "next-i18next";
+import { onChangeModalAdd } from "@/stores/modalAddCoin";
 import { TableFilterButton } from "../Table/TableFilterButton";
 import { TableFilterChip } from "../Table/TableFilterChip";
 
@@ -20,13 +22,20 @@ const ModalAddCoin = dynamic(
   { ssr: false },
 );
 
+const ModalDepSpread = dynamic(
+  () =>
+    import("../Modal/ModalDepSpread/ModalDepSpread").then(
+      (module) => module.ModalDepSpread,
+    ),
+  { ssr: false },
+);
+
 import SettingsIcon from "@mui/icons-material/Settings";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
-import dynamic from "next/dynamic";
-import { onChangeModalAdd } from "@/stores/modalAddCoin";
+import { onChangeModalDepSpread } from "@/stores/modalDepSpread";
 
 const AccordionFilter = styled(Accordion)(() => ({
   background: "transparent",
@@ -152,6 +161,7 @@ export const TableArbitrageFilter: React.FC = () => {
                 active
                 variant="contained"
                 size="small"
+                onClick={() => onChangeModalDepSpread({ open: true })}
                 startIcon={<SyncAltIcon />}
               >
                 {t("Биржи")}
@@ -162,6 +172,7 @@ export const TableArbitrageFilter: React.FC = () => {
                 active
                 variant="contained"
                 size="small"
+                onClick={() => onChangeModalDepSpread({ open: true })}
                 startIcon={
                   <SyncAltIcon style={{ transform: "rotate(90deg)" }} />
                 }
@@ -173,6 +184,7 @@ export const TableArbitrageFilter: React.FC = () => {
         </Details>
       </AccordionFilter>
       <ModalAddCoin />
+      <ModalDepSpread />
     </>
   );
 };

@@ -29,7 +29,6 @@ const FilterChip = styled(Chip)<Props>(({ theme, active }) => ({
       boxShadow: "none",
     },
   },
-
   "& .MuiChip-label": {
     padding: `${theme.spacing(1)} ${theme.spacing(1.5)}`,
     background: "transparent",
