@@ -11,16 +11,18 @@ export const TableCellCoin: React.FC<Props> = ({ name, shortName, logo }) => {
   const theme = useTheme();
 
   return (
-    <Grid container spacing={1} alignItems="center">
+    <Grid container spacing={1} alignItems="center" flexWrap="nowrap">
       {logo && (
-        <Grid item>
+        <Grid item display="inline-flex" alignItems="center">
           <Image alt={`${name} logo`} width={32} height={32} src={logo} />
         </Grid>
       )}
-      <Grid item>
-        {name && <Box>{name}</Box>}
+      <Grid item container flexDirection="column" spacing={0.5}>
+        {name && <Grid item>{name}</Grid>}
         {shortName && (
-          <Box color={theme.palette.text.secondary}>{shortName}</Box>
+          <Grid item>
+            <Box color={theme.palette.text.secondary}>{shortName}</Box>
+          </Grid>
         )}
       </Grid>
     </Grid>
