@@ -9,7 +9,7 @@ interface Props extends ChipProps {
 }
 
 const FilterChip = styled(Chip)<Props>(({ theme, active }) => ({
-  background: "#F1F2F5",
+  background: theme.palette.grey[200],
   height: 32,
   borderRadius: theme.spacing(2),
   boxShadow: "none",

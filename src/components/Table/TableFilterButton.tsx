@@ -6,7 +6,7 @@ interface Props extends ButtonProps {
 }
 
 export const TableFilterButton = styled(Button)<Props>(({ theme, active }) => ({
-  background: "#F1F2F5",
+  background: theme.palette.grey[200],
   height: 32,
   color: active
     ? theme.palette.primary.main
@@ -20,7 +20,7 @@ export const TableFilterButton = styled(Button)<Props>(({ theme, active }) => ({
   boxShadow: "none",
   "&:hover": {
     color: theme.palette.primary.main,
-    background: "#F1F2F5",
+    background: theme.palette.grey[200],
     boxShadow: "none",
   },
 }));
