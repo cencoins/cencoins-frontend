@@ -24,7 +24,7 @@ import { useState } from "react";
 import {
   $modalAddExchange,
   onChangeModalAddExchange,
-} from "@/stores/modalAddExchanges";
+} from "@/stores/modalAddExchange";
 
 export const data = [
   {

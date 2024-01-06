@@ -44,7 +44,7 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
 import { onChangeModalDepSpread } from "@/stores/modalDepSpread";
-import { onChangeModalAddExchange } from "@/stores/modalAddExchanges";
+import { onChangeModalAddExchange } from "@/stores/modalAddExchange";
 
 const AccordionFilter = styled(Accordion)(() => ({
   background: "transparent",
