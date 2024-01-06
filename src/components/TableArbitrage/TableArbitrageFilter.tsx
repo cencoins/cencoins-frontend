@@ -30,12 +30,21 @@ const ModalDepSpread = dynamic(
   { ssr: false },
 );
 
+const ModalAddExchange = dynamic(
+  () =>
+    import("../Modal/ModalAddExchange/ModalAddExchange").then(
+      (module) => module.ModalAddExchange,
+    ),
+  { ssr: false },
+);
+
 import SettingsIcon from "@mui/icons-material/Settings";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
 import { onChangeModalDepSpread } from "@/stores/modalDepSpread";
+import { onChangeModalAddExchange } from "@/stores/modalAddExchanges";
 
 const AccordionFilter = styled(Accordion)(() => ({
   background: "transparent",
@@ -161,7 +170,7 @@ export const TableArbitrageFilter: React.FC = () => {
                 active
                 variant="contained"
                 size="small"
-                onClick={() => onChangeModalDepSpread({ open: true })}
+                onClick={() => onChangeModalAddExchange({ open: true })}
                 startIcon={<SyncAltIcon />}
               >
                 {t("Биржи")}
@@ -185,6 +194,7 @@ export const TableArbitrageFilter: React.FC = () => {
       </AccordionFilter>
       <ModalAddCoin />
       <ModalDepSpread />
+      <ModalAddExchange />
     </>
   );
 };
