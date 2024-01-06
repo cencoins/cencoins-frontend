@@ -12,10 +12,21 @@ import { useTranslation } from "next-i18next";
 import { TableFilterButton } from "../Table/TableFilterButton";
 import { TableFilterChip } from "../Table/TableFilterChip";
 
+const ModalAddCoin = dynamic(
+  () =>
+    import("../Modal/ModalAddCoin/ModalAddCoin").then(
+      (module) => module.ModalAddCoin,
+    ),
+  { ssr: false },
+);
+
 import SettingsIcon from "@mui/icons-material/Settings";
+import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
+import dynamic from "next/dynamic";
+import { onChangeModalAdd } from "@/stores/modalAddCoin";
 
 const AccordionFilter = styled(Accordion)(() => ({
   background: "transparent",
@@ -37,6 +48,7 @@ const Details = styled(AccordionDetails)(() => ({
 export const TableArbitrageFilter: React.FC = () => {
   const { t } = useTranslation();
   const [settingsIsOpen, setSettingsIsOpen] = useState("");
+  const [isFavourites, setIsFavourites] = useState(false);
 
   const handleAccordClick = (value: string) => {
     if (settingsIsOpen !== value) {
@@ -69,7 +81,7 @@ export const TableArbitrageFilter: React.FC = () => {
               >
                 <Grid item>
                   <TableFilterButton
-                    isActive={"openAccordion" === settingsIsOpen}
+                    active={"openAccordion" === settingsIsOpen}
                     variant="contained"
                     size="small"
                     startIcon={<SettingsIcon />}
@@ -82,7 +94,9 @@ export const TableArbitrageFilter: React.FC = () => {
                   <TableFilterButton
                     variant="contained"
                     size="small"
-                    startIcon={<StarBorderIcon />}
+                    active={isFavourites}
+                    startIcon={isFavourites ? <StarIcon /> : <StarBorderIcon />}
+                    onClick={() => setIsFavourites((value) => !value)}
                   >
                     {t("Избранное")}
                   </TableFilterButton>
@@ -101,7 +115,7 @@ export const TableArbitrageFilter: React.FC = () => {
                 </Grid>
                 <Grid item>
                   <TableFilterChip
-                    isActive
+                    active
                     label={t("Монета")}
                     onDelete={() => {}}
                   />
@@ -124,8 +138,10 @@ export const TableArbitrageFilter: React.FC = () => {
           <Grid container alignItems="center" spacing={1.5}>
             <Grid item>
               <TableFilterButton
+                active
                 variant="contained"
                 size="small"
+                onClick={() => onChangeModalAdd({ open: true })}
                 startIcon={<CurrencyBitcoinIcon />}
               >
                 {t("Монета")}
@@ -133,6 +149,7 @@ export const TableArbitrageFilter: React.FC = () => {
             </Grid>
             <Grid item>
               <TableFilterButton
+                active
                 variant="contained"
                 size="small"
                 startIcon={<SyncAltIcon />}
@@ -142,6 +159,7 @@ export const TableArbitrageFilter: React.FC = () => {
             </Grid>
             <Grid item>
               <TableFilterButton
+                active
                 variant="contained"
                 size="small"
                 startIcon={
@@ -154,6 +172,7 @@ export const TableArbitrageFilter: React.FC = () => {
           </Grid>
         </Details>
       </AccordionFilter>
+      <ModalAddCoin />
     </>
   );
 };

@@ -5,17 +5,17 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 
 interface Props extends ChipProps {
-  isActive?: boolean;
+  active?: boolean;
 }
 
-const FilterChip = styled(Chip)<Props>(({ theme, isActive }) => ({
+const FilterChip = styled(Chip)<Props>(({ theme, active }) => ({
   background: "#F1F2F5",
   height: 32,
   borderRadius: theme.spacing(2),
   boxShadow: "none",
   cursor: "pointer",
   "& .MuiChip-label, .MuiChip-deleteIcon": {
-    color: isActive
+    color: active
       ? theme.palette.primary.main
       : theme.palette.mode === "dark"
       ? light.text.primary
@@ -43,7 +43,7 @@ export const TableFilterChip: React.FC<Props> = (props) => {
     <FilterChip
       {...props}
       deleteIcon={
-        props.isActive ? (
+        props.active ? (
           <CancelOutlinedIcon style={{ fontSize: 16 }} />
         ) : (
           <ExpandMoreIcon />
