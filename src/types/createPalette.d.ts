@@ -12,6 +12,7 @@ declare module "@mui/material/styles/createPalette" {
 
   interface PaletteOptions {
     cardShadow?: string;
+    favourite: string;
     alternate: {
       main: string;
       dark: string;
@@ -20,6 +21,7 @@ declare module "@mui/material/styles/createPalette" {
 
   interface Palette {
     cardShadow?: string;
+    favourite: string;
     alternate: {
       main: string;
       dark: string;

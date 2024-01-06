@@ -32,5 +32,16 @@
   "С возвращением": "Welcome back",
   "Еще нет аккаунта?": "Don't have an account yet?",
   "Введите ваше имя": "Enter your name",
-  "Футер.Куки": "When you visit or interact with our sites, services or tools, we or\n          our authorised service providers may use cookies for storing\n          information to help provide you with a better, faster and safer\n          experience and for marketing purposes."
+  "Футер.Куки": "When you visit or interact with our sites, services or tools, we or\n          our authorised service providers may use cookies for storing\n          information to help provide you with a better, faster and safer\n          experience and for marketing purposes.",
+  "Настроить": "Settings",
+  "Избранное": "Favourites",
+  "Пара": "Pair",
+  "Монета": "Coin",
+  "Покупка": "Buy",
+  "Продажа": "Sell",
+  "Спред": "Spread",
+  "Цена": "Price",
+  "Арбитражный сканер": "Arbitration scanner",
+  "Биржи": "Exchanges",
+  "Спред и депозит": "Spread and deposit"
 }
