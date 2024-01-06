@@ -26,6 +26,7 @@ import {
 } from "@/stores/signUp.effector";
 import { useUnit } from "effector-react";
 import { useRouter } from "next/router";
+import { getInitialServerSideProps } from "@/utils/getInitialServerSide";
 
 interface Props {}
 
@@ -256,6 +257,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   return {
     props: {
+      ...(await getInitialServerSideProps(context)),
       ...(await serverSideTranslations(context.locale ?? LANGUAGES.RU, [
         DICTIONARY.COMMON,
       ])),

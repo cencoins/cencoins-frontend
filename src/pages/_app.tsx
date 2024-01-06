@@ -1,7 +1,7 @@
 import { EmotionCache } from "@emotion/cache";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import type { AppContext, AppProps } from "next/app";
+import type { AppProps } from "next/app";
 import { CacheProvider } from "@emotion/react";
 import Head from "next/head";
 import createEmotionCache from "@/theme/createEmotionCache";
@@ -13,9 +13,8 @@ import AOS from "aos";
 import getTheme from "@/theme";
 import { RefreshTokenHandler } from "@/components/RefreshTokenHandler/RefreshTokenHandler";
 import { appWithTranslation } from "next-i18next";
-import { Session, getServerSession } from "next-auth";
+import { Session } from "next-auth";
 import nextI18NextConfig from "../../next-i18next.config.js";
-import { nextAuthOptions } from "@/constants/NEXTAUTH_OPTIONS";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -75,21 +74,6 @@ const App = (props: MyAppProps) => {
       </SessionProvider>
     </CacheProvider>
   );
-};
-
-App.getInitialProps = async (context: AppContext) => {
-  const session = await getServerSession(
-    // @ts-ignore
-    context.ctx.req,
-    context.ctx.res,
-    nextAuthOptions,
-  );
-
-  return {
-    pageProps: {
-      session,
-    },
-  };
 };
 
 export default appWithTranslation(App, nextI18NextConfig);
