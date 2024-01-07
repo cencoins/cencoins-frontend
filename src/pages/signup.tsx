@@ -17,7 +17,6 @@ import { useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { getSession } from "next-auth/react";
 import {
   $signUp,
   onChangeSignUp,
@@ -244,9 +243,9 @@ const Signup = () => {
 export const getServerSideProps: GetServerSideProps<Props> = async (
   context,
 ) => {
-  const session = await getSession(context);
+  const init = await getInitialServerSideProps(context);
 
-  if (session) {
+  if (init.session) {
     return {
       redirect: {
         destination: `/${context.locale}/`,
@@ -257,7 +256,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   return {
     props: {
-      ...(await getInitialServerSideProps(context)),
+      ...init,
       ...(await serverSideTranslations(context.locale ?? LANGUAGES.RU, [
         DICTIONARY.COMMON,
       ])),

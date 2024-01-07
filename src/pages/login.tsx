@@ -170,9 +170,9 @@ const Login = () => {
 export const getServerSideProps: GetServerSideProps<Props> = async (
   context,
 ) => {
-  const session = await getSession(context);
+  const init = await getInitialServerSideProps(context);
 
-  if (session) {
+  if (init.session) {
     return {
       redirect: {
         destination: `/${context.locale}/`,
@@ -183,7 +183,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   return {
     props: {
-      ...(await getInitialServerSideProps(context)),
+      ...init,
       ...(await serverSideTranslations(context.locale ?? LANGUAGES.RU, [
         DICTIONARY.COMMON,
       ])),
