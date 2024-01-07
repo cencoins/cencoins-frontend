@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import { useTranslation } from "next-i18next";
 import { Link as MuiLink } from "@mui/material";
 import Link from "next/link";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useUnit } from "effector-react";
 import {
   $signIn,
