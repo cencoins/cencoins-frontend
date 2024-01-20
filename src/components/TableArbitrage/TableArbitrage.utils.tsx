@@ -274,42 +274,53 @@ export const tableArbitrageColumns = [
   columnHelper.accessor((row) => row.isFavourite, {
     id: "isFavourite",
     header: () => "",
-    size: 24,
-    cell: (info) => <TableCellFavourite isFavourite={info.getValue()} />,
-  }),
-  columnHelper.accessor((row) => row.pair, {
-    id: "pair",
-    header: () => <TableCell textAlign="left">Пара</TableCell>,
-    cell: (info) => <TableCell>{info.getValue()}</TableCell>,
+    size: 40,
+    cell: (info) => (
+      <TableCellFavourite isFavourite={info.getValue()} {...info} />
+    ),
   }),
   columnHelper.accessor((row) => row.coin, {
     id: "coin",
+    size: 204,
     header: () => <TableCell textAlign="left">Монета</TableCell>,
     cell: (info) => <TableCellCoin {...info.getValue()} />,
   }),
+  columnHelper.accessor((row) => row.pair, {
+    id: "pair",
+    size: 74,
+    header: () => <TableCell textAlign="left">Пара</TableCell>,
+    cell: (info) => <TableCell>{info.getValue()}</TableCell>,
+  }),
   columnHelper.accessor((row) => row.buyMarket, {
     id: "buyMarket",
+    size: 174,
     header: () => <TableCell textAlign="left">Покупка</TableCell>,
-    cell: (info) => <TableCell>{info.getValue().name}</TableCell>,
+    cell: (info) => <TableCellCoin {...info.getValue()} />,
   }),
   columnHelper.accessor((row) => row.buyPrice, {
     id: "buyPrice",
-    header: () => <TableCell textAlign="left">Цена</TableCell>,
-    cell: (info) => <TableCell>{info.getValue()}</TableCell>,
+    size: 100,
+    header: () => <TableCell textAlign="right">Цена</TableCell>,
+    cell: (info) => <TableCell textAlign="right">{info.getValue()}</TableCell>,
   }),
   columnHelper.accessor((row) => row.sellMarket, {
     id: "sellMarket",
+    size: 174,
     header: () => <TableCell textAlign="left">Продажа</TableCell>,
     cell: (info) => <TableCellCoin {...info.getValue()} />,
   }),
   columnHelper.accessor((row) => row.sellPrice, {
     id: "sellPrice",
-    header: () => <TableCell textAlign="left">Цена</TableCell>,
-    cell: (info) => <TableCell>{info.getValue()}</TableCell>,
+    size: 100,
+    header: () => <TableCell textAlign="right">Цена</TableCell>,
+    cell: (info) => <TableCell textAlign="right">{info.getValue()}</TableCell>,
   }),
   columnHelper.accessor((row) => row.spread, {
     id: "spread",
-    header: () => <TableCell textAlign="left">Спред</TableCell>,
-    cell: (info) => <TableCell>{`${info.getValue()}%`}</TableCell>,
+    size: 54,
+    header: () => <TableCell textAlign="right">Спред</TableCell>,
+    cell: (info) => (
+      <TableCell textAlign="right">{`${info.getValue()}%`}</TableCell>
+    ),
   }),
 ];

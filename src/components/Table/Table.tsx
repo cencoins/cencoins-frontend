@@ -3,8 +3,16 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { TableContainer, TableTh, TableHead, TableTd } from "./Table.styled";
-import { TableBody } from "@mui/material";
+import {
+  TableBody,
+  TableContainer,
+  Table as MuiTable,
+  TableHead,
+  TableRow,
+  Box,
+  TableCell,
+  Divider,
+} from "@mui/material";
 
 interface Props {
   data: any;
@@ -19,44 +27,53 @@ export const Table: React.FC<Props> = ({ data, columns }) => {
   });
 
   return (
-    <TableContainer>
-      <TableHead>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <TableTh
-                key={header.id}
-                style={{
-                  width: header.column.getSize(),
-                }}
-              >
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-              </TableTh>
+    <Box sx={{ width: "100%", overflow: "hidden" }}>
+      <Divider />
+      <TableContainer sx={{ maxHeight: 800, fontSize: 14 }}>
+        <MuiTable stickyHeader>
+          <TableHead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableCell
+                      key={header.id}
+                      colSpan={header.colSpan}
+                      style={{
+                        fontWeight: 600,
+                        minWidth: header.getSize(),
+                      }}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
             ))}
-          </tr>
-        ))}
-      </TableHead>
-      <TableBody>
-        {table.getRowModel().rows.map((row) => (
-          <tr key={row.id}>
-            {row.getVisibleCells().map((cell) => (
-              <TableTd
-                key={cell.id}
-                style={{
-                  width: cell.column.getSize(),
-                }}
-              >
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </TableTd>
+          </TableHead>
+          <TableBody>
+            {table.getRowModel().rows.map((row) => (
+              <TableRow key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell
+                    key={cell.id}
+                    style={{
+                      minWidth: cell.column.getSize(),
+                    }}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
             ))}
-          </tr>
-        ))}
-      </TableBody>
-    </TableContainer>
+          </TableBody>
+        </MuiTable>
+      </TableContainer>
+    </Box>
   );
 };
