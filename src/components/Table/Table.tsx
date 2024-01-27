@@ -29,7 +29,7 @@ export const Table: React.FC<Props> = ({ data, columns }) => {
   return (
     <Box sx={{ width: "100%", overflow: "hidden" }}>
       <Divider />
-      <TableContainer sx={{ maxHeight: 800, fontSize: 14 }}>
+      <TableContainer sx={{ fontSize: 14 }}>
         <MuiTable stickyHeader>
           <TableHead>
             {table.getHeaderGroups().map((headerGroup) => (

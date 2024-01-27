@@ -99,7 +99,7 @@ export const TableArbitrageFilter: React.FC = () => {
               >
                 <Grid item>
                   <TableFilterButton
-                    active={"openAccordion" === settingsIsOpen}
+                    isActive={"openAccordion" === settingsIsOpen}
                     variant="contained"
                     size="small"
                     startIcon={<SettingsIcon />}
@@ -112,7 +112,7 @@ export const TableArbitrageFilter: React.FC = () => {
                   <TableFilterButton
                     variant="contained"
                     size="small"
-                    active={isFavourites}
+                    isActive={isFavourites}
                     startIcon={isFavourites ? <StarIcon /> : <StarBorderIcon />}
                     onClick={() => setIsFavourites((value) => !value)}
                   >
@@ -156,7 +156,7 @@ export const TableArbitrageFilter: React.FC = () => {
           <Grid container alignItems="center" spacing={1.5}>
             <Grid item>
               <TableFilterButton
-                active
+                isActive
                 variant="contained"
                 size="small"
                 onClick={() => onChangeModalAdd({ open: true })}
@@ -167,7 +167,7 @@ export const TableArbitrageFilter: React.FC = () => {
             </Grid>
             <Grid item>
               <TableFilterButton
-                active
+                isActive
                 variant="contained"
                 size="small"
                 onClick={() => onChangeModalAddExchange({ open: true })}
@@ -178,7 +178,7 @@ export const TableArbitrageFilter: React.FC = () => {
             </Grid>
             <Grid item>
               <TableFilterButton
-                active
+                isActive
                 variant="contained"
                 size="small"
                 onClick={() => onChangeModalDepSpread({ open: true })}

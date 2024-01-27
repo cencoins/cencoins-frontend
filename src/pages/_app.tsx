@@ -15,6 +15,7 @@ import { RefreshTokenHandler } from "@/components/RefreshTokenHandler/RefreshTok
 import { appWithTranslation } from "next-i18next";
 import { Session } from "next-auth";
 import nextI18NextConfig from "../../next-i18next.config.js";
+import "./../styles/reset.css";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();

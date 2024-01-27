@@ -66,7 +66,7 @@ Props): JSX.Element => {
       alignItems={"center"}
       width={1}
     >
-      <Link href="/" locale={i18n.language}>
+      <Link href="/">
         <Image
           alt="Cencoins logo"
           width={101}
@@ -78,11 +78,7 @@ Props): JSX.Element => {
         {pages.map((p, i) => (
           <Box key={i} marginLeft={3}>
             {!p.children ? (
-              <Link
-                href={p.href ?? ""}
-                locale={i18n.language}
-                style={{ textDecoration: "none" }}
-              >
+              <Link href={p.href ?? ""} style={{ textDecoration: "none" }}>
                 <MuiLink
                   component="span"
                   color={"text.primary"}
@@ -104,7 +100,7 @@ Props): JSX.Element => {
         {session.status === "unauthenticated" && (
           <>
             <Box marginLeft={3}>
-              <Link href="/login" locale={i18n.language}>
+              <Link href="/login">
                 <Button
                   variant="outlined"
                   size="large"
@@ -120,7 +116,7 @@ Props): JSX.Element => {
               </Link>
             </Box>
             <Box marginLeft={3}>
-              <Link href="/signup" locale={i18n.language}>
+              <Link href="/signup">
                 <Button
                   variant="contained"
                   color="primary"
