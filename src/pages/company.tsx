@@ -60,10 +60,10 @@ const CompanyPage = (): JSX.Element => {
           <Button endIcon={<ArrowRightAltIcon />}>{t("Подробнее")}</Button>
         </Link>
       </Container>
-      <Paper
-        elevation={4}
-        style={{
-          backgroundColor: theme.palette.background.footer,
+      <Box
+        sx={{
+          position: "relative",
+          backgroundColor: theme.palette.alternate.main,
         }}
       >
         <Container py={8}>
@@ -183,7 +183,7 @@ const CompanyPage = (): JSX.Element => {
             </Grid>
           </Grid>
         </Container>
-      </Paper>
+      </Box>
       <Container py={9}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>

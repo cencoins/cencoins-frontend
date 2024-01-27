@@ -16,10 +16,7 @@ interface Props {
   bgcolor?: string;
 }
 
-export const Navigation: React.FC<Props> = ({
-  colorInvert = false,
-  bgcolor = "transparent",
-}) => {
+export const Navigation: React.FC<Props> = ({ colorInvert = false }) => {
   const theme = useTheme();
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const isMd = useMediaQuery(theme.breakpoints.up("md"), {
@@ -43,7 +40,7 @@ export const Navigation: React.FC<Props> = ({
         position={"sticky"}
         sx={{
           top: 0,
-          backgroundColor: trigger ? theme.palette.background.paper : bgcolor,
+          backgroundColor: theme.palette.background.paper,
         }}
         elevation={1}
       >

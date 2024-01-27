@@ -191,7 +191,6 @@ const TariffsPage = (): JSX.Element => {
           sx={{
             position: "relative",
             backgroundColor: theme.palette.alternate.main,
-            backgroundImage: `linear-gradient(120deg, ${theme.palette.background.paper} 0%, ${theme.palette.alternate.main} 100%)`,
             marginTop: -13,
             paddingTop: 13,
           }}
