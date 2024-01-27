@@ -8,13 +8,14 @@ import createEmotionCache from "@/theme/createEmotionCache";
 import { Layout } from "@/components/Layout/Layout";
 import { SessionProvider } from "next-auth/react";
 import { useDarkMode } from "@/hooks/useDarkMode";
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import AOS from "aos";
 import getTheme from "@/theme";
 import { RefreshTokenHandler } from "@/components/RefreshTokenHandler/RefreshTokenHandler";
 import { appWithTranslation } from "next-i18next";
 import { Session } from "next-auth";
 import nextI18NextConfig from "../../next-i18next.config.js";
+
 import "./../styles/reset.css";
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -22,6 +23,10 @@ const clientSideEmotionCache = createEmotionCache();
 
 export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
+  Component: AppProps["Component"] & {
+    // eslint-disable-next-line no-unused-vars
+    getLayout?: (page: ReactElement) => JSX.Element;
+  };
   pageProps: {
     session?: Session;
   };
@@ -34,6 +39,7 @@ const App = (props: MyAppProps) => {
     pageProps: { session, ...pageProps },
   } = props;
   const [interval, setInterval] = useState(0);
+  const getLayout = Component.getLayout || ((page: ReactElement) => page);
 
   useEffect(() => {
     // Remove the server-side injected CSS.
@@ -67,9 +73,7 @@ const App = (props: MyAppProps) => {
         <ThemeProvider theme={getTheme(themeMode, themeToggler)}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <Layout>{getLayout(<Component {...pageProps} />)}</Layout>
         </ThemeProvider>
         <RefreshTokenHandler setInterval={setInterval} />
       </SessionProvider>

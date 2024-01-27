@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
+import { accountPages } from "../Layout/LayoutAccount";
 
 interface NavItemProps {
   title: string;
@@ -34,8 +35,7 @@ interface Props {
 const NavigationBar = ({
   handleMobileMenuClick,
   pages = [],
-}: // colorInvert,
-Props): JSX.Element => {
+}: Props): JSX.Element => {
   const theme = useTheme();
   const session = useSession();
   const { mode } = theme.palette;
@@ -167,15 +167,34 @@ Props): JSX.Element => {
                 <AccountCircleIcon fontSize="large" />
               </IconButton>
             </Box>
-            <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-              <MenuItem
-                onClick={() => {
-                  signOut();
-                  handleClose();
-                }}
-              >
-                {t("Выйти")}
-              </MenuItem>
+            <Menu
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              sx={{
+                top: 8,
+                "& .MuiList-root": {
+                  borderTop: `2px solid ${theme.palette.primary.main}`,
+                },
+              }}
+            >
+              {accountPages.map((item) => (
+                <MenuItem
+                  key={item.id}
+                  onClick={async () => {
+                    if (item.id === "logout") {
+                      return await signOut();
+                    }
+                    await router.push(item.href);
+                    handleClose();
+                  }}
+                  sx={{
+                    minWidth: 270,
+                  }}
+                >
+                  {t(item.title)}
+                </MenuItem>
+              ))}
             </Menu>
           </>
         )}
