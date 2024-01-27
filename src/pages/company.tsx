@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Container from "@/components/Container/Container";
-import { Button, useTheme, Typography, Paper, Grid } from "@mui/material";
+import { Button, useTheme, Typography, Grid } from "@mui/material";
 import { useTranslation } from "next-i18next";
 import { GetServerSideProps } from "next";
 import { getInitialServerSideProps } from "@/utils/getInitialServerSide";
