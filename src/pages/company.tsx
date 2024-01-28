@@ -10,9 +10,9 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Link from "next/link";
+import { Telegram } from "@/components/Company/Socials/Telegram";
+import { Email } from "@/components/Company/Socials/Email";
 
-import PhoneIcon from "@mui/icons-material/Phone";
-import EmailIcon from "@mui/icons-material/Email";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 
 interface Props {}
@@ -82,74 +82,10 @@ const CompanyPage = (): JSX.Element => {
           </Typography>
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
-              <Grid container alignItems="center" spacing={2}>
-                <Grid item>
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    width={40}
-                    height={40}
-                    borderRadius="50%"
-                    sx={{ backgroundColor: theme.palette.secondary.dark }}
-                  >
-                    <PhoneIcon
-                      style={{
-                        color: theme.palette.grey.A100,
-                      }}
-                    />
-                  </Box>
-                </Grid>
-                <Grid item>
-                  <Typography variant="body1">Telegram</Typography>
-                  <Link
-                    href="https://teleg.run/cencoins"
-                    passHref
-                    legacyBehavior
-                  >
-                    <Typography
-                      component="a"
-                      variant="body1"
-                      color={theme.palette.text.secondary}
-                    >
-                      @cencoins
-                    </Typography>
-                  </Link>
-                </Grid>
-              </Grid>
+              <Telegram />
             </Grid>
             <Grid item>
-              <Grid container alignItems="center" spacing={2}>
-                <Grid item>
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    width={40}
-                    height={40}
-                    borderRadius="50%"
-                    sx={{ backgroundColor: theme.palette.secondary.dark }}
-                  >
-                    <EmailIcon
-                      style={{
-                        color: theme.palette.grey.A100,
-                      }}
-                    />
-                  </Box>
-                </Grid>
-                <Grid item>
-                  <Typography variant="body1">Email</Typography>
-                  <Link href="mailto:info@cencoins.com" passHref legacyBehavior>
-                    <Typography
-                      component="a"
-                      variant="body1"
-                      color={theme.palette.text.secondary}
-                    >
-                      info@cencoins.com
-                    </Typography>
-                  </Link>
-                </Grid>
-              </Grid>
+              <Email />
             </Grid>
             <Grid item>
               <Grid container alignItems="center" spacing={2}>

@@ -8,24 +8,32 @@ import { GetServerSideProps } from "next";
 import { LayoutAccount } from "@/components/Layout/LayoutAccount";
 import { useTranslation } from "next-i18next";
 import Head from "next/head";
+import { SettingsTabs } from "@/components/Account/Settings/SettingsTabs";
 
 interface Props {}
 
-const AccountSettings = ({}: Props) => {
+const AccountSettingsCoins = ({}: Props) => {
   const { t } = useTranslation("common");
 
   return (
     <>
       <Head>
-        <title>{t("Настройки")}</title>
+        <title>
+          {t("Настройки")} | {t("Монеты")}
+        </title>
       </Head>
       <Box>123</Box>
     </>
   );
 };
 
-AccountSettings.getLayout = (page: ReactElement) => {
-  return <LayoutAccount>{page}</LayoutAccount>;
+AccountSettingsCoins.getLayout = (page: ReactElement) => {
+  return (
+    <LayoutAccount>
+      <SettingsTabs initialTab={0} />
+      <Box>{page}</Box>
+    </LayoutAccount>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async (
@@ -52,4 +60,4 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   };
 };
 
-export default AccountSettings;
+export default AccountSettingsCoins;
