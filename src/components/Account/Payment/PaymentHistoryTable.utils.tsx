@@ -1,5 +1,4 @@
 import { TableCell } from "@/components/Table/TableCell/TableCell";
-import Box from "@mui/material/Box";
 import { createColumnHelper } from "@tanstack/react-table";
 
 interface TablePaymenHistoryItem {
