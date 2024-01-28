@@ -1,15 +1,16 @@
 import { PropsWithChildren } from "react";
 import { useTranslation } from "next-i18next";
-import { Box } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 
-interface Props {
+interface Props extends BoxProps {
   textAlign?: "left" | "right" | "center";
+  color?: string;
 }
 
 export const TableCell: React.FC<PropsWithChildren<Props>> = ({
   children,
-  textAlign,
+  ...props
 }) => {
   const { t } = useTranslation();
-  return <Box textAlign={textAlign}>{t(String(children))}</Box>;
+  return <Box {...props}>{t(String(children))}</Box>;
 };

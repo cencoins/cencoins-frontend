@@ -9,6 +9,11 @@ import { LayoutAccount } from "@/components/Layout/LayoutAccount";
 import { useTranslation } from "next-i18next";
 import Head from "next/head";
 import { PaymentTabs } from "@/components/Account/Payment/PaymentTabs";
+import { Table } from "@/components/Table/Table";
+import {
+  tablePaymenHistoryColumns,
+  tablePaymentHistoryData,
+} from "@/components/Account/Payment/PaymentHistoryTable.utils";
 
 interface Props {}
 
@@ -22,7 +27,12 @@ const AccountPayment = ({}: Props) => {
           {t("Оплата")} | {t("История подписок")}
         </title>
       </Head>
-      <Box>123</Box>
+      <Box>
+        <Table
+          data={tablePaymentHistoryData}
+          columns={tablePaymenHistoryColumns}
+        />
+      </Box>
     </>
   );
 };
