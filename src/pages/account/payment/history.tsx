@@ -8,6 +8,7 @@ import { GetServerSideProps } from "next";
 import { LayoutAccount } from "@/components/Layout/LayoutAccount";
 import { useTranslation } from "next-i18next";
 import Head from "next/head";
+import { PaymentTabs } from "@/components/Account/Payment/PaymentTabs";
 
 interface Props {}
 
@@ -17,7 +18,9 @@ const AccountPayment = ({}: Props) => {
   return (
     <>
       <Head>
-        <title>{t("Оплата")}</title>
+        <title>
+          {t("Оплата")} | {t("История подписок")}
+        </title>
       </Head>
       <Box>123</Box>
     </>
@@ -25,7 +28,12 @@ const AccountPayment = ({}: Props) => {
 };
 
 AccountPayment.getLayout = (page: ReactElement) => {
-  return <LayoutAccount>{page}</LayoutAccount>;
+  return (
+    <LayoutAccount>
+      <PaymentTabs initialTab={0} />
+      <Box>{page}</Box>
+    </LayoutAccount>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async (

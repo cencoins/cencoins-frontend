@@ -27,7 +27,7 @@ const AccountProfile = () => {
       </Head>
       <Box>
         <Typography variant="h6" gutterBottom fontWeight={700}>
-          {t("Учетная запись")}
+          {t("Профиль")}
         </Typography>
         <Box paddingY={4}>
           <Divider />
@@ -78,7 +78,7 @@ const AccountProfile = () => {
               </Typography>
             </Grid>
             <Grid item>
-              <Link href="/account/payment">
+              <Link href="/account/payment/history">
                 <Button variant="contained">{t("Управление")}</Button>
               </Link>
             </Grid>
