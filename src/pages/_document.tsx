@@ -12,7 +12,6 @@ import { AppType } from "next/app";
 import { MyAppProps } from "@/pages/_app";
 import createEmotionCache from "@/theme/createEmotionCache";
 import { light } from "@/theme/palette";
-import i18nextConfig from "../../next-i18next.config";
 import { LANGUAGES } from "@/constants/LANGUAGES";
 
 interface MyDocumentProps extends DocumentProps {
