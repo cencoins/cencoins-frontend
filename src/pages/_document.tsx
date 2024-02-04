@@ -13,6 +13,7 @@ import { MyAppProps } from "@/pages/_app";
 import createEmotionCache from "@/theme/createEmotionCache";
 import { light } from "@/theme/palette";
 import i18nextConfig from "../../next-i18next.config";
+import { LANGUAGES } from "@/constants/LANGUAGES";
 
 interface MyDocumentProps extends DocumentProps {
   emotionStyleTags: JSX.Element[];
@@ -22,8 +23,7 @@ export default function MyDocument({
   emotionStyleTags,
   __NEXT_DATA__,
 }: MyDocumentProps) {
-  const currentLocale =
-    __NEXT_DATA__.locale ?? i18nextConfig.i18n.defaultLocale;
+  const currentLocale = __NEXT_DATA__.locale ?? LANGUAGES.EN;
   return (
     <Html lang={currentLocale}>
       <Head>
