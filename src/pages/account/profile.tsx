@@ -59,13 +59,13 @@ const AccountProfile = () => {
                 {t("Биллинг")}
               </Typography>
               <Typography variant="body2" fontWeight={700} mb={3}>
-                Тип подписки:{" "}
+                {t("Тип подписки")}:{" "}
                 <Typography component="span" variant="body2" fontWeight={400}>
                   Enterprise
                 </Typography>
               </Typography>
               <Typography variant="body2" fontWeight={700} mb={3}>
-                Статус:{" "}
+                {t("Статус")}:{" "}
                 <Typography component="span" variant="body2" fontWeight={400}>
                   активная
                 </Typography>
