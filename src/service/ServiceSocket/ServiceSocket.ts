@@ -8,12 +8,14 @@ export default class ServiceSocket {
   public static connection: Nullable<HubConnection> = null;
   public static isConnected: boolean = false;
 
-  public static async connect(url: string, token: string) {
+  public static async connect(url: string, token?: string) {
     const connectionBuilder = new HubConnectionBuilder();
 
     this.connection = connectionBuilder
       .withUrl(url, {
-        accessTokenFactory: () => token,
+        ...(token && {
+          accessTokenFactory: () => token,
+        }),
       })
       .withAutomaticReconnect()
       .configureLogging(LogLevel.Information)

@@ -8,6 +8,7 @@ const nextConfig = {
   generateEtags: false,
   publicRuntimeConfig: {
     WEBSOCKET_URL: process.env.WEBSOCKET_URL,
+    WEBSOCKET_PUBLIC_URL: process.env.WEBSOCKET_PUBLIC_URL,
   },
   serverRuntimeConfig: {
     BASE_URL: process.env.BASE_URL,
