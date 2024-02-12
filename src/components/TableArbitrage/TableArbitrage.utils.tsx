@@ -2,271 +2,12 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { TableCellFavourite } from "../Table/TableCell/TableCellFavourite";
 import { TableCell } from "../Table/TableCell/TableCell";
 import { TableCellCoin } from "../Table/TableCell/TableCellCoin";
+import { Spread } from "@/service/ServiceSocket/ServiceSocket.dto";
+import { onSelectSpread } from "@/stores/arbitrage.effector";
 
-interface TableCoin {
-  name: string;
-  shortName: string;
-  logo: string;
-}
-
-interface TableMarket {
-  name: string;
-  logo: string;
-}
-
-interface TableArbitrageItem {
+export interface TableArbitrageItem extends Spread {
   isFavourite: boolean;
-  pair: string;
-  coin: TableCoin;
-  buyMarket: TableMarket;
-  buyPrice: number;
-  sellMarket: TableMarket;
-  sellPrice: number;
-  spread: number;
 }
-
-export const tableArbitrageData: TableArbitrageItem[] = [
-  {
-    isFavourite: true,
-    pair: "USDT/TON",
-    coin: {
-      name: "Toncoin",
-      shortName: "TON",
-      logo: "/images/ton.svg",
-    },
-    buyMarket: {
-      name: "Bybit",
-      logo: "/images/bybit.svg",
-    },
-    buyPrice: 2.1056,
-    sellPrice: 2.207,
-    sellMarket: {
-      name: "Kraken",
-      logo: "/images/kraken.svg",
-    },
-    spread: 3.2,
-  },
-  {
-    isFavourite: false,
-    pair: "USDT/TON",
-    coin: {
-      name: "Toncoin",
-      shortName: "TON",
-      logo: "/images/ton.svg",
-    },
-    buyMarket: {
-      name: "Bybit",
-      logo: "/images/bybit.svg",
-    },
-    buyPrice: 2.1056,
-    sellPrice: 2.207,
-    sellMarket: {
-      name: "Kraken",
-      logo: "/images/kraken.svg",
-    },
-    spread: 3.2,
-  },
-  {
-    isFavourite: true,
-    pair: "USDT/TON",
-    coin: {
-      name: "Toncoin",
-      shortName: "TON",
-      logo: "/images/ton.svg",
-    },
-    buyMarket: {
-      name: "Bybit",
-      logo: "/images/bybit.svg",
-    },
-    buyPrice: 2.1056,
-    sellPrice: 2.207,
-    sellMarket: {
-      name: "Kraken",
-      logo: "/images/kraken.svg",
-    },
-    spread: 3.2,
-  },
-  {
-    isFavourite: true,
-    pair: "USDT/TON",
-    coin: {
-      name: "Toncoin",
-      shortName: "TON",
-      logo: "/images/ton.svg",
-    },
-    buyMarket: {
-      name: "Bybit",
-      logo: "/images/bybit.svg",
-    },
-    buyPrice: 2.1056,
-    sellPrice: 2.207,
-    sellMarket: {
-      name: "Kraken",
-      logo: "/images/kraken.svg",
-    },
-    spread: 3.2,
-  },
-  {
-    isFavourite: true,
-    pair: "USDT/TON",
-    coin: {
-      name: "Toncoin",
-      shortName: "TON",
-      logo: "/images/ton.svg",
-    },
-    buyMarket: {
-      name: "Bybit",
-      logo: "/images/bybit.svg",
-    },
-    buyPrice: 2.1056,
-    sellPrice: 2.207,
-    sellMarket: {
-      name: "Kraken",
-      logo: "/images/kraken.svg",
-    },
-    spread: 3.2,
-  },
-  {
-    isFavourite: false,
-    pair: "USDT/TON",
-    coin: {
-      name: "Toncoin",
-      shortName: "TON",
-      logo: "/images/ton.svg",
-    },
-    buyMarket: {
-      name: "Bybit",
-      logo: "/images/bybit.svg",
-    },
-    buyPrice: 2.1056,
-    sellPrice: 2.207,
-    sellMarket: {
-      name: "Kraken",
-      logo: "/images/kraken.svg",
-    },
-    spread: 3.2,
-  },
-  {
-    isFavourite: true,
-    pair: "USDT/TON",
-    coin: {
-      name: "Toncoin",
-      shortName: "TON",
-      logo: "/images/ton.svg",
-    },
-    buyMarket: {
-      name: "Bybit",
-      logo: "/images/bybit.svg",
-    },
-    buyPrice: 2.1056,
-    sellPrice: 2.207,
-    sellMarket: {
-      name: "Kraken",
-      logo: "/images/kraken.svg",
-    },
-    spread: 3.2,
-  },
-  {
-    isFavourite: true,
-    pair: "USDT/TON",
-    coin: {
-      name: "Toncoin",
-      shortName: "TON",
-      logo: "/images/ton.svg",
-    },
-    buyMarket: {
-      name: "Bybit",
-      logo: "/images/bybit.svg",
-    },
-    buyPrice: 2.1056,
-    sellPrice: 2.207,
-    sellMarket: {
-      name: "Kraken",
-      logo: "/images/kraken.svg",
-    },
-    spread: 3.2,
-  },
-  {
-    isFavourite: true,
-    pair: "USDT/TON",
-    coin: {
-      name: "Toncoin",
-      shortName: "TON",
-      logo: "/images/ton.svg",
-    },
-    buyMarket: {
-      name: "Bybit",
-      logo: "/images/bybit.svg",
-    },
-    buyPrice: 2.1056,
-    sellPrice: 2.207,
-    sellMarket: {
-      name: "Kraken",
-      logo: "/images/kraken.svg",
-    },
-    spread: 3.2,
-  },
-  {
-    isFavourite: false,
-    pair: "USDT/TON",
-    coin: {
-      name: "Toncoin",
-      shortName: "TON",
-      logo: "/images/ton.svg",
-    },
-    buyMarket: {
-      name: "Bybit",
-      logo: "/images/bybit.svg",
-    },
-    buyPrice: 2.1056,
-    sellPrice: 2.207,
-    sellMarket: {
-      name: "Kraken",
-      logo: "/images/kraken.svg",
-    },
-    spread: 3.2,
-  },
-  {
-    isFavourite: true,
-    pair: "USDT/TON",
-    coin: {
-      name: "Toncoin",
-      shortName: "TON",
-      logo: "/images/ton.svg",
-    },
-    buyMarket: {
-      name: "Bybit",
-      logo: "/images/bybit.svg",
-    },
-    buyPrice: 2.1056,
-    sellPrice: 2.207,
-    sellMarket: {
-      name: "Kraken",
-      logo: "/images/kraken.svg",
-    },
-    spread: 3.2,
-  },
-  {
-    isFavourite: true,
-    pair: "USDT/TON",
-    coin: {
-      name: "Toncoin",
-      shortName: "TON",
-      logo: "/images/ton.svg",
-    },
-    buyMarket: {
-      name: "Bybit",
-      logo: "/images/bybit.svg",
-    },
-    buyPrice: 2.1056,
-    sellPrice: 2.207,
-    sellMarket: {
-      name: "Kraken",
-      logo: "/images/kraken.svg",
-    },
-    spread: 3.2,
-  },
-];
 
 const columnHelper = createColumnHelper<TableArbitrageItem>();
 
@@ -276,40 +17,44 @@ export const tableArbitrageColumns = [
     header: () => "",
     size: 40,
     cell: (info) => (
-      <TableCellFavourite isFavourite={info.getValue()} {...info} />
+      <TableCellFavourite
+        isFavourite={info.getValue()}
+        onClick={() => onSelectSpread(info.row.original.key)}
+        {...info}
+      />
     ),
   }),
-  columnHelper.accessor((row) => row.coin, {
-    id: "coin",
+  columnHelper.accessor((row) => row.coinDto, {
+    id: "coinDto",
     size: 204,
     header: () => <TableCell textAlign="left">Монета</TableCell>,
     cell: (info) => <TableCellCoin {...info.getValue()} />,
   }),
-  columnHelper.accessor((row) => row.pair, {
+  columnHelper.accessor((row) => row.coinDto.pair, {
     id: "pair",
     size: 74,
     header: () => <TableCell textAlign="left">Пара</TableCell>,
     cell: (info) => <TableCell>{info.getValue()}</TableCell>,
   }),
-  columnHelper.accessor((row) => row.buyMarket, {
-    id: "buyMarket",
+  columnHelper.accessor((row) => row.marketBuyDto, {
+    id: "marketBuyDto",
     size: 174,
     header: () => <TableCell textAlign="left">Покупка</TableCell>,
     cell: (info) => <TableCellCoin {...info.getValue()} />,
   }),
-  columnHelper.accessor((row) => row.buyPrice, {
-    id: "buyPrice",
+  columnHelper.accessor((row) => row.priceBuy, {
+    id: "priceBuy",
     size: 100,
     header: () => <TableCell textAlign="right">Цена</TableCell>,
     cell: (info) => <TableCell textAlign="right">{info.getValue()}</TableCell>,
   }),
-  columnHelper.accessor((row) => row.sellMarket, {
-    id: "sellMarket",
+  columnHelper.accessor((row) => row.marketAskDto, {
+    id: "marketAskDto",
     size: 174,
     header: () => <TableCell textAlign="left">Продажа</TableCell>,
     cell: (info) => <TableCellCoin {...info.getValue()} />,
   }),
-  columnHelper.accessor((row) => row.sellPrice, {
+  columnHelper.accessor((row) => row.priceAsk, {
     id: "sellPrice",
     size: 100,
     header: () => <TableCell textAlign="right">Цена</TableCell>,
@@ -320,7 +65,10 @@ export const tableArbitrageColumns = [
     size: 54,
     header: () => <TableCell textAlign="right">Спред</TableCell>,
     cell: (info) => (
-      <TableCell textAlign="right">{`${info.getValue()}%`}</TableCell>
+      <TableCell
+        textAlign="right"
+        color={info.getValue() < 0 ? "error.main" : "text.default"}
+      >{`${info.getValue()}%`}</TableCell>
     ),
   }),
 ];

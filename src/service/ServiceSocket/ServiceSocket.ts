@@ -1,8 +1,10 @@
+import { onStreamOrders } from "@/stores/arbitrage.effector";
 import {
   HubConnection,
   HubConnectionBuilder,
   LogLevel,
 } from "@microsoft/signalr";
+import { Spread } from "./ServiceSocket.dto";
 
 export default class ServiceSocket {
   public static connection: Nullable<HubConnection> = null;
@@ -26,7 +28,6 @@ export default class ServiceSocket {
 
   public static async disconnect() {
     this.isConnected = false;
-    // this.connection?.off(METHOD_NAME)
     return null;
   }
 
@@ -38,9 +39,15 @@ export default class ServiceSocket {
 
         if (this.connection && this.isConnected) {
           try {
-            // if (notificationCommandCallback) {
-            //   this.connection.on("onNotification", notificationCommandCallback);
-            // }
+            this.connection.on("onstreamorders", (data) => {
+              if (data.spreadArray) {
+                onStreamOrders(
+                  data.spreadArray.sort((a: Spread, b: Spread) =>
+                    a.key > b.key ? 1 : b.key > a.key ? -1 : 0,
+                  ),
+                );
+              }
+            });
           } catch (error) {
             // eslint-disable-next-line no-console
             console.log(`Can't connection, error: ${error}`);

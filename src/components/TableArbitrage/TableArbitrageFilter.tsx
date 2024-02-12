@@ -45,6 +45,8 @@ import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
 import { onChangeModalDepSpread } from "@/stores/modalDepSpread";
 import { onChangeModalAddExchange } from "@/stores/modalAddExchange";
+import { useUnit } from "effector-react";
+import { $arbitrage, onShowSelected } from "@/stores/arbitrage.effector";
 
 const AccordionFilter = styled(Accordion)(() => ({
   background: "transparent",
@@ -65,8 +67,8 @@ const Details = styled(AccordionDetails)(() => ({
 
 export const TableArbitrageFilter: React.FC = () => {
   const { t } = useTranslation();
+  const arbitrage = useUnit($arbitrage);
   const [settingsIsOpen, setSettingsIsOpen] = useState("");
-  const [isFavourites, setIsFavourites] = useState(false);
 
   const handleAccordClick = (value: string) => {
     if (settingsIsOpen !== value) {
@@ -112,9 +114,11 @@ export const TableArbitrageFilter: React.FC = () => {
                   <TableFilterButton
                     variant="contained"
                     size="small"
-                    isActive={isFavourites}
-                    startIcon={isFavourites ? <StarIcon /> : <StarBorderIcon />}
-                    onClick={() => setIsFavourites((value) => !value)}
+                    isActive={arbitrage.showSelected}
+                    startIcon={
+                      arbitrage.showSelected ? <StarIcon /> : <StarBorderIcon />
+                    }
+                    onClick={() => onShowSelected()}
                   >
                     {t("Избранное")}
                   </TableFilterButton>
