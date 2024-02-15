@@ -15,16 +15,7 @@ export const TableArbitrage: React.FC = () => {
       </Box>
       <Box>
         <Table
-          data={arbitrage.data.sort((a, b) => {
-            if (a.coinDto.name > b.coinDto.name) {
-              return 1;
-            }
-            if (a.coinDto.name < b.coinDto.name) {
-              return -1;
-            }
-
-            return 0;
-          })}
+          data={arbitrage.data.sort((a, b) => b.spread - a.spread)}
           columns={tableArbitrageColumns}
         />
       </Box>
