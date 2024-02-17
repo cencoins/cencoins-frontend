@@ -16,6 +16,7 @@ export const TableCellCoin: React.FC<Props> = ({ name, symbol, iconUrl }) => {
       {iconUrl && (
         <Grid item display="inline-flex" alignItems="center">
           <Image
+            unoptimized
             alt={`${name} logo`}
             width={32}
             height={32}
