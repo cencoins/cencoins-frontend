@@ -16,7 +16,7 @@ const nextConfig = {
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   },
   images: {
-    domains: ["assets.maccarianagency.com", "https://s3.cencoins.com"],
+    domains: ["assets.maccarianagency.com", "s3.cencoins.com"],
   },
   i18n,
 };
