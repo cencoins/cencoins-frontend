@@ -16,7 +16,12 @@ const nextConfig = {
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   },
   images: {
-    domains: ["assets.maccarianagency.com", "s3.cencoins.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "s3.cencoins.com",
+      },
+    ],
   },
   i18n,
 };
