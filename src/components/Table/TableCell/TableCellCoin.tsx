@@ -15,7 +15,13 @@ export const TableCellCoin: React.FC<Props> = ({ name, symbol, iconUrl }) => {
     <Grid container spacing={1} alignItems="center" flexWrap="nowrap">
       {iconUrl && (
         <Grid item display="inline-flex" alignItems="center">
-          <Image alt={`${name} logo`} width={32} height={32} src={iconUrl} />
+          <Image
+            alt={`${name} logo`}
+            width={32}
+            height={32}
+            src={iconUrl}
+            style={{ objectFit: "contain" }}
+          />
         </Grid>
       )}
       <Grid item container flexDirection="column" spacing={0.5}>
