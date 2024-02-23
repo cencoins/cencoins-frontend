@@ -3,6 +3,7 @@ export interface Coin {
   name: string;
   pair: string;
   symbol: string;
+  exchange: string;
 }
 
 export interface Market {

@@ -30,11 +30,15 @@ export const tableArbitrageColumns = [
     header: () => <TableCell textAlign="left">Монета</TableCell>,
     cell: (info) => <TableCellCoin {...info.getValue()} />,
   }),
-  columnHelper.accessor((row) => row.coinDto.pair, {
+  columnHelper.accessor((row) => row.coinDto, {
     id: "pair",
     size: 74,
     header: () => <TableCell textAlign="left">Пара</TableCell>,
-    cell: (info) => <TableCell>{info.getValue()}</TableCell>,
+    cell: (info) => (
+      <TableCell>
+        {`${info.getValue().symbol} / ${info.getValue().exchange}`}
+      </TableCell>
+    ),
   }),
   columnHelper.accessor((row) => row.marketBuyDto, {
     id: "marketBuyDto",
