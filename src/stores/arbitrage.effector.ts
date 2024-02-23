@@ -1,7 +1,7 @@
 import { TableArbitrageItem } from "@/components/TableArbitrage/TableArbitrage.utils";
 import { Spread } from "@/service/ServiceSocket/ServiceSocket.dto";
 import { createEvent, createStore } from "effector";
-import { unionBy } from "lodash";
+import { filter, flatten, map, unionBy } from "lodash";
 
 interface ArbitrageStore {
   data: TableArbitrageItem[];
@@ -19,13 +19,21 @@ export const $arbitrage = createStore<ArbitrageStore>({
   showSelected: false,
 })
   .on(onStreamOrders, (state, payload) => {
+    const updatedArray = unionBy(
+      payload.map((item) => ({ ...item, isFavourite: false })),
+      state.data,
+      "key",
+    );
+
+    const filteredArray = flatten(
+      map(payload, function (item) {
+        return filter(updatedArray, item);
+      }),
+    ) as TableArbitrageItem[];
+
     return {
       ...state,
-      data: unionBy(
-        payload.map((item) => ({ ...item, isFavourite: false })),
-        state.data,
-        "key",
-      ),
+      data: filteredArray,
     };
   })
   .on(onSelectSpread, (state, payload) => ({
