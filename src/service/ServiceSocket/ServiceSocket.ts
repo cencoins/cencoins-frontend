@@ -1,16 +1,22 @@
-import { onStreamOrders } from "@/stores/arbitrage.effector";
 import {
   HubConnection,
   HubConnectionBuilder,
   LogLevel,
 } from "@microsoft/signalr";
-import { Spread } from "./ServiceSocket.dto";
 
 export default class ServiceSocket {
   public static connection: Nullable<HubConnection> = null;
   public static isConnected: boolean = false;
 
-  public static async connect(url: string, token?: string) {
+  public static async connect({
+    url,
+    token,
+    events,
+  }: {
+    url: string;
+    token?: string;
+    events: Record<string, any>;
+  }) {
     const connectionBuilder = new HubConnectionBuilder();
 
     this.connection = connectionBuilder
@@ -23,7 +29,7 @@ export default class ServiceSocket {
       .configureLogging(LogLevel.Information)
       .build();
 
-    await this.startConnect();
+    await this.startConnect({ events });
   }
 
   public static async disconnect() {
@@ -31,7 +37,11 @@ export default class ServiceSocket {
     return null;
   }
 
-  public static async startConnect() {
+  public static async startConnect({
+    events,
+  }: {
+    events: Record<string, any>;
+  }) {
     if (this.connection) {
       try {
         await this.connection.start();
@@ -39,15 +49,11 @@ export default class ServiceSocket {
 
         if (this.connection && this.isConnected) {
           try {
-            this.connection.on("onstreamorders", (data) => {
-              if (data.spreadArray) {
-                onStreamOrders(
-                  data.spreadArray.sort((a: Spread, b: Spread) =>
-                    a.key > b.key ? 1 : b.key > a.key ? -1 : 0,
-                  ),
-                );
-              }
-            });
+            if (events.onStreamOrders) {
+              this.connection.on("onstreamorders", (data) => {
+                events.onStreamOrders(data.spreadArray);
+              });
+            }
           } catch (error) {
             // eslint-disable-next-line no-console
             console.log(`Can't connection, error: ${error}`);

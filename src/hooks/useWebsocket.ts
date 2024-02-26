@@ -7,7 +7,7 @@ const {
   publicRuntimeConfig: { WEBSOCKET_PUBLIC_URL },
 } = getConfig();
 
-export const useWebsocket = () => {
+export const useWebsocket = ({ events }: { events: Record<string, any> }) => {
   const session = useSession();
 
   useEffect(() => {
@@ -15,13 +15,17 @@ export const useWebsocket = () => {
       // if (session.status === "authenticated") {
       //   ServiceSocket.connect(WEBSOCKET_URL, session.data.accessToken);
       // } else if (session.status === "unauthenticated") {
-      ServiceSocket.connect(WEBSOCKET_PUBLIC_URL);
+      ServiceSocket.connect({
+        url: WEBSOCKET_PUBLIC_URL,
+        events,
+      });
       // }
     }
 
     return () => {
       ServiceSocket.disconnect();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
   return null;

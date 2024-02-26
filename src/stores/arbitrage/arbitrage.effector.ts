@@ -13,11 +13,14 @@ export const onStreamOrders = createEvent<Spread[]>();
 export const onSelectSpread = createEvent<string>();
 export const onShowSelected = createEvent();
 
-export const $arbitrage = createStore<ArbitrageStore>({
-  data: [],
-  selected: [],
-  showSelected: false,
-})
+export const $arbitrage = createStore<ArbitrageStore>(
+  {
+    data: [],
+    selected: [],
+    showSelected: false,
+  },
+  { sid: "arbitrage" },
+)
   .on(onStreamOrders, (state, payload) => {
     const updatedArray = unionBy(
       payload.map((item) => ({ ...item, isFavourite: false })),

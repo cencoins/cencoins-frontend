@@ -6,7 +6,7 @@ import { LANGUAGES } from "@/constants/LANGUAGES";
 import { LOCALES } from "@/constants/LOCALES";
 
 const {
-  serverRuntimeConfig: { BASE_URL },
+  serverRuntimeConfig: { BASE_URL, GATEWAY_URL },
 } = getConfig();
 
 const getNormalizedHeaders = (req: GetServerSidePropsContext["req"]) => {
@@ -20,7 +20,7 @@ const getNormalizedHeaders = (req: GetServerSidePropsContext["req"]) => {
 
 export const createAxiosInstance = (ctx?: GetServerSidePropsContext) => {
   const instance = axios.create({
-    baseURL: BASE_URL,
+    baseURL: ctx ? GATEWAY_URL : BASE_URL,
     headers: {
       Accept: "application/json",
       ...(ctx?.req && {

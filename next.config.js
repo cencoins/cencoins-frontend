@@ -6,6 +6,9 @@ const nextConfig = {
   swcMinify: true,
   poweredByHeader: false,
   generateEtags: false,
+  experimental: {
+    swcPlugins: ["@effector/swc-plugin"],
+  },
   publicRuntimeConfig: {
     WEBSOCKET_URL: process.env.WEBSOCKET_URL,
     WEBSOCKET_PUBLIC_URL: process.env.WEBSOCKET_PUBLIC_URL,
