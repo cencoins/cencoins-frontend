@@ -12,27 +12,27 @@ export interface TableArbitrageItem extends Spread {
 const columnHelper = createColumnHelper<TableArbitrageItem>();
 
 export const tableArbitrageColumns = [
-  columnHelper.accessor((row) => row.isFavourite, {
-    id: "isFavourite",
-    header: () => "",
-    size: 40,
-    cell: (info) => (
-      <TableCellFavourite
-        isFavourite={info.getValue()}
-        onClick={() => onSelectSpread(info.row.original.key)}
-        {...info}
-      />
-    ),
-  }),
+  // columnHelper.accessor((row) => row.isFavourite, {
+  //   id: "isFavourite",
+  //   header: () => "",
+  //   size: 40,
+  //   cell: (info) => (
+  //     <TableCellFavourite
+  //       isFavourite={info.getValue()}
+  //       onClick={() => onSelectSpread(info.row.original.key)}
+  //       {...info}
+  //     />
+  //   ),
+  // }),
   columnHelper.accessor((row) => row.coinDto, {
     id: "coinDto",
-    size: 204,
+    size: 250,
     header: () => <TableCell textAlign="left">Монета</TableCell>,
     cell: (info) => <TableCellCoin {...info.getValue()} />,
   }),
   columnHelper.accessor((row) => row.coinDto, {
     id: "pair",
-    size: 74,
+    size: 200,
     header: () => <TableCell textAlign="left">Пара</TableCell>,
     cell: (info) => (
       <TableCell>
@@ -42,7 +42,7 @@ export const tableArbitrageColumns = [
   }),
   columnHelper.accessor((row) => row.marketBuyDto, {
     id: "marketBuyDto",
-    size: 174,
+    size: 140,
     header: () => <TableCell textAlign="left">Покупка</TableCell>,
     cell: (info) => <TableCellCoin {...info.getValue()} />,
   }),
@@ -54,7 +54,7 @@ export const tableArbitrageColumns = [
   }),
   columnHelper.accessor((row) => row.marketAskDto, {
     id: "marketAskDto",
-    size: 174,
+    size: 140,
     header: () => <TableCell textAlign="left">Продажа</TableCell>,
     cell: (info) => <TableCellCoin {...info.getValue()} />,
   }),

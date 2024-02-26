@@ -1,8 +1,8 @@
 import { MouseEvent } from "react";
 import { Grid } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
-import StarIcon from "@mui/icons-material/Star";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
+// import StarIcon from "@mui/icons-material/Star";
+// import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { useUnit } from "effector-react";
 import { $arbitrage, onShowSelected } from "@/stores/arbitrage.effector";
 import Link from "next/link";
@@ -52,7 +52,7 @@ export const TableArbitrageFilter: React.FC = () => {
                 </TableFilterButton>
               </Link>
             </Grid>
-            <Grid item>
+            {/* <Grid item>
               <TableFilterButton
                 variant="contained"
                 size="small"
@@ -64,7 +64,7 @@ export const TableArbitrageFilter: React.FC = () => {
               >
                 {t("Избранное")}
               </TableFilterButton>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
         <Grid item>
@@ -74,18 +74,18 @@ export const TableArbitrageFilter: React.FC = () => {
             alignItems="center"
             spacing={1.5}
           >
-            <Grid item>
+            {/* <Grid item>
               <TableFilterChip label={t("Пара")} onDelete={() => {}} />
-            </Grid>
-            <Grid item>
-              <TableFilterChip active label={t("Монета")} onDelete={() => {}} />
+            </Grid> */}
+            {/* <Grid item>
+              <TableFilterChip  label={t("Монета")} onDelete={() => {}} />
             </Grid>
             <Grid item>
               <TableFilterChip label={t("Покупка")} onDelete={() => {}} />
             </Grid>
             <Grid item>
               <TableFilterChip label={t("Продажа")} onDelete={() => {}} />
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
       </Grid>
