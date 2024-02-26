@@ -13,6 +13,7 @@ import { MyAppProps } from "@/pages/_app";
 import createEmotionCache from "@/theme/createEmotionCache";
 import { light } from "@/theme/palette";
 import { LANGUAGES } from "@/constants/LANGUAGES";
+import { LOCALES } from "@/constants/LOCALES";
 
 interface MyDocumentProps extends DocumentProps {
   emotionStyleTags: JSX.Element[];
@@ -22,9 +23,14 @@ export default function MyDocument({
   emotionStyleTags,
   __NEXT_DATA__,
 }: MyDocumentProps) {
-  const currentLocale = __NEXT_DATA__.locale ?? LANGUAGES.EN;
+  const currentLocale =
+    __NEXT_DATA__.locale === LOCALES.DEFAULT
+      ? LANGUAGES.RU
+      : __NEXT_DATA__.locale;
+  const locale = currentLocale ?? LANGUAGES.EN;
+
   return (
-    <Html lang={currentLocale}>
+    <Html lang={locale}>
       <Head>
         <meta charSet="utf-8" />
         {/* PWA primary color */}

@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { GetLocationResponse } from "./service/ServiceLocation/ServiceLocation.dto";
 import { checkLocaleIsAvailable } from "./utils/checkLocaleIsAvailable";
 
+const { GATEWAY_URL } = process.env;
+
 const PUBLIC_FILE = /\.(.*)$/;
 
 export async function middleware(req: NextRequest) {
@@ -14,49 +16,51 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // console.log(req.nextUrl.locale, "req.nextUrl.locale");
   if (req.nextUrl.locale === "default") {
-    let locale = req.cookies.get("NEXT_LOCALE")?.value || LANGUAGES.RU;
-    let locationObject;
+    const locale = req.cookies.get("NEXT_LOCALE")?.value || LANGUAGES.EN;
     const forwarded = req.headers.get("x-forwarded-for");
-    // const myIp = "192.168.142.192";
     const ip = forwarded ? forwarded.split(/, /)[0] : undefined;
 
-    if (ip) {
-      try {
-        const { GATEWAY_URL } = process.env;
-        const response = await fetch(`${GATEWAY_URL}/location/${ip}`, {
-          method: "GET",
-        });
-        const json: GetLocationResponse = await response.json();
-        locationObject = json;
-        const [currentLanguage] = json.lang.split("_");
-        if (checkLocaleIsAvailable(currentLanguage)) {
-          locale = currentLanguage;
-        }
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log("get location error", { error });
-      }
-    }
-    let response;
-
-    if (locale.toLocaleLowerCase() === LANGUAGES.RU) {
-      response = NextResponse.next();
-    } else {
-      response = NextResponse.redirect(
+    const redirectToLocale = (newLocale: string, locationObject?: unknown) => {
+      const response = NextResponse.redirect(
         new URL(
-          `/${locale}${req.nextUrl.pathname}${req.nextUrl.search}`,
+          `/${newLocale}${req.nextUrl.pathname}${req.nextUrl.search}`,
           req.url,
         ),
       );
-    }
+      response.cookies.set("NEXT_LOCALE", locale);
+      if (locationObject) {
+        response.cookies.set("location", JSON.stringify(locationObject));
+      }
+      return response;
+    };
 
-    response.cookies.set("NEXT_LOCALE", locale);
-    if (locationObject) {
-      response.cookies.set("location", JSON.stringify(locationObject));
+    // eslint-disable-next-line no-console
+    console.log({ ip }, "USER IP");
+
+    if (ip) {
+      try {
+        const response = await fetch(`${GATEWAY_URL}/location/${ip}`, {
+          method: "GET",
+        });
+        const responseData: GetLocationResponse = await response.json();
+        const [currentLanguage] = responseData.lang.split("_");
+        if (checkLocaleIsAvailable(currentLanguage)) {
+          return redirectToLocale(currentLanguage, responseData);
+        } else {
+          // eslint-disable-next-line no-console
+          console.log("unknown lang from user", {
+            ip,
+            lang: responseData.lang,
+          });
+          return redirectToLocale(locale);
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log("get location error, setted default locale", { locale });
+        return redirectToLocale(locale);
+      }
     }
-    return response;
   } else {
     const response = NextResponse.next();
     response.cookies.set("NEXT_LOCALE", req.nextUrl.locale);

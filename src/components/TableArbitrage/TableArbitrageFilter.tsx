@@ -3,25 +3,22 @@ import { Grid } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 // import StarIcon from "@mui/icons-material/Star";
 // import StarBorderIcon from "@mui/icons-material/StarBorder";
-import { useUnit } from "effector-react";
+// import { useUnit } from "effector-react";
 // import { $arbitrage, onShowSelected } from "@/stores/arbitrage.effector";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 import { TableFilterButton } from "../Table/TableFilterButton";
-import { $arbitrageFilter } from "@/stores/arbitrage/arbitrageFilter.effector";
+// import { $arbitrageFilter } from "@/stores/arbitrage/arbitrageFilter.effector";
 // import { TableFilterChip } from "../Table/TableFilterChip";
 
 export const TableArbitrageFilter: React.FC = () => {
   const { t } = useTranslation();
   // const arbitrage = useUnit($arbitrage);
-  const arbitrageFilter = useUnit($arbitrageFilter);
+  // const arbitrageFilter = useUnit($arbitrageFilter);
   const router = useRouter();
   const session = useSession();
-
-  // eslint-disable-next-line no-console
-  console.log({ arbitrageFilter });
 
   const onSettingsClick = useCallback(
     (event: MouseEvent<HTMLElement>) => {
