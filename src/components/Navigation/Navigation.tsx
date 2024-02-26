@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   AppBar,
   Box,
@@ -19,6 +19,7 @@ interface Props {
 
 export const Navigation: React.FC<Props> = ({ colorInvert = false }) => {
   const theme = useTheme();
+  const [widgetLoaded, setWidgetLoaded] = useState<boolean>(false);
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const isMd = useMediaQuery(theme.breakpoints.up("md"), {
     defaultMatches: true,
@@ -34,6 +35,34 @@ export const Navigation: React.FC<Props> = ({ colorInvert = false }) => {
     disableHysteresis: true,
     threshold: 38,
   });
+
+  useEffect(() => {
+    const loadWidget = async () => {
+      const script = document.createElement("script");
+      script.src = "https://cryptorank.io/widget/marquee.js";
+      script.async = true;
+      document.body.appendChild(script);
+    };
+    loadWidget().then(() => setWidgetLoaded(true));
+  }, [theme.palette.mode]);
+
+  const widget = useMemo(
+    () =>
+      widgetLoaded && (
+        <div
+          key={theme.palette.mode}
+          id="cr-widget-marquee"
+          data-coins="bitcoin,ethereum,tether,ripple,cardano"
+          data-theme={theme.palette.mode}
+          data-show-symbol="true"
+          data-show-icon="true"
+          data-show-period-change="true"
+          data-period-change="24H"
+          data-api-url="https://api.cryptorank.io/v0"
+        ></div>
+      ),
+    [theme.palette.mode, widgetLoaded],
+  );
 
   return (
     <>
@@ -53,22 +82,7 @@ export const Navigation: React.FC<Props> = ({ colorInvert = false }) => {
           />
         </Container>
       </AppBar>
-      <Box height={48}>
-        <div
-          id="cr-widget-marquee"
-          data-coins="bitcoin,ethereum,tether,ripple,cardano"
-          data-theme={theme.palette.mode}
-          data-show-symbol="true"
-          data-show-icon="true"
-          data-show-period-change="true"
-          data-period-change="24H"
-          data-api-url="https://api.cryptorank.io/v0"
-        >
-          <a></a>
-          <script src="https://cryptorank.io/widget/marquee.js" defer></script>
-        </div>
-      </Box>
-
+      <Box height={48}>{widget}</Box>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Container paddingY={0}>
           <MobileMenu pages={navigationPages}></MobileMenu>
