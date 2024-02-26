@@ -3,8 +3,8 @@ import { Grid } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 // import StarIcon from "@mui/icons-material/Star";
 // import StarBorderIcon from "@mui/icons-material/StarBorder";
-import { useUnit } from "effector-react";
-import { $arbitrage, onShowSelected } from "@/stores/arbitrage.effector";
+// import { useUnit } from "effector-react";
+// import { $arbitrage, onShowSelected } from "@/stores/arbitrage.effector";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
@@ -14,7 +14,7 @@ import { TableFilterButton } from "../Table/TableFilterButton";
 
 export const TableArbitrageFilter: React.FC = () => {
   const { t } = useTranslation();
-  const arbitrage = useUnit($arbitrage);
+  // const arbitrage = useUnit($arbitrage);
   const router = useRouter();
   const session = useSession();
 

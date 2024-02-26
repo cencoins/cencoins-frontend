@@ -1,9 +1,9 @@
 import { createColumnHelper } from "@tanstack/react-table";
-import { TableCellFavourite } from "../Table/TableCell/TableCellFavourite";
+// import { TableCellFavourite } from "../Table/TableCell/TableCellFavourite";
 import { TableCell } from "../Table/TableCell/TableCell";
 import { TableCellCoin } from "../Table/TableCell/TableCellCoin";
 import { Spread } from "@/service/ServiceSocket/ServiceSocket.dto";
-import { onSelectSpread } from "@/stores/arbitrage.effector";
+// import { onSelectSpread } from "@/stores/arbitrage.effector";
 
 export interface TableArbitrageItem extends Spread {
   isFavourite: boolean;
