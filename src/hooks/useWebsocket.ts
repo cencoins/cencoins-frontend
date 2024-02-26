@@ -4,7 +4,7 @@ import getConfig from "next/config";
 import { useSession } from "next-auth/react";
 
 const {
-  publicRuntimeConfig: {  WEBSOCKET_PUBLIC_URL },
+  publicRuntimeConfig: { WEBSOCKET_PUBLIC_URL },
 } = getConfig();
 
 export const useWebsocket = () => {
@@ -15,7 +15,7 @@ export const useWebsocket = () => {
       // if (session.status === "authenticated") {
       //   ServiceSocket.connect(WEBSOCKET_URL, session.data.accessToken);
       // } else if (session.status === "unauthenticated") {
-        ServiceSocket.connect(WEBSOCKET_PUBLIC_URL);
+      ServiceSocket.connect(WEBSOCKET_PUBLIC_URL);
       // }
     }
 

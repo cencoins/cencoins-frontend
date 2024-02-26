@@ -1,5 +1,5 @@
 export interface Coin {
-  iconUrl: Nullable<string>;
+  iconUrl?: Nullable<string>;
   name: string;
   pair: string;
   symbol: string;

@@ -9,6 +9,7 @@ import {
   EmailSignUpValidateParams,
   EmailSignUpValidateResponse,
 } from "../ServiceIdentity/ServiceIdentity.dto";
+import { Coin, Market } from "../ServiceSocket/ServiceSocket.dto";
 
 export class NextService extends ServiceBase {
   protected static API_VERSION = "api";
@@ -49,6 +50,26 @@ export class NextService extends ServiceBase {
     return this.post<EmailSignInResponse>(
       "/identity/email/signin/refresh",
       body,
+      config,
+    );
+  }
+
+  public static getFilterCoins(
+    config?: AxiosRequestConfig<unknown>,
+  ): AxiosPromise<Coin[]> {
+    return this.get<any>(
+      "/filters/coins",
+      undefined,
+      config,
+    );
+  }
+
+  public static getFilterMarkets(
+    config?: AxiosRequestConfig<unknown>,
+  ): AxiosPromise<Market[]> {
+    return this.get<any>(
+      "/filters/markets",
+      undefined,
       config,
     );
   }
