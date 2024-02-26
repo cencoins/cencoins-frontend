@@ -13,13 +13,21 @@ import {
   TableCell,
   Divider,
 } from "@mui/material";
+import { ReactElement } from "react";
 
 interface Props {
   data: any;
   columns?: any;
+  rowsLoader?: ReactElement;
+  isLoading?: boolean;
 }
 
-export const Table: React.FC<Props> = ({ data, columns }) => {
+export const Table: React.FC<Props> = ({
+  data,
+  columns,
+  rowsLoader,
+  isLoading = false,
+}) => {
   const table = useReactTable({
     data,
     columns,
@@ -27,7 +35,7 @@ export const Table: React.FC<Props> = ({ data, columns }) => {
   });
 
   return (
-    <Box sx={{ width: "100%", overflow: "hidden", height: 500 }}>
+    <Box sx={{ width: "100%", overflow: "hidden", minHeight: 400 }}>
       <Divider />
       <TableContainer sx={{ fontSize: 14 }}>
         <MuiTable stickyHeader>
@@ -57,20 +65,25 @@ export const Table: React.FC<Props> = ({ data, columns }) => {
             ))}
           </TableHead>
           <TableBody>
-            {table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell
-                    key={cell.id}
-                    style={{
-                      minWidth: cell.column.getSize(),
-                    }}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
+            {isLoading
+              ? rowsLoader
+              : table.getRowModel().rows.map((row) => (
+                  <TableRow key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell
+                        key={cell.id}
+                        style={{
+                          minWidth: cell.column.getSize(),
+                        }}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
                 ))}
-              </TableRow>
-            ))}
           </TableBody>
         </MuiTable>
       </TableContainer>

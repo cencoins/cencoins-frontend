@@ -13,7 +13,7 @@ export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
         {children}
         <Divider />
       </Box>
-      <Container paddingY={4}>
+      <Container paddingTop={2} paddingBottom={4}>
         <Footer />
       </Container>
     </Paper>

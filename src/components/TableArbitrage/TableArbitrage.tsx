@@ -6,16 +6,27 @@ import {
   onStreamOrders,
 } from "@/stores/arbitrage/arbitrage.effector";
 import { useWebsocket } from "@/hooks/useWebsocket";
+import { TableArbitrageRowsLoader } from "./TableArbitrageRowsLoader";
+import { useEffect, useState } from "react";
 
 export const TableArbitrage: React.FC = () => {
+  const [init, setInit] = useState(false);
   const arbitrage = useUnit($arbitrage);
+
+  useEffect(() => {
+    if (!init && arbitrage.data.length) {
+      setInit(true);
+    }
+  }, [arbitrage.data.length, init]);
 
   useWebsocket({ events: { onStreamOrders } });
 
   return (
     <Table
+      isLoading={!init}
       data={arbitrage.data.sort((a, b) => b.spread - a.spread)}
       columns={tableArbitrageColumns}
+      rowsLoader={<TableArbitrageRowsLoader rowsNumber={4} />}
     />
   );
 };

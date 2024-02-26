@@ -9,7 +9,7 @@ import { getInitialServerSideProps } from "@/utils/getInitialServerSide";
 import { Box, Typography } from "@mui/material";
 import { useTranslation } from "next-i18next";
 import { TableArbitrage } from "@/components/TableArbitrage/TableArbitrage";
-import { ServiceFilters } from "@/service/ServiceFilters/ServiceFilters";
+// import { ServiceFilters } from "@/service/ServiceFilters/ServiceFilters";
 import { allSettled, fork, serialize } from "effector";
 import { setDataArbitrageFilter } from "@/stores/arbitrage/arbitrageFilter.effector";
 import { TableArbitrageFilter } from "@/components/TableArbitrage/TableArbitrageFilter";
@@ -57,15 +57,22 @@ const Home = (props: Props) => {
 export const getServerSideProps: GetServerSideProps<Props> = async (
   context,
 ) => {
-  const responseMarkets = await ServiceFilters.getMarkets();
-  const responseCoins = await ServiceFilters.getCoins();
+  // const responseMarkets = ServiceFilters.getMarkets();
+  // const responseCoins = ServiceFilters.getCoins();
+
+  try {
+    // const allRequests = Promise.all([responseMarkets, responseCoins]);
+    // const response = await allRequests;
+  } catch (error) {
+    // console.log({ error });
+  }
 
   const scope = fork();
   await allSettled(setDataArbitrageFilter, {
     scope,
     params: {
-      markets: responseMarkets.data || [],
-      coins: responseCoins.data || [],
+      // markets: response[0].data || [],
+      // coins: response[1].data || [],
     },
   });
 

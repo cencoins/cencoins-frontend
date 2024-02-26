@@ -28,5 +28,5 @@ export const useWebsocket = ({ events }: { events: Record<string, any> }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
-  return null;
+  return ServiceSocket;
 };
