@@ -20,6 +20,7 @@ export const TableArbitrageFilter: React.FC = () => {
   const router = useRouter();
   const session = useSession();
 
+  // eslint-disable-next-line no-console
   console.log({ arbitrageFilter });
 
   const onSettingsClick = useCallback(
