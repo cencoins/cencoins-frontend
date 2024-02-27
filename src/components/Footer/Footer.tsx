@@ -2,14 +2,11 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Link as MuiLink } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/material/styles";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import Link from "next/link";
 
 export const Footer = (): JSX.Element => {
-  const theme = useTheme();
-  const { mode } = theme.palette;
   const { t, i18n } = useTranslation("common");
 
   return (
