@@ -18,7 +18,6 @@ interface Props {
 
 export const Navigation: React.FC<Props> = ({ colorInvert = false }) => {
   const theme = useTheme();
-  const [widgetLoaded, setWidgetLoaded] = useState<boolean>(false);
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const isMd = useMediaQuery(theme.breakpoints.up("md"), {
     defaultMatches: true,
@@ -37,37 +36,31 @@ export const Navigation: React.FC<Props> = ({ colorInvert = false }) => {
 
   useEffect(() => {
     const loadWidget = async () => {
-      setWidgetLoaded(false);
       document.scripts.namedItem("marquee")?.remove();
       const script = document.createElement("script");
       script.src = "https://cryptorank.io/widget/marquee.js";
       script.async = true;
       script.id = "marquee";
-
       document.body.appendChild(script);
-      script.onload = () => {
-        setWidgetLoaded(true);
-      };
     };
     loadWidget();
   }, [theme.palette.mode]);
 
   const widget = useMemo(
-    () =>
-      widgetLoaded && (
-        <div
-          key={theme.palette.mode}
-          id="cr-widget-marquee"
-          data-coins="bitcoin,ethereum,tether,ripple,cardano"
-          data-theme={theme.palette.mode}
-          data-show-symbol="true"
-          data-show-icon="true"
-          data-show-period-change="true"
-          data-period-change="24H"
-          data-api-url="https://api.cryptorank.io/v0"
-        ></div>
-      ),
-    [theme.palette.mode, widgetLoaded],
+    () => (
+      <div
+        key={theme.palette.mode}
+        id="cr-widget-marquee"
+        data-coins="bitcoin,ethereum,tether,ripple,cardano"
+        data-theme={theme.palette.mode}
+        data-show-symbol="true"
+        data-show-icon="true"
+        data-show-period-change="true"
+        data-period-change="24H"
+        data-api-url="https://api.cryptorank.io/v0"
+      ></div>
+    ),
+    [theme.palette.mode],
   );
 
   return (
