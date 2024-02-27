@@ -27,7 +27,7 @@ export const Footer = (): JSX.Element => {
               alt="Cencoins logo"
               width={101}
               height={16}
-              src={mode === "light" ? "/images/logo.svg" : "/images/logo.svg"}
+              src={"/images/logo-b.svg"}
             />
           </Link>
           <Box display="flex" flexWrap={"wrap"} alignItems={"center"}>

@@ -2,15 +2,14 @@ import { useEffect, useMemo, useState } from "react";
 import {
   AppBar,
   Box,
-  Collapse,
   useMediaQuery,
   useScrollTrigger,
   useTheme,
 } from "@mui/material";
 import Container from "@/components/Container/Container";
 import NavigationBar from "./NavigationBar";
-import MobileMenu from "./MobileMenu";
 import navigationPages from "./navigationPages";
+import { MobileMenuSlide } from "../MobileMenu/MobileMenu";
 
 interface Props {
   colorInvert?: boolean;
@@ -38,13 +37,14 @@ export const Navigation: React.FC<Props> = ({ colorInvert = false }) => {
 
   useEffect(() => {
     const loadWidget = async () => {
+      document.scripts.namedItem("marquee")?.remove();
+      setWidgetLoaded(false);
       const script = document.createElement("script");
       script.src = "https://cryptorank.io/widget/marquee.js";
       script.async = true;
+      script.id = "marquee";
+      setWidgetLoaded(true);
       document.body.appendChild(script);
-      script.onload = () => {
-        setWidgetLoaded(true);
-      };
     };
     loadWidget();
   }, [theme.palette.mode]);
@@ -86,11 +86,11 @@ export const Navigation: React.FC<Props> = ({ colorInvert = false }) => {
         </Container>
       </AppBar>
       <Box height={48}>{widget}</Box>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <Container paddingY={0}>
-          <MobileMenu pages={navigationPages}></MobileMenu>
-        </Container>
-      </Collapse>
+      <MobileMenuSlide
+        open={open}
+        handleClose={() => setOpenMobileMenu(false)}
+        pages={navigationPages}
+      />
     </>
   );
 };

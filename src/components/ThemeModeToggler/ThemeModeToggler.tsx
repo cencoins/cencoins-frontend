@@ -1,21 +1,44 @@
 import Button from "@mui/material/Button";
 import { alpha, useTheme } from "@mui/material/styles";
+import { useMemo } from "react";
 
-const ThemeModeToggler = (): JSX.Element => {
+interface Props {
+  isMobile?: boolean;
+}
+
+const ThemeModeToggler: React.FC<Props> = ({ isMobile }) => {
   const theme = useTheme();
   const { themeToggler } = theme;
   const { mode } = theme.palette;
+
+  const color = useMemo(() => {
+    if (isMobile) {
+      return mode === "light" ? "inherit" : "secondary";
+    }
+    return mode === "light" ? "primary" : "secondary";
+  }, [isMobile, mode]);
+
+  const brdclr = useMemo(() => {
+    if (isMobile) {
+      return alpha(
+        mode === "light" ? theme.palette.grey.A100 : theme.palette.divider,
+        0.2,
+      );
+    }
+
+    return alpha(theme.palette.divider, 0.2);
+  }, [isMobile, mode, theme.palette.divider, theme.palette.grey.A100]);
 
   return (
     <Button
       variant="outlined"
       onClick={() => themeToggler()}
-      color={mode === "light" ? "primary" : "secondary"}
+      color={color}
       sx={{
         borderRadius: 2,
         minWidth: "auto",
         padding: 1,
-        borderColor: alpha(theme.palette.divider, 0.2),
+        borderColor: brdclr,
       }}
     >
       {mode === "light" ? (

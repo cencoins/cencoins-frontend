@@ -3,7 +3,13 @@ import Button from "@mui/material/Button";
 import { alpha, useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import NavItem from "./NavigationItem";
-import { IconButton, Menu, MenuItem, Link as MuiLink } from "@mui/material";
+import {
+  Grid,
+  IconButton,
+  Menu,
+  MenuItem,
+  Link as MuiLink,
+} from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import ThemeModeToggler from "../ThemeModeToggler/ThemeModeToggler";
@@ -71,7 +77,7 @@ const NavigationBar = ({
           alt="Cencoins logo"
           width={101}
           height={16}
-          src={mode === "light" ? "/images/logo.svg" : "/images/logo.svg"}
+          src={"/images/logo-b.svg"}
         />
       </Link>
       <Box sx={{ display: { xs: "none", md: "flex" } }} alignItems={"center"}>
@@ -200,19 +206,73 @@ const NavigationBar = ({
         )}
       </Box>
       <Box sx={{ display: { xs: "block", md: "none" } }} alignItems={"center"}>
-        <Button
-          onClick={() => handleMobileMenuClick()}
-          aria-label="Menu"
-          variant={"outlined"}
-          sx={{
-            borderRadius: 2,
-            minWidth: "auto",
-            padding: 1,
-            borderColor: alpha(theme.palette.divider, 0.2),
-          }}
-        >
-          <MenuIcon />
-        </Button>
+        <Grid container spacing={1.25}>
+          {session.status === "authenticated" && (
+            <Grid item>
+              <IconButton
+                color="primary"
+                onClick={(event) => handleClick(event)}
+                sx={{
+                  width: 42,
+                  height: 42,
+                }}
+              >
+                <AccountCircleIcon fontSize="large" />
+              </IconButton>
+            </Grid>
+          )}
+          {session.status === "unauthenticated" && (
+            <>
+              <Grid item>
+                <Link href="/login">
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    color={mode === "light" ? "primary" : "info"}
+                    sx={{
+                      height: 42,
+                      borderColor:
+                        mode === "light"
+                          ? ""
+                          : alpha(theme.palette.divider, 0.2),
+                    }}
+                  >
+                    {t("Войти")}
+                  </Button>
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="/signup">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    sx={{
+                      height: 42,
+                    }}
+                  >
+                    {t("Регистрация")}
+                  </Button>
+                </Link>
+              </Grid>
+            </>
+          )}
+          <Grid item>
+            <Button
+              onClick={() => handleMobileMenuClick()}
+              aria-label="Menu"
+              variant={"outlined"}
+              sx={{
+                borderRadius: 2,
+                minWidth: "auto",
+                padding: 1,
+                borderColor: alpha(theme.palette.divider, 0.2),
+              }}
+            >
+              <MenuIcon />
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </Box>
   );
