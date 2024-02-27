@@ -37,14 +37,17 @@ export const Navigation: React.FC<Props> = ({ colorInvert = false }) => {
 
   useEffect(() => {
     const loadWidget = async () => {
-      document.scripts.namedItem("marquee")?.remove();
       setWidgetLoaded(false);
+      document.scripts.namedItem("marquee")?.remove();
       const script = document.createElement("script");
       script.src = "https://cryptorank.io/widget/marquee.js";
       script.async = true;
       script.id = "marquee";
-      setWidgetLoaded(true);
+
       document.body.appendChild(script);
+      script.onload = () => {
+        setWidgetLoaded(true);
+      };
     };
     loadWidget();
   }, [theme.palette.mode]);
