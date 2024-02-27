@@ -42,8 +42,11 @@ export const Navigation: React.FC<Props> = ({ colorInvert = false }) => {
       script.src = "https://cryptorank.io/widget/marquee.js";
       script.async = true;
       document.body.appendChild(script);
+      script.onload = () => {
+        setWidgetLoaded(true);
+      };
     };
-    loadWidget().then(() => setWidgetLoaded(true));
+    loadWidget();
   }, [theme.palette.mode]);
 
   const widget = useMemo(
