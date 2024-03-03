@@ -1,9 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
-// import { TableCellFavourite } from "../Table/TableCell/TableCellFavourite";
 import { TableCell } from "../Table/TableCell/TableCell";
 import { TableCellCoin } from "../Table/TableCell/TableCellCoin";
 import { Spread } from "@/service/ServiceSocket/ServiceSocket.dto";
-// import { onSelectSpread } from "@/stores/arbitrage.effector";
 
 export interface TableArbitrageItem extends Spread {
   isFavourite: boolean;
@@ -12,22 +10,13 @@ export interface TableArbitrageItem extends Spread {
 const columnHelper = createColumnHelper<TableArbitrageItem>();
 
 export const tableArbitrageColumns = [
-  // columnHelper.accessor((row) => row.isFavourite, {
-  //   id: "isFavourite",
-  //   header: () => "",
-  //   size: 40,
-  //   cell: (info) => (
-  //     <TableCellFavourite
-  //       isFavourite={info.getValue()}
-  //       onClick={() => onSelectSpread(info.row.original.key)}
-  //       {...info}
-  //     />
-  //   ),
-  // }),
   columnHelper.accessor((row) => row.coinDto, {
     id: "coinDto",
     size: 250,
     header: () => <TableCell textAlign="left">Монета</TableCell>,
+    // @ts-ignore
+    filterFn: "customFilter",
+    // @ts-ignore
     cell: (info) => <TableCellCoin {...info.getValue()} />,
   }),
   columnHelper.accessor((row) => row.coinDto, {
@@ -44,6 +33,9 @@ export const tableArbitrageColumns = [
     id: "marketBuyDto",
     size: 140,
     header: () => <TableCell textAlign="left">Покупка</TableCell>,
+    // @ts-ignore
+    filterFn: "customFilter",
+    // @ts-ignore
     cell: (info) => <TableCellCoin {...info.getValue()} />,
   }),
   columnHelper.accessor((row) => row.priceBuy, {
@@ -56,6 +48,9 @@ export const tableArbitrageColumns = [
     id: "marketAskDto",
     size: 140,
     header: () => <TableCell textAlign="left">Продажа</TableCell>,
+    // @ts-ignore
+    filterFn: "customFilter",
+    // @ts-ignore
     cell: (info) => <TableCellCoin {...info.getValue()} />,
   }),
   columnHelper.accessor((row) => row.priceAsk, {

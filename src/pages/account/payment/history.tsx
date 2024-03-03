@@ -29,8 +29,11 @@ const AccountPayment = ({}: Props) => {
       </Head>
       <Box>
         <Table
+          ref={null}
           data={tablePaymentHistoryData}
           columns={tablePaymenHistoryColumns}
+          columnFilters={[]}
+          setColumnFilters={() => {}}
         />
       </Box>
     </>

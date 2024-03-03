@@ -8,8 +8,8 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import { Fragment, forwardRef } from "react";
-import { Button, Grid, alpha, useTheme } from "@mui/material";
+import { forwardRef } from "react";
+import { Box, Button, Grid, alpha, useTheme } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import ThemeModeToggler from "../ThemeModeToggler/ThemeModeToggler";
@@ -137,14 +137,14 @@ export const MobileMenuSlide: React.FC<Props> = ({
       </AppBar>
       <List>
         {pages.map((page) => (
-          <Fragment key={page.href}>
+          <Box key={page.href}>
             <Link href={page.href ?? ""}>
               <ListItemButton onClick={handleClose}>
                 <ListItemText primary={t(page.title)} />
               </ListItemButton>
             </Link>
             <Divider />
-          </Fragment>
+          </Box>
         ))}
       </List>
     </Dialog>

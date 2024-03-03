@@ -38,16 +38,16 @@ const Home = (props: Props) => {
           </Typography>
         </Box>
         <Box>
-          <Box>
-            <Box mb={2.5}>
-              <EffectorNext values={props.values}>
-                <TableArbitrageFilter />
-              </EffectorNext>
-            </Box>
+          <EffectorNext values={props.values}>
             <Box>
-              <TableArbitrage />
+              <Box mb={2.5}>
+                <TableArbitrageFilter />
+              </Box>
+              <Box>
+                <TableArbitrage />
+              </Box>
             </Box>
-          </Box>
+          </EffectorNext>
         </Box>
       </Container>
     </>
