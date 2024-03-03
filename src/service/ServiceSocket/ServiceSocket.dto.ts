@@ -1,4 +1,5 @@
 export interface Coin {
+  id: string;
   iconUrl?: Nullable<string>;
   name: string;
   pair: string;

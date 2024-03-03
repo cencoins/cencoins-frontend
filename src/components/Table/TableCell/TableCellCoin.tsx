@@ -6,9 +6,15 @@ interface Props {
   name: string;
   pair?: string;
   symbol?: string;
+  display?: string;
 }
 
-export const TableCellCoin: React.FC<Props> = ({ name, symbol, iconUrl }) => {
+export const TableCellCoin: React.FC<Props> = ({
+  name,
+  symbol,
+  iconUrl,
+  display,
+}) => {
   const theme = useTheme();
 
   return (
@@ -35,7 +41,7 @@ export const TableCellCoin: React.FC<Props> = ({ name, symbol, iconUrl }) => {
         </Grid>
       )}
       <Grid item container flexDirection="column" spacing={0.5}>
-        {name && <Grid item>{name}</Grid>}
+        {display && <Grid item>{display}</Grid>}
         {symbol && (
           <Grid item>
             <Box color={theme.palette.text.secondary}>{symbol}</Box>

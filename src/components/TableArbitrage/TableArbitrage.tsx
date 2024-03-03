@@ -19,11 +19,11 @@ export const TableArbitrage: React.FC = () => {
     }
   }, [arbitrage.data.length, init]);
 
-  useWebsocket({ events: { onStreamOrders } });
+  const { isConnected } = useWebsocket({ events: { onStreamOrders } });
 
   return (
     <Table
-      isLoading={!init}
+      isLoading={!isConnected}
       data={arbitrage.data.sort((a, b) => b.spread - a.spread)}
       columns={tableArbitrageColumns}
       rowsLoader={<TableArbitrageRowsLoader rowsNumber={4} />}

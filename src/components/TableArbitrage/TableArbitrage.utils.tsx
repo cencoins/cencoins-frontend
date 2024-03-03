@@ -46,7 +46,7 @@ export const tableArbitrageColumns = [
     header: () => <TableCell textAlign="left">Покупка</TableCell>,
     cell: (info) => <TableCellCoin {...info.getValue()} />,
   }),
-  columnHelper.accessor((row) => row.priceAsk, {
+  columnHelper.accessor((row) => row.priceBuy, {
     id: "priceBuy",
     size: 100,
     header: () => <TableCell textAlign="right">Цена</TableCell>,
@@ -58,7 +58,7 @@ export const tableArbitrageColumns = [
     header: () => <TableCell textAlign="left">Продажа</TableCell>,
     cell: (info) => <TableCellCoin {...info.getValue()} />,
   }),
-  columnHelper.accessor((row) => row.priceBuy, {
+  columnHelper.accessor((row) => row.priceAsk, {
     id: "sellPrice",
     size: 100,
     header: () => <TableCell textAlign="right">Цена</TableCell>,

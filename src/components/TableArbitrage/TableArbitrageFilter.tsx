@@ -80,7 +80,14 @@ export const TableArbitrageFilter: React.FC = () => {
             spacing={1.5}
           >
             {/* <Grid item>
-              <TableFilterChip label={t("Пара")} onDelete={() => {}} />
+              <TableFilterChip
+                label={t("Пара")}
+                options={arbitrageFilter.coins.map((item) => ({
+                  id: item.name,
+                  title: item.name,
+                }))}
+                onDelete={() => {}}
+              />
             </Grid> */}
             {/* <Grid item>
               <TableFilterChip  label={t("Монета")} onDelete={() => {}} />
