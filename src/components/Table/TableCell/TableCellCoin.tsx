@@ -14,14 +14,23 @@ export const TableCellCoin: React.FC<Props> = ({ name, symbol, iconUrl }) => {
   return (
     <Grid container spacing={1} alignItems="center" flexWrap="nowrap">
       {iconUrl && (
-        <Grid item display="inline-flex" alignItems="center">
+        <Grid item position="relative" width="32px" height="32px">
           <Image
             unoptimized
             alt={`${name} logo`}
-            width={32}
-            height={32}
+            width="32"
+            height="32"
             src={iconUrl}
-            style={{ objectFit: "contain" }}
+            style={{
+              objectFit: "contain",
+              borderRadius: "50%",
+              position: "absolute",
+              minHeight: 32,
+              minWidth: 32,
+              top: 0,
+              right: 0,
+              overflow: "hidden",
+            }}
           />
         </Grid>
       )}
