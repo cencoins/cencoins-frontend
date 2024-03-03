@@ -71,7 +71,7 @@ sample({
           id: "marketBuyDto",
           value: at(
             keyBy(filter.markets, "id"),
-            filter.selectedMarketBidIds,
+            filter.selectedMarketBuyIds,
           ).map((item) => item.name),
         },
       ];
