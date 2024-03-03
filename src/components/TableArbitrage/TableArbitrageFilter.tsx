@@ -1,24 +1,48 @@
-import { MouseEvent, useCallback } from "react";
+import { MouseEvent, useCallback, useMemo } from "react";
 import { Grid } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
-// import StarIcon from "@mui/icons-material/Star";
-// import StarBorderIcon from "@mui/icons-material/StarBorder";
-// import { useUnit } from "effector-react";
-// import { $arbitrage, onShowSelected } from "@/stores/arbitrage.effector";
+import { useUnit } from "effector-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 import { TableFilterButton } from "../Table/TableFilterButton";
-// import { $arbitrageFilter } from "@/stores/arbitrage/arbitrageFilter.effector";
-// import { TableFilterChip } from "../Table/TableFilterChip";
+import {
+  $arbitrageFilter,
+  onDeleteArbitrageFilter,
+  onResetArbitrageFilter,
+  onSelectArbitrageFilter,
+} from "@/stores/arbitrage/arbitrageFilter.effector";
+import { TableFilterChip } from "../Table/TableFilterChip";
 
 export const TableArbitrageFilter: React.FC = () => {
   const { t } = useTranslation();
-  // const arbitrage = useUnit($arbitrage);
-  // const arbitrageFilter = useUnit($arbitrageFilter);
+
+  const arbitrageFilter = useUnit($arbitrageFilter);
   const router = useRouter();
   const session = useSession();
+
+  const onSelectFilter = useUnit(onSelectArbitrageFilter);
+  const onResetFilter = useUnit(onResetArbitrageFilter);
+  const onDeleteChip = useUnit(onDeleteArbitrageFilter);
+
+  const coinOptions = useMemo(
+    () =>
+      arbitrageFilter.coins.map((item) => ({
+        id: item.id,
+        title: item.name,
+      })),
+    [arbitrageFilter.coins],
+  );
+
+  const marketOptions = useMemo(
+    () =>
+      arbitrageFilter.markets.map((item) => ({
+        id: item.id,
+        title: item.name,
+      })),
+    [arbitrageFilter.markets],
+  );
 
   const onSettingsClick = useCallback(
     (event: MouseEvent<HTMLElement>) => {
@@ -57,19 +81,6 @@ export const TableArbitrageFilter: React.FC = () => {
                 </TableFilterButton>
               </Link>
             </Grid>
-            {/* <Grid item>
-              <TableFilterButton
-                variant="contained"
-                size="small"
-                isActive={arbitrage.showSelected}
-                startIcon={
-                  arbitrage.showSelected ? <StarIcon /> : <StarBorderIcon />
-                }
-                onClick={() => onShowSelected()}
-              >
-                {t("Избранное")}
-              </TableFilterButton>
-            </Grid> */}
           </Grid>
         </Grid>
         <Grid item>
@@ -79,25 +90,55 @@ export const TableArbitrageFilter: React.FC = () => {
             alignItems="center"
             spacing={1.5}
           >
-            {/* <Grid item>
+            <Grid item>
               <TableFilterChip
-                label={t("Пара")}
-                options={arbitrageFilter.coins.map((item) => ({
-                  id: item.name,
-                  title: item.name,
-                }))}
-                onDelete={() => {}}
+                label={t("Монета")}
+                options={coinOptions}
+                isActive={Boolean(arbitrageFilter.selectedCoinIds.length)}
+                selectedIds={arbitrageFilter.selectedCoinIds}
+                onResetFilter={() => onResetFilter({ key: "selectedCoinIds" })}
+                onSelectFilter={(value: string) =>
+                  onSelectFilter({ key: "selectedCoinIds", value })
+                }
+                onDeleteChip={(value: string) =>
+                  onDeleteChip({ key: "selectedCoinIds", value })
+                }
               />
-            </Grid> */}
-            {/* <Grid item>
-              <TableFilterChip  label={t("Монета")} onDelete={() => {}} />
             </Grid>
             <Grid item>
-              <TableFilterChip label={t("Покупка")} onDelete={() => {}} />
+              <TableFilterChip
+                label={t("Покупка")}
+                options={marketOptions}
+                isActive={Boolean(arbitrageFilter.selectedMarketBuyIds.length)}
+                selectedIds={arbitrageFilter.selectedMarketBuyIds}
+                onResetFilter={() =>
+                  onResetFilter({ key: "selectedMarketBuyIds" })
+                }
+                onSelectFilter={(value: string) =>
+                  onSelectFilter({ key: "selectedMarketBuyIds", value })
+                }
+                onDeleteChip={(value: string) =>
+                  onDeleteChip({ key: "selectedMarketBuyIds", value })
+                }
+              />
             </Grid>
             <Grid item>
-              <TableFilterChip label={t("Продажа")} onDelete={() => {}} />
-            </Grid> */}
+              <TableFilterChip
+                label={t("Продажа")}
+                options={marketOptions}
+                isActive={Boolean(arbitrageFilter.selectedMarketBidIds.length)}
+                selectedIds={arbitrageFilter.selectedMarketBidIds}
+                onResetFilter={() =>
+                  onResetFilter({ key: "selectedMarketBidIds" })
+                }
+                onSelectFilter={(value: string) =>
+                  onSelectFilter({ key: "selectedMarketBidIds", value })
+                }
+                onDeleteChip={(value: string) =>
+                  onDeleteChip({ key: "selectedMarketBidIds", value })
+                }
+              />
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
