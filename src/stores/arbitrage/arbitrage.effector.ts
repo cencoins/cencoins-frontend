@@ -2,7 +2,7 @@ import { TableArbitrageItem } from "@/components/TableArbitrage/TableArbitrage.u
 import { Spread } from "@/service/ServiceSocket/ServiceSocket.dto";
 import { ColumnFiltersState } from "@tanstack/react-table";
 import { createEvent, createStore, sample } from "effector";
-import { at, filter, flatten, keyBy, map, unionBy, uniqBy } from "lodash";
+import { at, filter, flatten, keyBy, map, unionBy } from "lodash";
 import { $arbitrageFilter } from "./arbitrageFilter.effector";
 
 interface ArbitrageStore {

@@ -1,6 +1,4 @@
 import {
-  ColumnFiltersState,
-  OnChangeFn,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
