@@ -30,7 +30,7 @@ interface Props {
   rowsLoader?: ReactElement;
   isLoading?: boolean;
   columnFilters: any;
-  setColumnFilters: OnChangeFn<ColumnFiltersState>;
+  setColumnFilters: any;
 }
 
 export const Table: React.FC<Props> = forwardRef(
@@ -46,7 +46,6 @@ export const Table: React.FC<Props> = forwardRef(
     ref,
   ) => {
     const table = useReactTable({
-      enableColumnFilters: true,
       data,
       columns,
       getCoreRowModel: getCoreRowModel(),
@@ -66,8 +65,6 @@ export const Table: React.FC<Props> = forwardRef(
           );
         },
       },
-      debugTable: true,
-      debugColumns: true,
       onColumnFiltersChange: setColumnFilters,
     });
 
