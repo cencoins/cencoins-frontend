@@ -6,15 +6,18 @@ import { at, filter, flatten, keyBy, map, unionBy } from "lodash";
 import { $arbitrageFilter } from "./arbitrageFilter.effector";
 
 interface ArbitrageStore {
+  isConnected: boolean;
   filter: ColumnFiltersState;
   data: TableArbitrageItem[];
 }
 
 export const onStreamOrders = createEvent<Spread[]>();
 export const onSetFilterArbitrage = createEvent<ColumnFiltersState>();
+export const onChangeConnectStatus = createEvent<boolean>();
 
 export const $arbitrage = createStore<ArbitrageStore>(
   {
+    isConnected: false,
     data: [],
     filter: [],
   },
@@ -39,6 +42,10 @@ export const $arbitrage = createStore<ArbitrageStore>(
   .on(onSetFilterArbitrage, (state, filter) => ({
     ...state,
     filter,
+  }))
+  .on(onChangeConnectStatus, (state, isConnected) => ({
+    ...state,
+    isConnected,
   }));
 
 sample({

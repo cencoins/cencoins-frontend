@@ -23,7 +23,7 @@ export const useWebsocket = ({ events }: { events: Record<string, any> }) => {
     }
 
     return () => {
-      ServiceSocket.disconnect();
+      ServiceSocket.disconnect({ events });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);

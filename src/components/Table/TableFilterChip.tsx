@@ -5,9 +5,11 @@ import {
   Box,
   Chip,
   ChipProps,
+  CircularProgress,
   Grid,
   Menu,
   MenuItem,
+  Skeleton,
   TextField,
   styled,
 } from "@mui/material";
@@ -17,6 +19,7 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import { useTranslation } from "next-i18next";
 import { at, keyBy } from "lodash";
 import Image from "next/image";
+import { useIsClient } from "@/hooks/isClient";
 
 interface Props extends ChipProps {
   open?: boolean;
@@ -61,6 +64,7 @@ const FilterChip = styled(Chip)<Props>(({ theme, isActive }) => ({
 export const TableFilterChip: React.FC<Props> = (props) => {
   const { isActive, onSelectFilter, onResetFilter, onDeleteChip, selectedIds } =
     props;
+  const isClient = useIsClient();
   const { t } = useTranslation("common");
   const ref = useRef<Nullable<HTMLDivElement>>(null);
   const [anchorEl, setAnchorEl] = useState<Nullable<HTMLElement>>(null);
@@ -84,6 +88,10 @@ export const TableFilterChip: React.FC<Props> = (props) => {
   }, [props.options, selectedIds, value]);
 
   const deleteIcon = useMemo(() => {
+    if (!isClient) {
+      return <></>;
+    }
+
     if (isActive) {
       return <CancelOutlinedIcon style={{ fontSize: 16 }} />;
     }
@@ -93,7 +101,7 @@ export const TableFilterChip: React.FC<Props> = (props) => {
     }
 
     return <ExpandMoreIcon />;
-  }, [isActive, props.open, open]);
+  }, [isClient, isActive, open, props.open]);
 
   const selectedOptions = useMemo(
     () => at(keyBy(props.options, "id"), selectedIds),
@@ -134,6 +142,27 @@ export const TableFilterChip: React.FC<Props> = (props) => {
         deleteIcon={deleteIcon}
         onClick={handleOnClick}
         onDelete={handleOnDelete}
+        label={
+          <Box position="relative">
+            {!isClient && (
+              <Skeleton
+                animation="wave"
+                variant="text"
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  zIndex: 1,
+                  top: 0,
+                }}
+              />
+            )}
+            <Box color={!isClient ? "transparent" : undefined}>
+              {props.label}
+            </Box>
+          </Box>
+        }
       />
       <Menu
         anchorEl={anchorEl}

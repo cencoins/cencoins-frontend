@@ -1,7 +1,9 @@
+import { persist } from "effector-storage/local";
+
 import { Coin, Market } from "@/service/ServiceSocket/ServiceSocket.dto";
 import { createEvent, createStore } from "effector";
 
-interface ArbitrageFilterStore {
+export interface ArbitrageFilterStore {
   coins: Coin[];
   markets: Market[];
   selectedCoinIds: string[];
@@ -45,3 +47,5 @@ export const $arbitrageFilter = createStore<ArbitrageFilterStore>(
     ...state,
     [payload.key]: state[payload.key].filter((id) => id !== payload.value),
   }));
+
+persist({ store: $arbitrageFilter, key: "arbitrageFilter" });

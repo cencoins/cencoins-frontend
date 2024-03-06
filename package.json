@@ -38,6 +38,7 @@
     "axios": "^1.6.2",
     "effector": "^22.8.7",
     "effector-react": "^22.5.4",
+    "effector-storage": "^7.0.0",
     "i18next": "^23.7.6",
     "install": "^0.13.0",
     "jwt-decode": "^4.0.0",

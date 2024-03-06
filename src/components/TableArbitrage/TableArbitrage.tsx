@@ -3,6 +3,7 @@ import { tableArbitrageColumns } from "./TableArbitrage.utils";
 import { useUnit } from "effector-react";
 import {
   $arbitrage,
+  onChangeConnectStatus,
   onSetFilterArbitrage,
   onStreamOrders,
 } from "@/stores/arbitrage/arbitrage.effector";
@@ -16,15 +17,19 @@ export const TableArbitrage: React.FC = () => {
 
   const onStreamOrdersEvent = useUnit(onStreamOrders);
   const onSetFilterEvent = useUnit(onSetFilterArbitrage);
+  const onChangeConnectStatusEvent = useUnit(onChangeConnectStatus);
 
-  const { isConnected } = useWebsocket({
-    events: { onStreamOrders: onStreamOrdersEvent },
+  useWebsocket({
+    events: {
+      onStreamOrders: onStreamOrdersEvent,
+      onConnect: onChangeConnectStatusEvent,
+    },
   });
 
   return (
     <Table
       ref={tableInstance}
-      isLoading={!isConnected}
+      isLoading={!arbitrage.isConnected}
       data={arbitrage.data.sort((a, b) => b.spread - a.spread)}
       columns={tableArbitrageColumns}
       rowsLoader={<TableArbitrageRowsLoader rowsNumber={4} />}

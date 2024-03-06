@@ -32,8 +32,11 @@ export default class ServiceSocket {
     await this.startConnect({ events });
   }
 
-  public static async disconnect() {
+  public static async disconnect({ events }: { events: Record<string, any> }) {
     this.isConnected = false;
+    if (events.onConnect) {
+      events.onConnect(false);
+    }
     return null;
   }
 
@@ -46,6 +49,9 @@ export default class ServiceSocket {
       try {
         await this.connection.start();
         this.isConnected = true;
+        if (events.onConnect) {
+          events.onConnect(true);
+        }
 
         if (this.connection && this.isConnected) {
           try {

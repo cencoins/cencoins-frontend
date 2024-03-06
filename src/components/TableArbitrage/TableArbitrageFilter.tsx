@@ -1,5 +1,5 @@
-import { MouseEvent, useCallback, useMemo } from "react";
-import { Grid } from "@mui/material";
+import { MouseEvent, useCallback, useEffect, useMemo } from "react";
+import { CircularProgress, Grid } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useUnit } from "effector-react";
 import Link from "next/link";
@@ -9,22 +9,38 @@ import { useTranslation } from "next-i18next";
 import { TableFilterButton } from "../Table/TableFilterButton";
 import {
   $arbitrageFilter,
+  ArbitrageFilterStore,
   onDeleteArbitrageFilter,
   onResetArbitrageFilter,
   onSelectArbitrageFilter,
+  setDataArbitrageFilter,
 } from "@/stores/arbitrage/arbitrageFilter.effector";
 import { TableFilterChip } from "../Table/TableFilterChip";
 
 export const TableArbitrageFilter: React.FC = () => {
   const { t } = useTranslation();
-
   const arbitrageFilter = useUnit($arbitrageFilter);
   const router = useRouter();
   const session = useSession();
 
+  const onSetFilter = useUnit(setDataArbitrageFilter);
   const onSelectFilter = useUnit(onSelectArbitrageFilter);
   const onResetFilter = useUnit(onResetArbitrageFilter);
   const onDeleteChip = useUnit(onDeleteArbitrageFilter);
+
+  useEffect(() => {
+    const localData = localStorage.getItem("arbitrageFilter");
+    if (localData) {
+      const data: ArbitrageFilterStore = JSON.parse(localData);
+      const { selectedCoinIds, selectedMarketBidIds, selectedMarketBuyIds } =
+        data;
+      onSetFilter({
+        selectedCoinIds,
+        selectedMarketBidIds,
+        selectedMarketBuyIds,
+      });
+    }
+  }, [onSetFilter]);
 
   const coinOptions = useMemo(
     () =>
