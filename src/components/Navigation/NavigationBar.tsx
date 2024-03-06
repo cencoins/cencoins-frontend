@@ -72,7 +72,14 @@ const NavigationBar = ({
       alignItems={"center"}
       width={1}
     >
-      <Link href="/">
+      <Link
+        href="/"
+        onClick={(event) => {
+          if (router.pathname === "/") {
+            event.preventDefault();
+          }
+        }}
+      >
         <Image
           alt="Cencoins logo"
           width={101}
