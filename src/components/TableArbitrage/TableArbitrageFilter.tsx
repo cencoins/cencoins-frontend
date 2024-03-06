@@ -1,5 +1,5 @@
 import { MouseEvent, useCallback, useEffect, useMemo } from "react";
-import { CircularProgress, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useUnit } from "effector-react";
 import Link from "next/link";
