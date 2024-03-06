@@ -10,6 +10,7 @@ export interface Coin {
 export interface Market {
   id: string;
   name: string;
+  iconUrl?: Nullable<string>;
 }
 
 export interface Spread {

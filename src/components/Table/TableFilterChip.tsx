@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { light } from "@/theme/palette";
 import {
   Box,
@@ -16,11 +16,12 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import { useTranslation } from "next-i18next";
 import { at, keyBy } from "lodash";
+import Image from "next/image";
 
 interface Props extends ChipProps {
   open?: boolean;
   isActive?: boolean;
-  options: { id: string; title: string }[];
+  options: { id: string; title: string; iconUrl?: Nullable<string> }[];
   onSelectFilter: (value: string) => void;
   onDeleteChip: (value: string) => void;
   onResetFilter: () => void;
@@ -61,6 +62,7 @@ export const TableFilterChip: React.FC<Props> = (props) => {
   const { isActive, onSelectFilter, onResetFilter, onDeleteChip, selectedIds } =
     props;
   const { t } = useTranslation("common");
+  const ref = useRef<Nullable<HTMLDivElement>>(null);
   const [anchorEl, setAnchorEl] = useState<Nullable<HTMLElement>>(null);
   const [value, setValue] = useState<string>("");
   const open = Boolean(anchorEl);
@@ -98,8 +100,10 @@ export const TableFilterChip: React.FC<Props> = (props) => {
     [props.options, selectedIds],
   );
 
-  const handleOnClick = useCallback((event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleOnClick = useCallback(() => {
+    if (ref.current) {
+      setAnchorEl(ref.current);
+    }
   }, []);
 
   const handleOnChangeInput = useCallback(
@@ -114,20 +118,19 @@ export const TableFilterChip: React.FC<Props> = (props) => {
     setValue("");
   }, []);
 
-  const handleOnDelete = useCallback(
-    (event: React.MouseEvent<HTMLElement>) => {
-      if (isActive && onResetFilter) {
-        event.preventDefault();
-        onResetFilter();
-      }
-    },
-    [onResetFilter, isActive],
-  );
+  const handleOnDelete = useCallback(() => {
+    if (isActive && onResetFilter) {
+      onResetFilter();
+    } else {
+      handleOnClick();
+    }
+  }, [isActive, onResetFilter, handleOnClick]);
 
   return (
     <>
       <FilterChip
         {...props}
+        ref={ref}
         deleteIcon={deleteIcon}
         onClick={handleOnClick}
         onDelete={handleOnDelete}
@@ -206,6 +209,21 @@ export const TableFilterChip: React.FC<Props> = (props) => {
             onClick={() => onSelectFilter(option.id)}
             onKeyDown={(event) => event.stopPropagation()}
           >
+            <Image
+              unoptimized
+              alt={`${option.title} logo`}
+              width="24"
+              height="24"
+              src={option.iconUrl ?? ""}
+              style={{
+                objectFit: "contain",
+                borderRadius: "50%",
+                minHeight: 24,
+                minWidth: 24,
+                overflow: "hidden",
+                marginRight: 8,
+              }}
+            />
             {option.title}
           </MenuItem>
         ))}

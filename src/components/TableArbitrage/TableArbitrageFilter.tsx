@@ -31,6 +31,7 @@ export const TableArbitrageFilter: React.FC = () => {
       arbitrageFilter.coins.map((item) => ({
         id: item.id,
         title: item.name,
+        iconUrl: item.iconUrl,
       })),
     [arbitrageFilter.coins],
   );
@@ -40,6 +41,7 @@ export const TableArbitrageFilter: React.FC = () => {
       arbitrageFilter.markets.map((item) => ({
         id: item.id,
         title: item.name,
+        iconUrl: item.iconUrl,
       })),
     [arbitrageFilter.markets],
   );
