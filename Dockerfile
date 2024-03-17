@@ -1,11 +1,11 @@
-FROM node:19-bullseye-slim AS deps
+FROM node:19-bullseye AS deps
 WORKDIR /app
 
 COPY package.json package-lock.json ./
 RUN npm pkg delete scripts.prepare
 RUN npm ci --legacy-peer-deps
 #
-FROM node:19-bullseye-slim AS builder
+FROM node:19-bullseye AS builder
 WORKDIR /app
 
 ENV NODE_ENV production
@@ -16,7 +16,7 @@ COPY . .
 
 RUN npm run build
 #
-FROM node:19-bullseye-slim AS runner
+FROM node:19-bullseye AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
