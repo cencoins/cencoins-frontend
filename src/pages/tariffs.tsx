@@ -211,7 +211,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
         periods: responsePeriods.data.map((period, index) => ({
           ...period,
           // @ts-ignore
-          tariffs: response[index].data,
+          tariffs: response[index].data.reverse(),
         })),
       },
     });
