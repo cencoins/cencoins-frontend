@@ -1,5 +1,4 @@
 import { persist } from "effector-storage/local";
-
 import { Coin, Market } from "@/service/ServiceSocket/ServiceSocket.dto";
 import { createEvent, createStore } from "effector";
 

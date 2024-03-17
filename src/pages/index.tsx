@@ -58,12 +58,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   context,
 ) => {
   let response;
-  const responseMarkets = ServiceFilters.getMarkets();
-  const responseCoins = ServiceFilters.getCoins();
+  const responseMarkets = await ServiceFilters.getMarkets();
+  const responseCoins = await ServiceFilters.getCoins();
 
   try {
-    const allRequests = Promise.all([responseMarkets, responseCoins]);
-    response = await allRequests;
+    const allRequests = await Promise.all([responseMarkets, responseCoins]);
+    response = allRequests;
   } catch (error) {}
 
   const scope = fork();
